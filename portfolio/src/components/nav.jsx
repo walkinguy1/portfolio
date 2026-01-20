@@ -5,7 +5,7 @@ import { useState,useEffect } from 'react';
 import navIcon1 from '../assets/img/nav-icon1.svg';
 import navIcon2 from '../assets/img/nav-icon2.svg';
 import navIcon3 from '../assets/img/nav-icon3.svg';
-import logo from '../assets/img/logo.svg';
+import logo from '../assets/img/logo.png';
 
 export const NavBar = () => {
     const [activeLink, setActiveLink] = useState('home');
@@ -46,10 +46,10 @@ export const NavBar = () => {
                     <Nav.Link href="#service" className={activeLink === 'service  ' ? 'active navbar-link' : 'navbar-link'} onCLick={() =>onUpdateActiveLink('services')}>Services</Nav.Link>
                 </Nav>
                 <span className='navbar-text'>
-                    <div className='social_icon'>
+                    <div className='social-icon'>
                         <a href ='#'><img src={navIcon1} alt = ""/></a>
                         <a href ='#'><img src={navIcon2} alt = ""/></a>
-                        <a href ='#'><img src={navIcon3} alt = ""/></a>
+                        <a href ='https://www.instagram.com/walkinguy/'><img src={navIcon3} alt = ""/></a>
                     </div>
                     <button className='vvd' onClick={() => console.log('connect')}><span>Let’s Connect</span></button>
                 </span>
