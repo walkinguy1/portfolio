@@ -41,6 +41,7 @@ export const NavBar = () => {
                 <Nav className="me-auto">
                     <Nav.Link href="#home" className={activeLink === 'home' ? 'active navbar-link' : 'navbar-link'} onCLick={() =>onUpdateActiveLink('home')}>Home</Nav.Link>
                     <Nav.Link href="#about" className={activeLink === 'about' ? 'active navbar-link' : 'navbar-link'}  onCLick={() =>onUpdateActiveLink('about')}>About</Nav.Link>
+                    <Nav.Link href="#skills" className={activeLink === 'skills' ? 'active navbar-link' : 'navbar-link'} onCLick={() =>onUpdateActiveLink('skills')}>Skills</Nav.Link>
                     <Nav.Link href="#projects" className={activeLink === 'projects' ? 'active navbar-link' : 'navbar-link'} onCLick={() =>onUpdateActiveLink('projects')}>Projects</Nav.Link>
                     <Nav.Link href="#blogs" className={activeLink === 'blogs' ? 'active navbar-link' : 'navbar-link'} onCLick={() =>onUpdateActiveLink('blogs')}>Blogs</Nav.Link>
                     <Nav.Link href="#service" className={activeLink === 'service  ' ? 'active navbar-link' : 'navbar-link'} onCLick={() =>onUpdateActiveLink('services')}>Services</Nav.Link>
