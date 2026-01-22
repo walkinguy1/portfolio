@@ -9,17 +9,20 @@ import { Footer } from './components/footer.jsx'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
-
   return (
-    <>
-      <div className="App">
-        <NavBar />
+    <div className="App">
+      <NavBar />
+      
+      {/* Group sections that share the background */}
+      <div className="main-bg-wrapper">
         <Banner />
         <Skills />
-        <Contact />
-        <Footer />
-      </div>  
-    </>
+        {/* Add more sections here later (Projects, Blogs, etc.) */}
+      </div>
+
+      <Contact />
+      <Footer />
+    </div>
   )
 }
 

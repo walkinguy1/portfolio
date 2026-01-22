@@ -88,6 +88,31 @@ nav.navbar {
   width: 100%;
   top: 0;
   z-index: 9999;
+  /* Updated transition to include transform */
+  transition: transform 0.32s ease-in-out, padding 0.32s ease-in-out, background-color 0.32s ease-in-out;
+}
+
+/* Class to hide the navbar by sliding it up */
+.nav-hidden {
+  transform: translateY(-100%);
+}
+
+/* Class to show the navbar */
+.nav-visible {
+  transform: translateY(0);
+}
+
+nav.navbar.scrolled {
+  padding: 0px 0;
+  background-color: #121212;
+}
+
+nav.navbar {
+  padding: 18px 0;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 9999;
   transition:  0.32s ease-in-out;
 }
 nav.navbar.scrolled {
@@ -237,10 +262,7 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-image: url('./assets/img/banner-bg.png');
-  background-position:center;
-  background-size: cover;
-  background-repeat: no-repeat;
+  background: transparent !important;
 }
 .banner .tagline {
   font-weight: 700;
@@ -261,7 +283,7 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   display: block;
 }
 .banner p {
-  color: #B8B8B8;
+  color: #000000;
   font-size: 18px;
   letter-spacing: 0.8px;
   line-height: 1.5em;
@@ -303,7 +325,6 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   border-right: 0.08em solid #666;
 }
 
-/************ Skills Css ************/
 .skill {
   padding: 0 0 50px 0;
   position: relative;
@@ -320,7 +341,7 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 	font-weight: 700;
 }
 .skill p {
-    color: #b8b8b821;
+    color: #b8b8b8ec;
     font-size: 18px;
     letter-spacing: 0.8px;
     line-height: 1.5em;
@@ -618,4 +639,19 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   color: #B8B8B8;
   letter-spacing: 0.5px;
   margin-top: 20px;
+}
+
+.main-bg-wrapper {
+  background-image: url('./assets/img/banner-bg.png');
+  background-position: top center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100%;
+  display: block;
+}
+
+.skill {
+  background: transparent !important;
+  margin-top: 0; 
+  padding-top: 50px;
 }
