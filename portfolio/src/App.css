@@ -92,6 +92,26 @@ nav.navbar {
   transition: transform 0.32s ease-in-out, padding 0.32s ease-in-out, background-color 0.32s ease-in-out;
 }
 
+.navbar-collapse {
+  display: flex !important;
+  /* This pushes the Nav links to the left and Social text to the right */
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* On Desktop, make sure the social icons don't hug the links */
+@media (min-width: 992px) {
+  .me-auto {
+    /* Ensures the links take up only the space they need, letting the push happen */
+    flex-grow: 1; 
+  }
+}
+
+/* Ensure the navbar brand doesn't push everything too far */
+nav.navbar a.navbar-brand {
+  margin-right: 50px;
+}
+
 @media (max-width: 991px) {
   .navbar-collapse {
     background: rgba(18, 18, 18, 0.95); /* Solid dark background */
