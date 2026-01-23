@@ -255,6 +255,7 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 	border-color: transparent;
 }
 
+
 /************ Banner Css ************/
 .banner {
   margin-top: 0;
@@ -283,7 +284,7 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   display: block;
 }
 .banner p {
-  color: #000000;
+  color: #ffffff;
   font-size: 18px;
   letter-spacing: 0.8px;
   line-height: 1.5em;
@@ -364,11 +365,68 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   z-index: -4;
 }
 
+
+/************ About Css ************/
+/************ About Section Css ************/
+.about {
+  padding: 60px 0;
+  position: relative;
+  background-color: transparent; /* Keep transparent so main-bg-wrapper shows through */
+}
+.about img {
+  width: 90%;
+}
+.about h2 {
+	font-size: 45px;
+	font-weight: 700;
+  margin-bottom: 20px;
+}
+.about p {
+  color: #B8B8B8;
+  font-size: 18px;
+  letter-spacing: 0.8px;
+  line-height: 1.5em;
+  width: 95%;
+}
+.about-stats {
+  display: flex;
+  gap: 30px;
+  margin: 30px 0;
+}
+.stat-item {
+  display: flex;
+  flex-direction: column;
+}
+.stat-number {
+  font-size: 32px;
+  font-weight: 700;
+  color: #AA367C; /* Your purple accent color */
+}
+.stat-text {
+  font-size: 14px;
+  color: #B8B8B8;
+}
+.about button {
+  font-weight: 700;
+  color: #fff;
+  background-color: transparent;
+  padding: 14px 48px;
+  font-size: 18px;
+  margin-top: 10px;
+  position: relative;
+  border: 1px solid #fff;
+  transition: 0.3s ease-in-out;
+}
+.about button:hover {
+  background-color: #fff;
+  color: #121212;
+}
+
 /************ Projects Css ************/
 .project {
   padding: 80px 0;
   position: relative;
-  background-color: black;
+  background-color: transparent;
 }
 .project h2 {
 	font-size: 45px;
@@ -490,9 +548,9 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
   z-index: -4;
 }
 
-/************ Projects Css ************/
+/************ Conacts Css ************/
 .contact {
-  background: linear-gradient(90.21deg, #AA367C -5.91%, #4A2FBD 111.58%);
+  /* background: linear-gradient(90.21deg, #368faadc -5.91%, #bd682f 111.58%); */
   padding: 60px 0 200px 0;
 }
 .contact img {
@@ -642,13 +700,22 @@ nav.navbar .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
 }
 
 .main-bg-wrapper {
-  background-image: url('./assets/img/banner-bg.png');
-  background-position: top center;
-  background-size: cover;
-  background-repeat: no-repeat;
   width: 100%;
-  display: block;
+  min-height: 100vh;
+  /* This creates the base deep color and layered 'cloud' blobs */
+  background-color: #0d1117;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(47, 132, 189, 0.719) 0px, transparent 50%), 
+    radial-gradient(at 50% 0%, rgba(187, 65, 136, 0.589) 0px, transparent 50%), 
+    radial-gradient(at 100% 0%, rgba(47, 189, 177, 0.5) 0px, transparent 50%),
+    radial-gradient(at 50% 50%, rgba(95, 76, 35, 0.548) 0px, transparent 80%),
+    radial-gradient(at 100% 100%, rgba(73, 47, 189, 0.733) 0px, transparent 50%);
+  
+  background-attachment: fixed;
+  position: relative;
+  overflow: hidden;
 }
+
 
 .skill {
   background: transparent !important;

@@ -8,8 +8,8 @@ export const Banner = () => {
                 <Row className = "align-items-center">
                     <Col xs={12} md={6} xl={7}>
                         <span className="tagline">Welcome to my Portfolio</span>
-                        <h1>{"Hi I'm Walkinguy"}<span className='wrap'></span></h1>
-                        <p>This is a placeholder for now to have some details to have added later on depending on what will be required so yeah</p>
+                        <h1>{"Hi I'm Tushar Khatiwada"}<span className='wrap'></span></h1>
+                        <p>Also known as Walkinguy in many online spaces, aspiring to be entangled in software development space, which interests also spanning towards AI/ML and overall in general to make it easier for problem solving.</p>
                         <button onClick={() => console.log('connect')}> Let's Connect <ArrowRightCircle size={25}/></button>
                     </Col>
                     <Col xs={12} md={6} xl={5}>

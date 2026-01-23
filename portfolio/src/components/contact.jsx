@@ -23,25 +23,27 @@ export const Contact = () => {
       })
   }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setButtonText("Sending...");
-    let response = await fetch("http://localhost:5000/contact", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json;charset=utf-8",
-      },
-      body: JSON.stringify(formDetails),
-    });
-    setButtonText("Send");
-    let result = await response.json();
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setButtonText("Sending...");
+
+  let response = await fetch("https://formspree.io/f/xgoakojy", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    },
+    body: JSON.stringify(formDetails),
+  });
+
+  setButtonText("Send");
+  if (response.ok) { // Check if response status is 200-299
     setFormDetails(formInitialDetails);
-    if (result.code == 200) {
-      setStatus({ succes: true, message: 'Message sent successfully'});
-    } else {
-      setStatus({ succes: false, message: 'Something went wrong, please try again later.'});
-    }
-  };
+    setStatus({ success: true, message: 'Message sent successfully'});
+  } else {
+    setStatus({ success: false, message: 'Something went wrong, please try again later.'});
+  }
+};
 
   return (
     <section className="contact" id="connect">
