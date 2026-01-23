@@ -17,19 +17,16 @@ export const NavBar = () => {
         const handleScroll = () => {
             const currentScrollY = window.scrollY;
 
-            // Handle background color change
             if (currentScrollY > 50) {
                 setScrolled(true);
             } else {
                 setScrolled(false);
             }
 
-            // Handle Show/Hide logic
-            // Only hide if scrolled down more than 150px to prevent flickering at the top
             if (currentScrollY > lastScrollY && currentScrollY > 150) {
-                setVisible(false); // Scrolling down
+                setVisible(false); 
             } else {
-                setVisible(true); // Scrolling up
+                setVisible(true); 
             }
 
             setLastScrollY(currentScrollY);
@@ -41,6 +38,14 @@ export const NavBar = () => {
 
     const onUpdateActiveLink = (value) => {
         setActiveLink(value);
+    }
+
+    // Function to handle smooth scroll to contact
+    const scrollToConnect = () => {
+        const contactSection = document.getElementById('connect');
+        if (contactSection) {
+            contactSection.scrollIntoView({ behavior: 'smooth' });
+        }
     }
 
     return (
@@ -57,7 +62,8 @@ export const NavBar = () => {
                     </span>
                 </Navbar.Toggle>
                 <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav className="navbar-toggler-icon-auto">
+                    {/* Changed class to me-auto to push social icons to the right */}
+                    <Nav className="me-auto">
                         <Nav.Link href="#home" className={activeLink === 'home' ? 'active navbar-link' : 'navbar-link'} onClick={() => onUpdateActiveLink('home')}>Home</Nav.Link>
                         <Nav.Link href="#about" className={activeLink === 'about' ? 'active navbar-link' : 'navbar-link'} onClick={() => onUpdateActiveLink('about')}>About</Nav.Link>
                         <Nav.Link href="#skills" className={activeLink === 'skills' ? 'active navbar-link' : 'navbar-link'} onClick={() => onUpdateActiveLink('skills')}>Skills</Nav.Link>
@@ -65,11 +71,11 @@ export const NavBar = () => {
                     </Nav>
                     <span className='navbar-text'>
                         <div className='social-icon'>
-                            <a href='https://www.linkedin.com/in/tushar-khatiwada/'><img src={navIcon1} alt="" /></a>
-                            <a href='https://github.com/walkinguy1'><img src={navIcon2} alt="" /></a>
-                            <a href='https://www.instagram.com/walkinguy/'><img src={navIcon3} alt="" /></a>
+                            <a href='https://www.linkedin.com/in/tushar-khatiwada/' target="_blank" rel="noreferrer"><img src={navIcon1} alt="" /></a>
+                            <a href='https://github.com/walkinguy1' target="_blank" rel="noreferrer"><img src={navIcon2} alt="" /></a>
+                            <a href='https://www.instagram.com/walkinguy/' target="_blank" rel="noreferrer"><img src={navIcon3} alt="" /></a>
                         </div>
-                        <button className='vvd' onClick={() => console.log('connect')}><span>Let’s Connect</span></button>
+                        <button className='vvd' onClick={scrollToConnect}><span>Let’s Connect</span></button>
                     </span>
                 </Navbar.Collapse>
             </Container>

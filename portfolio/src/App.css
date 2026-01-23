@@ -81,75 +81,71 @@ p.success {
 p.danger {
 	color: red;
 }
-/************ Navbar Css ************/
+/************ Navbar Base ************/
 nav.navbar {
   padding: 18px 0;
   position: fixed;
   width: 100%;
   top: 0;
   z-index: 9999;
-  /* Updated transition to include transform */
   transition: transform 0.32s ease-in-out, padding 0.32s ease-in-out, background-color 0.32s ease-in-out;
 }
 
-.navbar-collapse {
-  display: flex !important;
-  /* This pushes the Nav links to the left and Social text to the right */
-  justify-content: space-between;
-  width: 100%;
+/* Scroll Classes */
+.nav-hidden { transform: translateY(-100%); }
+.nav-visible { transform: translateY(0); }
+
+nav.navbar.scrolled {
+  padding: 0px 0;
+  background-color: #121212;
 }
 
-/* On Desktop, make sure the social icons don't hug the links */
+/* Logo Sizes */
+nav.navbar a.navbar-brand {
+  width: 9%;
+}
+
+@media (max-width: 991px) {
+  nav.navbar a.navbar-brand {
+    width: 120px !important; /* Larger logo for mobile visibility */
+  }
+}
+
+/************ Navbar Layout Logic ************/
+/* On Desktop: Push links and social apart */
 @media (min-width: 992px) {
+  .navbar-collapse {
+    display: flex !important;
+    justify-content: space-between;
+    width: 100%;
+  }
   .me-auto {
-    /* Ensures the links take up only the space they need, letting the push happen */
     flex-grow: 1; 
   }
 }
 
-/* Ensure the navbar brand doesn't push everything too far */
-nav.navbar a.navbar-brand {
-  margin-right: 50px;
-}
-
+/* On Mobile: Hide by default, show only when toggled */
 @media (max-width: 991px) {
   .navbar-collapse {
-    background: rgba(18, 18, 18, 0.95); /* Solid dark background */
+    display: none; /* Removed !important so Bootstrap can toggle it */
+    background: rgba(18, 18, 18, 0.98); 
     margin-top: 10px;
     padding: 20px;
     border-radius: 10px;
+    text-align: center;
+  }
+  
+  /* When the burger is clicked, Bootstrap adds .show */
+  .navbar-collapse.show {
+    display: block !important;
+  }
+
+  .navbar-nav {
+    margin-bottom: 20px;
   }
 }
-/* Class to hide the navbar by sliding it up */
-.nav-hidden {
-  transform: translateY(-100%);
-}
 
-/* Class to show the navbar */
-.nav-visible {
-  transform: translateY(0);
-}
-
-nav.navbar.scrolled {
-  padding: 0px 0;
-  background-color: #121212;
-}
-
-nav.navbar {
-  padding: 18px 0;
-  position: fixed;
-  width: 100%;
-  top: 0;
-  z-index: 9999;
-  transition:  0.32s ease-in-out;
-}
-nav.navbar.scrolled {
-  padding: 0px 0;
-  background-color: #121212;
-}
-nav.navbar a.navbar-brand {
-    width: 9%;
-}
+/************ Navigation Links ************/
 nav.navbar .navbar-nav .nav-link.navbar-link {
   font-weight: 400;
   color: #fff !important;
@@ -158,93 +154,20 @@ nav.navbar .navbar-nav .nav-link.navbar-link {
   font-size: 18px;
   opacity: 0.75;
 }
+
 nav.navbar .navbar-nav a.nav-link.navbar-link:hover,
 nav.navbar .navbar-nav a.nav-link.navbar-link.active {
-    opacity: 1;
+  opacity: 1;
 }
-span.navbar-text {
-    display: flex;
-    align-items: center;
-}
-.social-icon {
-    display: inline-block;
-    margin-left: 14px;
-}
-.social-icon a {
-    width: 42px;
-    height: 42px;
-    background: rgba(217, 217, 217, 0.1);
-    display: inline-flex;
-    border-radius: 50%;
-    margin-right: 6px;
-    align-items: center;
-    justify-content: center;
-    line-height: 1;
-    border: 1px solid rgba(255, 255, 255, 0.5);
-}
-.social-icon a::before {
-    content: "";
-    width: 42px;
-    height: 42px;
-    position: absolute;
-    background-color: #ffffff;
-    border-radius: 50%;
-    transform: scale(0);
-	transition: 0.3s ease-in-out;
-}
-.social-icon a:hover::before {
-    transform: scale(1);
-}
-.social-icon a img {
-	width: 40%;
-	z-index: 1;
-	transition: 0.3s ease-in-out;
-}
-.social-icon a:hover img {
-	filter: brightness(0) saturate(100%) invert(0%) sepia(7%) saturate(98%) hue-rotate(346deg) brightness(95%) contrast(86%);
-}
-.navbar-text button {
-  font-weight: 700;
-  color: #fff;
-  border: 1px solid #fff;
-  padding: 18px 34px;
-  font-size: 18px;
-  margin-left: 18px;
-	position: relative;
-	background-color: transparent;
-	transition: 0.3s ease-in-out;
-}
-.navbar-text button span {
-  z-index: 1;
-}
-.navbar-text button::before {
-  content: "";
-  width: 0%;
-  height: 100%;
-  position: absolute;
-  background-color: #fff;
-  left: 0;
-  top: 0;
-  z-index: -1;
-  transition: 0.3s ease-in-out;
-}
-.navbar-text button:hover {
-  color: #121212;
-}
-.navbar-text button:hover::before {
-	content: "";
-	width: 100%;
-	height: 100%;
-	position: absolute;
-}
-/* 1. Remove the default Bootstrap icon and border */
+
+/************ Burger Icon (3-Line) ************/
 .navbar-toggler {
   border: none !important;
   box-shadow: none !important;
 }
 
 .navbar-toggler-icon {
-  background-image: none !important; /* Removes the default icon */
+  background-image: none !important;
   display: flex !important;
   flex-direction: column;
   justify-content: space-around;
@@ -253,27 +176,69 @@ span.navbar-text {
   height: 24px !important;
 }
 
-/* 2. Create the 3 lines and set the color */
 .navbar-toggler-icon span {
   display: block;
   width: 100%;
-  height: 3px; /* Thickness of lines */
-  background-color: #ffffff; /* <--- CHANGE YOUR COLOR HERE */
+  height: 3px;
+  background-color: #ffffff;
   border-radius: 3px;
   transition: all 0.3s ease-in-out;
 }
 
-/* 3. Animation to 'X' (Optional but recommended) */
+/* X Animation */
 .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon span:nth-child(2) {
-  opacity: 0; /* Hide middle line */
+  opacity: 0;
 }
-
 .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon span:nth-child(1) {
   transform: translateY(8px) rotate(45deg);
 }
-
 .navbar-toggler[aria-expanded="true"] .navbar-toggler-icon span:nth-child(3) {
   transform: translateY(-8px) rotate(-45deg);
+}
+
+/************ Social Icons & Button ************/
+span.navbar-text {
+  display: flex;
+  align-items: center;
+}
+
+.social-icon {
+  display: inline-block;
+  margin-left: 14px;
+}
+
+.social-icon a {
+  width: 42px;
+  height: 42px;
+  background: rgba(217, 217, 217, 0.1);
+  display: inline-flex;
+  border-radius: 50%;
+  margin-right: 6px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  position: relative;
+}
+
+.social-icon a img {
+  width: 40%;
+  z-index: 1;
+}
+
+.navbar-text button {
+  font-weight: 700;
+  color: #fff;
+  border: 1px solid #fff;
+  padding: 12px 25px;
+  font-size: 18px;
+  margin-left: 18px;
+  background-color: transparent;
+  transition: 0.3s ease-in-out;
+}
+
+.navbar-text button:hover {
+  background-color: #fff;
+  color: #121212;
 }
 
 /************ Banner Css ************/
@@ -290,13 +255,13 @@ span.navbar-text {
   /* Targeted selector for the logo image */
   nav.navbar .navbar-brand img {
     /* Change '9%' to a fixed pixel width for stability */
-    width: 130px !important; 
+    width: 100px !important; 
     height: auto;
     /* Optional: Ensure it doesn't touch the top/bottom edges */
     margin: 5px 0;
   }
   .banner{
-    padding: 180px 0 50px 0;
+    padding: 150px 0 50px 0;
   }
 
   /* Adjust the brand container to allow more space */
