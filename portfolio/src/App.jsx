@@ -19,9 +19,9 @@ function App() {
         <About />
         <Skills />
         <Projects />
+        <Contact />
       </div>
-      {/* Contact and Footer will sit on the default page background below the wrapper */}
-      <Contact />
+      
       <Footer />
     </div>
   );
