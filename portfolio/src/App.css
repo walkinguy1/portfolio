@@ -197,6 +197,7 @@ nav.navbar .navbar-nav a.nav-link.navbar-link.active {
 }
 
 /************ Social Icons & Button ************/
+/************ Social Icons & Button (High Priority Fix) ************/
 span.navbar-text {
   display: flex;
   align-items: center;
@@ -218,6 +219,17 @@ span.navbar-text {
   justify-content: center;
   border: 1px solid rgba(255, 255, 255, 0.5);
   position: relative;
+  transition: 0.3s ease-in-out; /* Ensure smooth scaling */
+}
+
+/* Specificity fix for Social Icon Hover */
+.navbar-text .social-icon a:hover img {
+  transform: scale(1.1) !important; /* Forces the image to grow */
+  transition: 0.3s ease-in-out !important;
+}
+
+.navbar-text .social-icon a:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
 }
 
 .social-icon a img {
@@ -225,20 +237,23 @@ span.navbar-text {
   z-index: 1;
 }
 
-.navbar-text button {
+/* Specificity fix for Let's Connect Button */
+.navbar-text button.vvd {
   font-weight: 700;
-  color: #fff;
-  border: 1px solid #fff;
+  color: #fff !important;
+  border: 1px solid #fff !important;
   padding: 12px 25px;
   font-size: 18px;
   margin-left: 18px;
-  background-color: transparent;
-  transition: 0.3s ease-in-out;
+  background-color: transparent !important;
+  transition: 0.3s ease-in-out !important;
+  cursor: pointer;
 }
 
-.navbar-text button:hover {
-  background-color: #fff;
-  color: #121212;
+/* Ensure Hover works in Production */
+.navbar-text button.vvd:hover {
+  background-color: #fff !important;
+  color: #121212 !important;
 }
 
 /************ Banner Css ************/
