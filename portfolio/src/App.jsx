@@ -7,23 +7,26 @@ import { Skills } from './components/skills.jsx'
 import { Projects } from './components/Projects.jsx'
 import { Contact } from './components/contact.jsx';
 import { Footer } from './components/footer.jsx'
+import { HelmetProvider } from 'react-helmet-async';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
-    <div className="App">
-      <NavBar />
-      <div className="main-bg-wrapper">
-        <Banner />
-        <About />
-        <Skills />
-        <Projects />
-        <Contact />
+    <HelmetProvider>
+      <div className="App">
+        <NavBar />
+        <div className="main-bg-wrapper">
+          <Banner />
+          <About />
+          <Skills />
+          <Projects />
+          <Contact />
+        </div>
+        
+        <Footer />
       </div>
-      
-      <Footer />
-    </div>
+    </HelmetProvider>
   );
 }
 

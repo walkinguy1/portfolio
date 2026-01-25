@@ -10,15 +10,22 @@ export const Footer = () => {
       <Container>
         <Row className="align-items-center">
           <Col size={12} sm={6}>
-            <img src={logo} alt="Logo" />
+            <img src={logo} alt="Tushar Khatiwada Logo" style={{ width: '120px' }} />
           </Col>
           <Col size={12} sm={6} className="text-center text-sm-end">
             <div className="social-icon">
-              <a href="https://www.linkedin.com/in/tushar-khatiwada/"><img src={navIcon1} alt="Icon" /></a>
-              <a href="https://github.com/walkinguy1"><img src={navIcon2} alt="Icon" /></a>
-              <a href="https://www.instagram.com/walkinguy/"><img src={navIcon3} alt="Icon" /></a>
+              {/* Added aria-labels and specific alt text for SEO */}
+              <a href="https://www.linkedin.com/in/tushar-khatiwada/" target="_blank" rel="noreferrer" aria-label="LinkedIn Profile">
+                <img src={navIcon1} alt="LinkedIn Icon" />
+              </a>
+              <a href="https://github.com/walkinguy1" target="_blank" rel="noreferrer" aria-label="GitHub Profile">
+                <img src={navIcon2} alt="GitHub Icon" />
+              </a>
+              <a href="https://www.instagram.com/walkinguy/" target="_blank" rel="noreferrer" aria-label="Instagram Profile">
+                <img src={navIcon3} alt="Instagram Icon" />
+              </a>
             </div>
-            <p>Copyright @2026 Tushar</p>
+            <p>© {new Date().getFullYear()}. All Rights Reserved - Tushar Khatiwada</p>
           </Col>
         </Row>
       </Container>
