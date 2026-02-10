@@ -20,8 +20,8 @@ export const Projects = () => {
       imgUrl: projImg2,
     },
     {
-      title: "Placeholder 3",
-      description: "Design & Development",
+      title: "Food Ordering Website",
+      description: "Using React and FAST API to create a full-stack food ordering website with user authentication",
       imgUrl: projImg3,
     },
     {
