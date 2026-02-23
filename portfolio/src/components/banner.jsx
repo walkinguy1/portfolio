@@ -1,49 +1,127 @@
+import { useState, useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import { ArrowRightCircle } from 'react-bootstrap-icons';
 import headerImg from '../assets/img/header-img.png';
 import { Helmet } from 'react-helmet-async';
 
+const ROLES = ['Full Stack Dev', 'ML Enthusiast', 'Problem Solver', 'CS Student'];
+
+const AnimatedName = ({ text, delay = 0 }) => (
+  <span className="anim-word">
+    {text.split('').map((char, i) => (
+      <span key={i} className="anim-char" style={{ animationDelay: `${delay + i * 0.04}s` }}>
+        {char === ' ' ? '\u00A0' : char}
+      </span>
+    ))}
+  </span>
+);
+
 export const Banner = () => {
+  const [roleIndex, setRoleIndex] = useState(0);
+  const [displayed, setDisplayed] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [charIndex, setCharIndex] = useState(0);
 
-    const scrollToConnect = () => {
-        const contactSection = document.getElementById('connect');
-        if (contactSection) {
-            contactSection.scrollIntoView({ behavior: 'smooth' });
-        }
+  useEffect(() => {
+    const currentRole = ROLES[roleIndex];
+    let timeout;
+    if (!isDeleting && charIndex <= currentRole.length) {
+      timeout = setTimeout(() => { setDisplayed(currentRole.slice(0, charIndex)); setCharIndex(c => c + 1); }, 80);
+    } else if (!isDeleting && charIndex > currentRole.length) {
+      timeout = setTimeout(() => setIsDeleting(true), 1800);
+    } else if (isDeleting && charIndex >= 0) {
+      timeout = setTimeout(() => { setDisplayed(currentRole.slice(0, charIndex)); setCharIndex(c => c - 1); }, 45);
+    } else {
+      setIsDeleting(false);
+      setRoleIndex(i => (i + 1) % ROLES.length);
+      setCharIndex(0);
     }
+    return () => clearTimeout(timeout);
+  }, [charIndex, isDeleting, roleIndex]);
 
-    return (
-        <section className="banner" id="home">
-            {/* SEO Metadata Starts Here */}
-            <Helmet>
-                <title>Tushar Khatiwada | Full Stack Developer & Aspiring Software developer</title>
-                <meta name="description" content="Portfolio of Tushar Khatiwada (Walkinguy). Aspiring software developer interested in AI/ML and creative problem solving." />
-                <meta name="keywords" content="Tushar Khatiwada, Walkinguy, Portfolio, Software Developer, AI, ML, Nepal" />
-                
-                {/* Social Media Preview (Open Graph) */}
-                <meta property="og:title" content="Tushar Khatiwada Portfolio" />
-                <meta property="og:description" content="Aspiring software developer exploring the world of AI/ML." />
-                <meta property="og:type" content="website" />
-            </Helmet>
-            {/* SEO Metadata Ends Here */}
+  const scrollToConnect = () => document.getElementById('connect')?.scrollIntoView({ behavior: 'smooth' });
 
-            <Container>
-                <Row className="align-items-center">
-                    <Col xs={12} md={6} xl={7}>
-                        <span className="tagline">Welcome to my Portfolio</span>
-                        <h1>{"Hi I'm Tushar Khatiwada"}<span className='wrap'></span></h1>
-                        <p>Also known as Walkinguy in many online spaces, aspiring to be entangled in software development space, which interests also spanning towards AI/ML and overall in general to make it easier for problem solving.</p>
-                        
-                        {/* Updated button to trigger the scroll */}
-                        <button onClick={scrollToConnect}> 
-                            Let's Connect <ArrowRightCircle size={25}/>
-                        </button>
-                    </Col>
-                    <Col xs={12} md={6} xl={5}>
-                        <img src={headerImg} alt="Tushar Khatiwada - Robotics and AI Header" />
-                    </Col>
-                </Row>
-            </Container>
-        </section>
-    )
-}
+  return (
+    <section className="banner" id="home">
+      <Helmet>
+        <title>Tushar Khatiwada | Full Stack Developer</title>
+        <meta name="description" content="Portfolio of Tushar Khatiwada — CS student, web developer and ML enthusiast from Kathmandu, Nepal." />
+        <meta property="og:title" content="Tushar Khatiwada Portfolio" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+      </Helmet>
+
+      <div className="grain-overlay" aria-hidden="true" />
+      <div className="banner-glow banner-glow--1" aria-hidden="true" />
+      <div className="banner-glow banner-glow--2" aria-hidden="true" />
+
+      {/* Bright accent bar top */}
+      <div className="banner-accent-bar" aria-hidden="true" />
+
+      <Container className="banner-container">
+        <Row className="align-items-center banner-row">
+          <Col xs={12} md={6} xl={7} className="banner-text-col">
+
+            <div className="banner-eyebrow">
+              <span className="eyebrow-dot" />
+              Kathmandu, Nepal
+            </div>
+
+            <h1 className="banner-headline">
+              <span className="headline-hi">Hi, I'm</span>
+              <span className="headline-name">
+                <AnimatedName text="Tushar" delay={0.1} />
+                <br />
+                <AnimatedName text="Khatiwada" delay={0.4} />
+              </span>
+            </h1>
+
+            <div className="banner-role-wrapper">
+              <span className="role-bracket">[</span>
+              <span className="banner-role-type">
+                {displayed}
+                <span className="cursor-blink">_</span>
+              </span>
+              <span className="role-bracket">]</span>
+            </div>
+
+            <p className="banner-desc">
+              Also known as <strong>Walkinguy</strong> — weaving together web, ML,
+              and whatever interesting problem lands on my desk next.
+            </p>
+
+            {/* FIXED: both buttons inline, same row, same style family */}
+            <div className="banner-cta-row">
+              <button className="btn-primary-cta" onClick={scrollToConnect}>
+                Let's Connect <span className="cta-arrow">→</span>
+              </button>
+              <a
+                href="https://github.com/walkinguy1"
+                target="_blank"
+                rel="noreferrer"
+                className="btn-outline-cta"
+              >
+                GitHub ↗
+              </a>
+            </div>
+
+          </Col>
+
+          <Col xs={12} md={6} xl={5} className="banner-img-col">
+            <div className="banner-img-wrapper">
+              <div className="img-frame-corner img-frame-corner--tl" aria-hidden="true" />
+              <div className="img-frame-corner img-frame-corner--tr" aria-hidden="true" />
+              <div className="img-frame-corner img-frame-corner--bl" aria-hidden="true" />
+              <div className="img-frame-corner img-frame-corner--br" aria-hidden="true" />
+              <img src={headerImg} alt="Tushar Khatiwada" loading="eager" />
+            </div>
+          </Col>
+        </Row>
+
+        <div className="scroll-hint" aria-hidden="true">
+          <div className="scroll-line" />
+          <span>scroll</span>
+        </div>
+      </Container>
+    </section>
+  );
+};

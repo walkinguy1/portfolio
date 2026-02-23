@@ -6,79 +6,73 @@ import navIcon1 from '../assets/img/nav-icon1.svg';
 import navIcon2 from '../assets/img/nav-icon2.svg';
 import navIcon3 from '../assets/img/nav-icon3.svg';
 import logo from '../assets/img/logo.png';
+import { ThemeSwitch } from './Themeswitch';
 
 export const NavBar = () => {
-    const [activeLink, setActiveLink] = useState('home');
-    const [scrolled, setScrolled] = useState(false);
-    const [visible, setVisible] = useState(true);
-    const [lastScrollY, setLastScrollY] = useState(0);
+  const [activeLink, setActiveLink] = useState('home');
+  const [scrolled, setScrolled]     = useState(false);
+  const [visible, setVisible]       = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
-    useEffect(() => {
-        const handleScroll = () => {
-            const currentScrollY = window.scrollY;
+  useEffect(() => {
+    const handleScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 50);
+      setVisible(!(y > lastScrollY && y > 150));
+      setLastScrollY(y);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastScrollY]);
 
-            if (currentScrollY > 50) {
-                setScrolled(true);
-            } else {
-                setScrolled(false);
-            }
+  const scrollToConnect = () =>
+    document.getElementById('connect')?.scrollIntoView({ behavior: 'smooth' });
 
-            if (currentScrollY > lastScrollY && currentScrollY > 150) {
-                setVisible(false); 
-            } else {
-                setVisible(true); 
-            }
+  return (
+    <Navbar
+      expand="lg"
+      className={`${scrolled ? 'scrolled' : ''} ${visible ? 'nav-visible' : 'nav-hidden'}`}
+    >
+      <Container>
+        <Navbar.Brand href="#home">
+          <img src={logo} alt="Walkinguy logo" />
+        </Navbar.Brand>
 
-            setLastScrollY(currentScrollY);
-        };
+        <Navbar.Toggle aria-controls="basic-navbar-nav">
+          <span className="navbar-toggler-icon">
+            <span /><span /><span />
+          </span>
+        </Navbar.Toggle>
 
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, [lastScrollY]);
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto">
+            {['home','about','skills','projects'].map(link => (
+              <Nav.Link
+                key={link}
+                href={`#${link}`}
+                className={activeLink === link ? 'active navbar-link' : 'navbar-link'}
+                onClick={() => setActiveLink(link)}
+              >
+                {link.charAt(0).toUpperCase() + link.slice(1)}
+              </Nav.Link>
+            ))}
+          </Nav>
 
-    const onUpdateActiveLink = (value) => {
-        setActiveLink(value);
-    }
+          <span className="navbar-text">
+            <div className="social-icon">
+              <a href="https://www.linkedin.com/in/tushar-khatiwada/" target="_blank" rel="noreferrer" aria-label="LinkedIn"><img src={navIcon1} alt="LinkedIn" /></a>
+              <a href="https://github.com/walkinguy1"                  target="_blank" rel="noreferrer" aria-label="GitHub"><img src={navIcon2} alt="GitHub" /></a>
+              <a href="https://www.instagram.com/walkinguy/"           target="_blank" rel="noreferrer" aria-label="Instagram"><img src={navIcon3} alt="Instagram" /></a>
+            </div>
 
-    // Function to handle smooth scroll to contact
-    const scrollToConnect = () => {
-        const contactSection = document.getElementById('connect');
-        if (contactSection) {
-            contactSection.scrollIntoView({ behavior: 'smooth' });
-        }
-    }
+            <ThemeSwitch />
 
-    return (
-        <Navbar expand="lg" className={`${scrolled ? "scrolled" : ""} ${visible ? "nav-visible" : "nav-hidden"}`}>
-            <Container>
-                <Navbar.Brand href="#home">
-                    <img src={logo} alt="Logo" />
-                </Navbar.Brand>
-                <Navbar.Toggle aria-controls="basic-navbar-nav">
-                    <span className="navbar-toggler-icon">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </span>
-                </Navbar.Toggle>
-                <Navbar.Collapse id="basic-navbar-nav">
-                    {/* Changed class to me-auto to push social icons to the right */}
-                    <Nav className="me-auto">
-                        <Nav.Link href="#home" className={activeLink === 'home' ? 'active navbar-link' : 'navbar-link'} onClick={() => onUpdateActiveLink('home')}>Home</Nav.Link>
-                        <Nav.Link href="#about" className={activeLink === 'about' ? 'active navbar-link' : 'navbar-link'} onClick={() => onUpdateActiveLink('about')}>About</Nav.Link>
-                        <Nav.Link href="#skills" className={activeLink === 'skills' ? 'active navbar-link' : 'navbar-link'} onClick={() => onUpdateActiveLink('skills')}>Skills</Nav.Link>
-                        <Nav.Link href="#projects" className={activeLink === 'projects' ? 'active navbar-link' : 'navbar-link'} onClick={() => onUpdateActiveLink('projects')}>Projects</Nav.Link>
-                    </Nav>
-                    <span className='navbar-text'>
-                        <div className='social-icon'>
-                            <a href='https://www.linkedin.com/in/tushar-khatiwada/' target="_blank" rel="noreferrer"><img src={navIcon1} alt="" /></a>
-                            <a href='https://github.com/walkinguy1' target="_blank" rel="noreferrer"><img src={navIcon2} alt="" /></a>
-                            <a href='https://www.instagram.com/walkinguy/' target="_blank" rel="noreferrer"><img src={navIcon3} alt="" /></a>
-                        </div>
-                        <button className='vvd' onClick={scrollToConnect}><span>Let’s Connect</span></button>
-                    </span>
-                </Navbar.Collapse>
-            </Container>
-        </Navbar>
-    )
-}
+            <button className="vvd" onClick={scrollToConnect}>
+              <span>Let's Connect</span>
+            </button>
+          </span>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
+  );
+};

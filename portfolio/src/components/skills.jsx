@@ -1,71 +1,90 @@
-import web from "../assets/img/web.png";
-import ml from "../assets/img/ML.png";
-import sql from "../assets/img/sql.png";
-import game from "../assets/img/gamedev.png";
-import python from "../assets/img/python.png";
-import uiux from "../assets/img/uiux.png";
-import Carousel from 'react-multi-carousel';
-import 'react-multi-carousel/lib/styles.css';
+import TrackVisibility from 'react-on-screen';
+import 'animate.css';
+
+const SKILL_CATEGORIES = [
+  {
+    category: "Frontend",
+    skills: [
+      { name: "React", level: 80 },
+      { name: "JavaScript", level: 75 },
+      { name: "HTML & CSS", level: 85 },
+      { name: "Bootstrap", level: 80 },
+    ],
+  },
+  {
+    category: "Backend & APIs",
+    skills: [
+      { name: "Python", level: 85 },
+      { name: "FastAPI", level: 70 },
+      { name: "SQL", level: 65 },
+      { name: "REST APIs", level: 72 },
+    ],
+  },
+  {
+    category: "ML & Data",
+    skills: [
+      { name: "Scikit-learn", level: 65 },
+      { name: "Pandas", level: 70 },
+      { name: "NumPy", level: 68 },
+      { name: "Matplotlib", level: 65 },
+    ],
+  },
+  {
+    category: "Tools & Other",
+    skills: [
+      { name: "Git & GitHub", level: 78 },
+      { name: "Pygame", level: 75 },
+      { name: "Figma / UI Design", level: 60 },
+      { name: "Linux / CLI", level: 65 },
+    ],
+  },
+];
 
 export const Skills = () => {
-  const responsive = {
-    superLargeDesktop: {
-      // the naming can be any, depends on you.
-      breakpoint: { max: 4000, min: 3000 },
-      items: 5
-    },
-    desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: 3
-    },
-    tablet: {
-      breakpoint: { max: 1024, min: 464 },
-      items: 2
-    },
-    mobile: {
-      breakpoint: { max: 464, min: 0 },
-      items: 1
-    }
-  };
-
   return (
     <section className="skill" id="skills">
-        <div className="container">
-            <div className="row">
-                <div className="col-12">
-                    <div className="skill-bx wow zoomIn">
-                        <h2>Skills</h2>
-                        <p>This is the place to have my "skills" be written in<br></br> let's see in the future</p>
-                        <Carousel responsive={responsive} infinite={true} className="owl-carousel owl-theme skill-slider">
-                            <div className="item">
-                                <img src={web} alt="Image" />
-                                <h5>Web Development</h5>
-                            </div>
-                            <div className="item">
-                                <img src={uiux} alt="Image" />
-                                <h5>UI/UX design</h5>
-                            </div>
-                            <div className="item">
-                                <img src={ml} alt="Image" />
-                                <h5>Machine Learning</h5>
-                            </div>
-                            <div className="item">
-                                <img src={sql} alt="Image" />
-                                <h5>SQL</h5>
-                            </div>
-                            <div className="item">
-                                <img src={game} alt="Image" />
-                                <h5>PyGame Development</h5>
-                            </div>
-                            <div className="item">
-                                <img src={python} alt="Image" />
-                                <h5>Python</h5>
-                            </div>
-                        </Carousel>
+      <div className="container">
+        <TrackVisibility>
+          {({ isVisible }) => (
+            <div className={isVisible ? "animate__animated animate__fadeIn" : ""}>
+
+              <div className="section-header">
+                <span className="section-tag">— What I Work With</span>
+                <h2>Skills</h2>
+                <p>
+                  Technologies I've used across web development, machine learning, and beyond —
+                  always picking up something new.
+                </p>
+              </div>
+
+              <div className="skills-grid">
+                {SKILL_CATEGORIES.map((cat, ci) => (
+                  <div key={ci} className="skill-category-card">
+                    <h5 className="skill-cat-title">{cat.category}</h5>
+                    <div className="skill-bars">
+                      {cat.skills.map((skill, si) => (
+                        <div key={si} className="skill-bar-item">
+                          <div className="skill-bar-header">
+                            <span className="skill-bar-name">{skill.name}</span>
+                            <span className="skill-bar-pct">{skill.level}%</span>
+                          </div>
+                          <div className="skill-bar-track">
+                            <div
+                              className={`skill-bar-fill ${isVisible ? 'skill-bar-animated' : ''}`}
+                              style={{ '--target-width': `${skill.level}%`, animationDelay: `${si * 0.12}s` }}
+                            />
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                </div>
+                  </div>
+                ))}
+              </div>
+
             </div>
-        </div>
+          )}
+        </TrackVisibility>
+      </div>
     </section>
-  )
-}
+  );
+};
