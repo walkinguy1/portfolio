@@ -47,10 +47,10 @@ export const About = () => {
                   <div className="about-stats">
                     <div className="stat-item">
                       <span className="stat-number">3rd</span>
-                      <span className="stat-text">Year CE Student</span>
+                      <span className="stat-text">Year Computer Engineering Student</span>
                     </div>
                     <div className="stat-item">
-                      <span className="stat-number">3+</span>
+                      <span className="stat-number">9+</span>
                       <span className="stat-text">Projects Shipped</span>
                     </div>
                     <div className="stat-item">
