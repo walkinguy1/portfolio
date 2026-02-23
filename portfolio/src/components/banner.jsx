@@ -24,17 +24,34 @@ export const Banner = () => {
   useEffect(() => {
     const currentRole = ROLES[roleIndex];
     let timeout;
-    if (!isDeleting && charIndex <= currentRole.length) {
-      timeout = setTimeout(() => { setDisplayed(currentRole.slice(0, charIndex)); setCharIndex(c => c + 1); }, 80);
-    } else if (!isDeleting && charIndex > currentRole.length) {
-      timeout = setTimeout(() => setIsDeleting(true), 1800);
-    } else if (isDeleting && charIndex >= 0) {
-      timeout = setTimeout(() => { setDisplayed(currentRole.slice(0, charIndex)); setCharIndex(c => c - 1); }, 45);
+
+    if (!isDeleting) {
+      if (charIndex < currentRole.length) {
+        // Still typing — add next character
+        timeout = setTimeout(() => {
+          setDisplayed(currentRole.slice(0, charIndex + 1));
+          setCharIndex(c => c + 1);
+        }, 80);
+      } else {
+        // Fully typed — pause then start deleting
+        timeout = setTimeout(() => setIsDeleting(true), 1800);
+      }
     } else {
-      setIsDeleting(false);
-      setRoleIndex(i => (i + 1) % ROLES.length);
-      setCharIndex(0);
+      if (charIndex > 0) {
+        // Still deleting — remove last character
+        timeout = setTimeout(() => {
+          setDisplayed(currentRole.slice(0, charIndex - 1));
+          setCharIndex(c => c - 1);
+        }, 45);
+      } else {
+        // Fully deleted — defer state reset to avoid synchronous setState in effect
+        timeout = setTimeout(() => {
+          setIsDeleting(false);
+          setRoleIndex(i => (i + 1) % ROLES.length);
+        }, 0);
+      }
     }
+
     return () => clearTimeout(timeout);
   }, [charIndex, isDeleting, roleIndex]);
 
@@ -75,13 +92,13 @@ export const Banner = () => {
               </span>
             </h1>
 
-            <div className="banner-role-wrapper">
-              <span className="role-bracket">[</span>
+            <div className="banner-role-wrapper" aria-live="polite" aria-label={`Role: ${displayed}`}>
+              <span className="role-bracket" aria-hidden="true">[</span>
               <span className="banner-role-type">
                 {displayed}
-                <span className="cursor-blink">_</span>
+                <span className="cursor-blink" aria-hidden="true">_</span>
               </span>
-              <span className="role-bracket">]</span>
+              <span className="role-bracket" aria-hidden="true">]</span>
             </div>
 
             <p className="banner-desc">
@@ -89,10 +106,9 @@ export const Banner = () => {
               and whatever interesting problem lands on my desk next.
             </p>
 
-            {/* FIXED: both buttons inline, same row, same style family */}
             <div className="banner-cta-row">
               <button className="btn-primary-cta" onClick={scrollToConnect}>
-                Let's Connect <span className="cta-arrow">→</span>
+                Let's Connect <span className="cta-arrow" aria-hidden="true">→</span>
               </button>
               <a
                 href="https://github.com/walkinguy1"

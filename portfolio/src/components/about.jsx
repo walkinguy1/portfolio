@@ -17,7 +17,7 @@ export const About = () => {
               {({ isVisible }) => (
                 <div className={`about-img-wrap ${isVisible ? "animate__animated animate__zoomIn" : ""}`}>
                   <div className="about-img-accent" aria-hidden="true" />
-                  <img src={aboutImg} alt="About Tushar Khatiwada" loading="lazy" />
+                  <img src={aboutImg} alt="Tushar Khatiwada" loading="lazy" />
                 </div>
               )}
             </TrackVisibility>
@@ -59,9 +59,20 @@ export const About = () => {
                     </div>
                   </div>
 
-                  <button className="btn-primary-cta" onClick={scrollToProjects}>
-                    See My Work ↓
-                  </button>
+                  <div className="about-cta-row">
+                    <button className="btn-primary-cta" onClick={scrollToProjects}>
+                      See My Work ↓
+                    </button>
+                    <a
+                      href="https://github.com/walkinguy1"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="btn-outline-cta"
+                      aria-label="View GitHub profile"
+                    >
+                      GitHub ↗
+                    </a>
+                  </div>
                 </div>
               )}
             </TrackVisibility>

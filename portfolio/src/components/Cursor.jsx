@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 export const Cursor = () => {
   const dotRef = useRef(null);
   const ringRef = useRef(null);
-  const [visible, setVisible] = useState(false);
+  // Use ref to avoid stale closure — no re-render needed for visibility
+  const visibleRef = useRef(false);
 
   useEffect(() => {
     if (window.matchMedia('(pointer: coarse)').matches) return;
@@ -26,7 +27,12 @@ export const Cursor = () => {
       mouseY = e.clientY;
       // Always center dot exactly on cursor
       dot.style.transform = `translate(${mouseX - DOT_SIZE / 2}px, ${mouseY - DOT_SIZE / 2}px)`;
-      if (!visible) setVisible(true);
+      // Show cursor elements on first move — use DOM directly to avoid stale closure
+      if (!visibleRef.current) {
+        visibleRef.current = true;
+        dot.classList.add('cursor-dot--visible');
+        ring.classList.add('cursor-ring--visible');
+      }
     };
 
     const animate = () => {
@@ -66,8 +72,8 @@ export const Cursor = () => {
 
   return (
     <>
-      <div className={`cursor-dot ${visible ? 'cursor-dot--visible' : ''}`} ref={dotRef} />
-      <div className={`cursor-ring ${visible ? 'cursor-ring--visible' : ''}`} ref={ringRef} />
+      <div className="cursor-dot" ref={dotRef} />
+      <div className="cursor-ring" ref={ringRef} />
     </>
   );
 };

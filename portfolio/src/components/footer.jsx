@@ -9,10 +9,10 @@ export const Footer = () => {
     <footer className="footer">
       <Container>
         <Row className="align-items-center">
-          <Col size={12} sm={6}>
+          <Col xs={12} sm={6}>
             <img src={logo} alt="Tushar Khatiwada Logo" style={{ width: '120px' }} />
           </Col>
-          <Col size={12} sm={6} className="text-center text-sm-end">
+          <Col xs={12} sm={6} className="text-center text-sm-end">
             <div className="social-icon">
               {/* Added aria-labels and specific alt text for SEO */}
               <a href="https://www.linkedin.com/in/tushar-khatiwada/" target="_blank" rel="noreferrer" aria-label="LinkedIn Profile">

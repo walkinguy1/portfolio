@@ -1,37 +1,61 @@
-import { useState } from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { useState, useCallback } from "react";
+import { Container } from "react-bootstrap";
 import TrackVisibility from 'react-on-screen';
 import 'animate.css';
 
+const FORM_INITIAL = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  message: ''
+};
+
 export const Contact = () => {
-  const formInitialDetails = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    message: ''
-  };
-  const [formDetails, setFormDetails] = useState(formInitialDetails);
+  const [formDetails, setFormDetails] = useState(FORM_INITIAL);
   const [buttonText, setButtonText] = useState('Send Message');
   const [status, setStatus] = useState({});
+  const [isSending, setIsSending] = useState(false);
 
-  const onFormUpdate = (category, value) => {
-    setFormDetails({ ...formDetails, [category]: value });
-  };
+  const onFormUpdate = useCallback((field, value) => {
+    setFormDetails(prev => ({ ...prev, [field]: value }));
+    // Clear status message when user starts typing again
+    if (status.message) setStatus({});
+  }, [status.message]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (isSending) return;
+    setIsSending(true);
     setButtonText("Sending...");
-    let response = await fetch("https://formspree.io/f/xgoakojy", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "Accept": "application/json" },
-      body: JSON.stringify(formDetails),
-    });
-    setButtonText("Send Message");
-    if (response.ok) {
-      setFormDetails(formInitialDetails);
-      setStatus({ success: true, message: 'Message sent! I\'ll get back to you soon.' });
-    } else {
-      setStatus({ success: false, message: 'Something went wrong — please try again.' });
+    setStatus({});
+
+    try {
+      const response = await fetch("https://formspree.io/f/xgoakojy", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify({
+          firstName: formDetails.firstName,
+          lastName: formDetails.lastName,
+          email: formDetails.email,
+          message: formDetails.message,
+        }),
+      });
+
+      if (response.ok) {
+        setFormDetails(FORM_INITIAL);
+        setStatus({ success: true, message: "Message sent! I'll get back to you soon." });
+      } else {
+        const data = await response.json().catch(() => ({}));
+        setStatus({
+          success: false,
+          message: data?.errors?.[0]?.message || 'Something went wrong — please try again.',
+        });
+      }
+    } catch {
+      setStatus({ success: false, message: 'Network error — please check your connection and try again.' });
+    } finally {
+      setButtonText("Send Message");
+      setIsSending(false);
     }
   };
 
@@ -58,58 +82,65 @@ export const Contact = () => {
 
                   <div className="contact-links">
                     <a href="https://www.linkedin.com/in/tushar-khatiwada/" target="_blank" rel="noreferrer" className="contact-social-link">
-                      <span className="contact-social-icon">in</span>
+                      <span className="contact-social-icon" aria-hidden="true">in</span>
                       <span>LinkedIn</span>
                     </a>
                     <a href="https://github.com/walkinguy1" target="_blank" rel="noreferrer" className="contact-social-link">
-                      <span className="contact-social-icon">gh</span>
+                      <span className="contact-social-icon" aria-hidden="true">gh</span>
                       <span>GitHub</span>
                     </a>
                     <a href="https://www.instagram.com/walkinguy/" target="_blank" rel="noreferrer" className="contact-social-link">
-                      <span className="contact-social-icon">ig</span>
+                      <span className="contact-social-icon" aria-hidden="true">ig</span>
                       <span>Instagram</span>
                     </a>
                   </div>
                 </div>
 
                 {/* Right form panel */}
-                <form className="contact-form" onSubmit={handleSubmit}>
+                <form className="contact-form" onSubmit={handleSubmit} noValidate>
                   <div className="form-row-2">
                     <div className="form-group">
-                      <label>First Name</label>
+                      <label htmlFor="firstName">First Name</label>
                       <input
+                        id="firstName"
                         type="text"
                         value={formDetails.firstName}
                         placeholder="Tushar"
                         onChange={(e) => onFormUpdate('firstName', e.target.value)}
                         required
+                        autoComplete="given-name"
                       />
                     </div>
                     <div className="form-group">
-                      <label>Last Name</label>
+                      <label htmlFor="lastName">Last Name</label>
                       <input
+                        id="lastName"
                         type="text"
                         value={formDetails.lastName}
                         placeholder="Khatiwada"
                         onChange={(e) => onFormUpdate('lastName', e.target.value)}
+                        autoComplete="family-name"
                       />
                     </div>
                   </div>
 
                   <div className="form-group">
-                    <label>Email Address</label>
+                    <label htmlFor="email">Email Address</label>
                     <input
+                      id="email"
                       type="email"
                       value={formDetails.email}
                       placeholder="you@example.com"
                       onChange={(e) => onFormUpdate('email', e.target.value)}
                       required
+                      autoComplete="email"
                     />
                   </div>
 
                   <div className="form-group">
-                    <label>Message</label>
+                    <label htmlFor="message">Message</label>
                     <textarea
+                      id="message"
                       rows="5"
                       value={formDetails.message}
                       placeholder="Tell me what you're working on..."
@@ -118,13 +149,22 @@ export const Contact = () => {
                     />
                   </div>
 
-                  <button type="submit" className="btn-primary-cta contact-submit">
+                  <button
+                    type="submit"
+                    className="btn-primary-cta contact-submit"
+                    disabled={isSending}
+                    aria-busy={isSending}
+                  >
                     <span>{buttonText}</span>
-                    {buttonText === 'Send Message' && <span className="submit-arrow">→</span>}
+                    {!isSending && <span className="submit-arrow" aria-hidden="true">→</span>}
                   </button>
 
                   {status.message && (
-                    <p className={`form-status ${status.success ? 'form-status--success' : 'form-status--error'}`}>
+                    <p
+                      role="status"
+                      aria-live="polite"
+                      className={`form-status ${status.success ? 'form-status--success' : 'form-status--error'}`}
+                    >
                       {status.message}
                     </p>
                   )}

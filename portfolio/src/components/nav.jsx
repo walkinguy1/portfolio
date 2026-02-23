@@ -1,7 +1,7 @@
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import navIcon1 from '../assets/img/nav-icon1.svg';
 import navIcon2 from '../assets/img/nav-icon2.svg';
 import navIcon3 from '../assets/img/nav-icon3.svg';
@@ -12,18 +12,19 @@ export const NavBar = () => {
   const [activeLink, setActiveLink] = useState('home');
   const [scrolled, setScrolled]     = useState(false);
   const [visible, setVisible]       = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
+  // Use ref to avoid stale closure in scroll handler
+  const lastScrollYRef = useRef(0);
 
   useEffect(() => {
     const handleScroll = () => {
       const y = window.scrollY;
       setScrolled(y > 50);
-      setVisible(!(y > lastScrollY && y > 150));
-      setLastScrollY(y);
+      setVisible(!(y > lastScrollYRef.current && y > 150));
+      lastScrollYRef.current = y;
     };
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollY]);
+  }, []); // No deps needed — ref is always current
 
   const scrollToConnect = () =>
     document.getElementById('connect')?.scrollIntoView({ behavior: 'smooth' });

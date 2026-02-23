@@ -1,4 +1,4 @@
-import { ThemeProvider } from './ThemeContext'
+import { ThemeProvider } from './Themecontext'
 import { NavBar }        from './components/nav.jsx'
 import { Banner }        from './components/banner.jsx'
 import { About }         from './components/about.jsx'
