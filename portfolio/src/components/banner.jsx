@@ -67,7 +67,6 @@ export const Banner = () => {
         <meta name="twitter:card" content="summary_large_image" />
       </Helmet>
 
-      <div className="grain-overlay" aria-hidden="true" />
       <div className="banner-glow banner-glow--1" aria-hidden="true" />
       <div className="banner-glow banner-glow--2" aria-hidden="true" />
 
