@@ -1319,3 +1319,19 @@ nav.navbar .navbar-nav a.nav-link.navbar-link.active::after {
   background: var(--accent-dim) !important;
   box-shadow: 0 0 10px rgba(91,156,246,0.2) !important;
 }
+/* ============================================================
+   PARTICLE CANVAS — antigravity ring effect
+   ============================================================ */
+.particle-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none; /* never blocks clicks — section catches mousemove */
+}
+
+/* Ensure banner content (text, buttons) sits above canvas */
+.banner-container  { position: relative; z-index: 2; }
+.banner-glow       { z-index: 0; }
+.banner-accent-bar { z-index: 3; }

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import headerImg from '../assets/img/header-img.png';
 import { Helmet } from 'react-helmet-async';
+import { ParticleCanvas } from './ParticleCanvas';
 
 const ROLES = ['Full Stack Dev', 'ML Enthusiast', 'Problem Solver', 'CS Student'];
 
@@ -24,38 +25,24 @@ export const Banner = () => {
   useEffect(() => {
     const currentRole = ROLES[roleIndex];
     let timeout;
-
     if (!isDeleting) {
       if (charIndex < currentRole.length) {
-        // Still typing — add next character
-        timeout = setTimeout(() => {
-          setDisplayed(currentRole.slice(0, charIndex + 1));
-          setCharIndex(c => c + 1);
-        }, 80);
+        timeout = setTimeout(() => { setDisplayed(currentRole.slice(0, charIndex + 1)); setCharIndex(c => c + 1); }, 80);
       } else {
-        // Fully typed — pause then start deleting
         timeout = setTimeout(() => setIsDeleting(true), 1800);
       }
     } else {
       if (charIndex > 0) {
-        // Still deleting — remove last character
-        timeout = setTimeout(() => {
-          setDisplayed(currentRole.slice(0, charIndex - 1));
-          setCharIndex(c => c - 1);
-        }, 45);
+        timeout = setTimeout(() => { setDisplayed(currentRole.slice(0, charIndex - 1)); setCharIndex(c => c - 1); }, 45);
       } else {
-        // Fully deleted — defer state reset to avoid synchronous setState in effect
-        timeout = setTimeout(() => {
-          setIsDeleting(false);
-          setRoleIndex(i => (i + 1) % ROLES.length);
-        }, 0);
+        timeout = setTimeout(() => { setIsDeleting(false); setRoleIndex(i => (i + 1) % ROLES.length); }, 0);
       }
     }
-
     return () => clearTimeout(timeout);
   }, [charIndex, isDeleting, roleIndex]);
 
-  const scrollToConnect = () => document.getElementById('connect')?.scrollIntoView({ behavior: 'smooth' });
+  const scrollToConnect = () =>
+    document.getElementById('connect')?.scrollIntoView({ behavior: 'smooth' });
 
   return (
     <section className="banner" id="home">
@@ -67,21 +54,17 @@ export const Banner = () => {
         <meta name="twitter:card" content="summary_large_image" />
       </Helmet>
 
+      {/* Particle field — absolute inside banner, scoped to this section */}
+      <ParticleCanvas />
+
       <div className="banner-glow banner-glow--1" aria-hidden="true" />
       <div className="banner-glow banner-glow--2" aria-hidden="true" />
-
-      {/* Bright accent bar top */}
       <div className="banner-accent-bar" aria-hidden="true" />
 
       <Container className="banner-container">
         <Row className="align-items-center banner-row">
           <Col xs={12} md={6} xl={7} className="banner-text-col">
-
-            <div className="banner-eyebrow">
-              <span className="eyebrow-dot" />
-              Kathmandu, Nepal
-            </div>
-
+            <div className="banner-eyebrow"><span className="eyebrow-dot" />Kathmandu, Nepal</div>
             <h1 className="banner-headline">
               <span className="headline-hi">Hi, I'm</span>
               <span className="headline-name">
@@ -90,37 +73,24 @@ export const Banner = () => {
                 <AnimatedName text="Khatiwada" delay={0.4} />
               </span>
             </h1>
-
-            <div className="banner-role-wrapper" aria-live="polite" aria-label={`Role: ${displayed}`}>
+            <div className="banner-role-wrapper" aria-live="polite">
               <span className="role-bracket" aria-hidden="true">[</span>
-              <span className="banner-role-type">
-                {displayed}
-                <span className="cursor-blink" aria-hidden="true">_</span>
-              </span>
+              <span className="banner-role-type">{displayed}<span className="cursor-blink" aria-hidden="true">_</span></span>
               <span className="role-bracket" aria-hidden="true">]</span>
             </div>
-
             <p className="banner-desc">
               Also known as <strong>Walkinguy</strong> — weaving together web, ML,
               and whatever interesting problem lands on my desk next.
             </p>
-
             <div className="banner-cta-row">
               <button className="btn-primary-cta" onClick={scrollToConnect}>
                 Let's Connect <span className="cta-arrow" aria-hidden="true">→</span>
               </button>
-              <a
-                href="https://github.com/walkinguy1"
-                target="_blank"
-                rel="noreferrer"
-                className="btn-outline-cta"
-              >
+              <a href="https://github.com/walkinguy1" target="_blank" rel="noreferrer" className="btn-outline-cta">
                 GitHub ↗
               </a>
             </div>
-
           </Col>
-
           <Col xs={12} md={6} xl={5} className="banner-img-col">
             <div className="banner-img-wrapper">
               <div className="img-frame-corner img-frame-corner--tl" aria-hidden="true" />
@@ -131,10 +101,8 @@ export const Banner = () => {
             </div>
           </Col>
         </Row>
-
         <div className="scroll-hint" aria-hidden="true">
-          <div className="scroll-line" />
-          <span>scroll</span>
+          <div className="scroll-line" /><span>scroll</span>
         </div>
       </Container>
     </section>
