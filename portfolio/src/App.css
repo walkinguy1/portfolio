@@ -1611,3 +1611,97 @@ nav.navbar .navbar-nav a.nav-link.navbar-link.active::after {
 .banner-container  { position: relative; z-index: 2; }
 .banner-glow       { z-index: 0; }
 .banner-accent-bar { z-index: 3; }
+
+
+.snake-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.snake-modal {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  color: #7ef58a;
+  font-family: monospace;
+}
+
+.snake-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
+}
+
+.snake-hud {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 8px;
+  font-size: 12px;
+}
+
+.crt {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255,255,255,0.03),
+    rgba(255,255,255,0.03) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+}
+
+.cmd-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 10vh;
+  z-index: 9999;
+}
+
+.cmd-modal {
+  width: 500px;
+  background: #111;
+  border: 1px solid #333;
+  border-radius: 8px;
+  overflow: hidden;
+  font-family: monospace;
+  color: #fff;
+}
+
+.cmd-input {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  outline: none;
+  background: #1a1a1a;
+  color: #fff;
+}
+
+.cmd-list {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.cmd-item {
+  padding: 10px 12px;
+  cursor: pointer;
+}
+
+.cmd-item:hover,
+.cmd-item.active {
+  background: #2a2a2a;
+}
+
+.cmd-empty {
+  padding: 10px;
+  color: #777;
+}
