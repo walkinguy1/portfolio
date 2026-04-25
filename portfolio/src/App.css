@@ -865,23 +865,168 @@ nav.navbar {
   letter-spacing: 0.18em; text-transform: uppercase;
   color: var(--accent); margin-bottom: 24px;
 }
-.skill-bars { display: flex; flex-direction: column; gap: 18px; }
-.skill-bar-item { display: flex; flex-direction: column; gap: 7px; }
-.skill-bar-header { display: flex; justify-content: space-between; }
-.skill-bar-name { font-size: 0.88rem; font-weight: 500; color: var(--text); }
-.skill-bar-pct { font-size: 0.78rem; font-weight: 700; color: var(--accent); }
-.skill-bar-track {
-  height: 5px; border-radius: 99px; overflow: hidden;
-  background: var(--border-bright);
+/* ===== Skills — tiered chips ===== */
+
+/* Default (dark mode) tokens */
+.skill {
+  --tier-card-bg-from: rgba(255, 255, 255, 0.04);
+  --tier-card-bg-to:   rgba(255, 255, 255, 0.015);
+  --tier-card-border:  rgba(255, 255, 255, 0.08);
+
+  --tier-title:        #ffffff;
+  --tier-blurb:        rgba(200, 205, 225, 0.65);
+  --tier-index:        rgba(170, 180, 220, 0.55);
+
+  --chip-bg:           rgba(255, 255, 255, 0.04);
+  --chip-bg-hover:     rgba(255, 255, 255, 0.07);
+  --chip-border:       rgba(255, 255, 255, 0.10);
+  --chip-text:         rgba(235, 238, 250, 0.92);
+  --chip-cat:          rgba(170, 175, 200, 0.60);
+
+  --accent-1: rgba(140, 120, 255, 0.25);
+  --accent-1-hover: rgba(140, 120, 255, 0.60);
+  --accent-2: rgba(90, 180, 230, 0.18);
+  --accent-2-hover: rgba(90, 180, 230, 0.55);
+  --accent-3: rgba(255, 180, 100, 0.18);
+  --accent-3-hover: rgba(255, 180, 100, 0.55);
 }
-.skill-bar-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--accent), var(--accent-bright));
-  border-radius: 99px; width: 0;
-  transition: none !important;
+
+/* Light mode overrides — change selector to match your app
+   (e.g. body.light, html[data-theme="light"], .light-mode .skill, etc.) */
+[data-theme="light"] .skill,
+.light .skill,
+body.light .skill {
+  --tier-card-bg-from: rgba(15, 20, 40, 0.04);
+  --tier-card-bg-to:   rgba(15, 20, 40, 0.015);
+  --tier-card-border:  rgba(15, 20, 40, 0.10);
+
+  --tier-title:        #0f1428;
+  --tier-blurb:        rgba(40, 50, 80, 0.70);
+  --tier-index:        rgba(60, 70, 110, 0.55);
+
+  --chip-bg:           rgba(15, 20, 40, 0.04);
+  --chip-bg-hover:     rgba(15, 20, 40, 0.07);
+  --chip-border:       rgba(15, 20, 40, 0.14);
+  --chip-text:         rgba(20, 25, 50, 0.92);
+  --chip-cat:          rgba(60, 70, 100, 0.65);
+
+  --accent-1: rgba(110, 80, 230, 0.35);
+  --accent-1-hover: rgba(110, 80, 230, 0.70);
+  --accent-2: rgba(40, 130, 200, 0.30);
+  --accent-2-hover: rgba(40, 130, 200, 0.65);
+  --accent-3: rgba(220, 130, 40, 0.30);
+  --accent-3-hover: rgba(220, 130, 40, 0.65);
 }
-.skill-bar-animated { animation: barFill 1s ease forwards; }
-@keyframes barFill { from { width:0; } to { width: var(--target-width); } }
+
+.skills-tiers {
+  display: grid;
+  gap: 28px;
+  margin-top: 40px;
+}
+
+.skill-tier {
+  position: relative;
+  padding: 28px 28px 24px;
+  border-radius: 18px;
+  background: linear-gradient(180deg, var(--tier-card-bg-from) 0%, var(--tier-card-bg-to) 100%);
+  border: 1px solid var(--tier-card-border);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  transform: translateY(14px);
+  animation: tierIn 0.7s ease forwards;
+}
+
+@keyframes tierIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.skill-tier-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  margin-bottom: 22px;
+}
+
+.skill-tier-index {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  color: var(--tier-index);
+  padding-top: 4px;
+}
+
+.skill-tier-title {
+  margin: 0 0 4px;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--tier-title);
+  letter-spacing: -0.01em;
+}
+
+.skill-tier-blurb {
+  margin: 0;
+  font-size: 14px;
+  color: var(--tier-blurb);
+  line-height: 1.5;
+}
+
+.skill-chip-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.skill-chip {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: var(--chip-bg);
+  border: 1px solid var(--chip-border);
+  font-size: 14px;
+  color: var(--chip-text);
+  transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+}
+
+.skill-chip:hover {
+  transform: translateY(-2px);
+  background: var(--chip-bg-hover);
+}
+
+.skill-chip-name { font-weight: 500; }
+
+.skill-chip-cat {
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--chip-cat);
+}
+
+/* Tier-specific accents (work in both themes via vars) */
+.skill-tier--0 { border-color: var(--accent-1); }
+.skill-tier--0 .skill-chip:hover { border-color: var(--accent-1-hover); }
+
+.skill-tier--1 { border-color: var(--accent-2); }
+.skill-tier--1 .skill-chip:hover { border-color: var(--accent-2-hover); }
+
+.skill-tier--2 { border-color: var(--accent-3); }
+.skill-tier--2 .skill-chip:hover { border-color: var(--accent-3-hover); }
+
+@media (prefers-reduced-motion: reduce) {
+  .skill-tier { animation: none; opacity: 1; transform: none; }
+  .skill-chip { transition: none; }
+  .skill-chip:hover { transform: none; }
+}
+
+@media (min-width: 992px) {
+  .skill-tier { padding: 32px 36px 28px; }
+  .skill-tier-title { font-size: 22px; }
+}
+
 
 /* ============================================================
    PROJECTS
