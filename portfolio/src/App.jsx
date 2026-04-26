@@ -14,7 +14,9 @@ import { Cursor }         from './components/Cursor.jsx'
 import { HelmetProvider } from 'react-helmet-async'
 
 import SnakeGame from "./games/SnakeGame";
+import MinesweeperGame from "./games/MinesweeperGame";
 import useKonami from "./hooks/useKonami";
+import useTypedSequence from "./hooks/useTypedSequence";
 import CommandPalette from "./components/CommandPalette";
 
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -23,6 +25,7 @@ import './App.css'
 function App() {
   // Snake state
   const [snakeOpen, setSnakeOpen] = useState(false);
+  const [mineOpen, setMineOpen] = useState(false);
 
   // Command palette state
   const [cmdOpen, setCmdOpen] = useState(false);
@@ -30,11 +33,17 @@ function App() {
   // Konami trigger
   useKonami(() => {
     setSnakeOpen(true);
-  });
+  }, { disabled: snakeOpen || mineOpen || cmdOpen });
+
+  useTypedSequence(["m", "i", "n", "e"], () => {
+    setMineOpen(true);
+  }, { disabled: snakeOpen || mineOpen || cmdOpen });
 
   // Keyboard shortcut for command palette
   useEffect(() => {
     const handler = (e) => {
+      if (snakeOpen || mineOpen) return;
+
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
         e.preventDefault();
         setCmdOpen((o) => !o);
@@ -48,7 +57,7 @@ function App() {
 
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
-  }, []);
+  }, [mineOpen, snakeOpen]);
 
   // Scroll helper
   const scrollTo = (id) => {
@@ -64,6 +73,7 @@ function App() {
     { label: "Go to Contact", action: () => scrollTo("contact") },
 
     { label: "Play Snake", action: () => setSnakeOpen(true) },
+    { label: "Play Minesweeper", action: () => setMineOpen(true) },
 
     {
       label: "Toggle Theme",
@@ -133,6 +143,11 @@ function App() {
           <SnakeGame
             open={snakeOpen}
             onClose={() => setSnakeOpen(false)}
+          />
+
+          <MinesweeperGame
+            open={mineOpen}
+            onClose={() => setMineOpen(false)}
           />
 
           {/* Command Palette */}

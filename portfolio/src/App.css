@@ -1643,6 +1643,16 @@ nav.navbar .navbar-nav a.nav-link.navbar-link.active::after {
   font-size: 12px;
 }
 
+.snake-help {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 10px 12px;
+  font-size: 11px;
+  color: #7ef58a;
+  font-family: monospace;
+}
+
 .crt {
   position: absolute;
   inset: 0;
@@ -1704,4 +1714,60 @@ nav.navbar .navbar-nav a.nav-link.navbar-link.active::after {
 .cmd-empty {
   padding: 10px;
   color: #777;
+}
+
+.mine-modal {
+  min-width: 420px;
+}
+
+.mine-hud {
+  gap: 16px;
+}
+
+.mine-board {
+  display: grid;
+  grid-template-columns: repeat(10, 30px);
+  gap: 2px;
+  padding: 10px;
+  justify-content: center;
+  background: #111;
+}
+
+.mine-cell {
+  width: 30px;
+  height: 30px;
+  border: 1px solid #365136;
+  background: #1b2b1b;
+  color: #7ef58a;
+  font-family: monospace;
+  font-size: 14px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.mine-cell--revealed {
+  background: #0f170f;
+  border-color: #223522;
+}
+
+.mine-cell--flagged {
+  color: #f6ad55;
+}
+
+.mine-cell--mine {
+  color: #ff6b6b;
+  background: #2a1010;
+}
+
+.mine-help {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 10px 12px;
+  font-size: 11px;
+  color: #7ef58a;
+  font-family: monospace;
 }

@@ -75,6 +75,17 @@ export default function SnakeGame({ open, onClose }) {
 
   }, [open, resetRef, resetUI]);
 
+  useEffect(() => {
+    if (!open) return undefined;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [open]);
+
   // GAME LOOP
   useEffect(() => {
     if (!open) return;
@@ -214,15 +225,34 @@ export default function SnakeGame({ open, onClose }) {
       const s = stateRef.current;
       if (!s) return;
 
-      if (e.key === "Escape") return onClose();
+      const key = e.key.toLowerCase();
+      const shouldBlock = [
+        "escape",
+        " ",
+        "r",
+        "arrowup",
+        "arrowdown",
+        "arrowleft",
+        "arrowright",
+        "w",
+        "a",
+        "s",
+        "d",
+      ].includes(key);
+
+      if (shouldBlock) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+
+      if (key === "escape") return onClose();
 
       if (e.key === " ") {
-        e.preventDefault();
         s.paused = !s.paused;
         return;
       }
 
-      if (e.key.toLowerCase() === "r") {
+      if (key === "r") {
         resetRef();
         resetUI();
         return;
@@ -230,14 +260,14 @@ export default function SnakeGame({ open, onClose }) {
 
       if (s.dead) return;
 
-      if (e.key === "ArrowUp") s.nextDir = "U";
-      if (e.key === "ArrowDown") s.nextDir = "D";
-      if (e.key === "ArrowLeft") s.nextDir = "L";
-      if (e.key === "ArrowRight") s.nextDir = "R";
+      if (key === "arrowup" || key === "w") s.nextDir = "U";
+      if (key === "arrowdown" || key === "s") s.nextDir = "D";
+      if (key === "arrowleft" || key === "a") s.nextDir = "L";
+      if (key === "arrowright" || key === "d") s.nextDir = "R";
     };
 
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    window.addEventListener("keydown", onKey, { capture: true });
+    return () => window.removeEventListener("keydown", onKey, { capture: true });
   }, [open, onClose, resetRef, resetUI]);
 
   // Pause on tab switch
@@ -267,6 +297,11 @@ export default function SnakeGame({ open, onClose }) {
         <div style={{ position: "relative" }}>
           <canvas ref={canvasRef} width={SIZE} height={SIZE} />
           <div className="crt" />
+        </div>
+        <div className="snake-help">
+          <span>w a s d (or arrow keys): move</span>
+          <span>esc: close</span>
+          <span>r: reset</span>
         </div>
       </div>
     </div>
