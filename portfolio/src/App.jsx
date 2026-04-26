@@ -15,7 +15,9 @@ import { Cursor } from './components/Cursor.jsx'
 import { HelmetProvider } from 'react-helmet-async'
 
 import SnakeGame from "./games/SnakeGame";
+import MinesweeperGame from "./games/MinesweeperGame";
 import useKonami from "./hooks/useKonami";
+import useTypedSequence from "./hooks/useTypedSequence";
 import CommandPalette from "./components/CommandPalette";
 
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -25,15 +27,21 @@ function AppContent() {
   const { theme, toggle } = useContext(ThemeContext); 
 
   const [snakeOpen, setSnakeOpen] = useState(false);
+  const [minesweeperOpen, setMinesweeperOpen] = useState(false);
   const [cmdOpen, setCmdOpen] = useState(false);
 
   useKonami(() => {
     setSnakeOpen(true);
-  });
+  }, { disabled: snakeOpen || minesweeperOpen || cmdOpen });
 
-  // Command palette shortcut
+  useTypedSequence(["m", "i", "n", "e"], () => {
+    setMinesweeperOpen(true);
+  }, { disabled: snakeOpen || minesweeperOpen || cmdOpen });
+
   useEffect(() => {
     const handler = (e) => {
+      if (snakeOpen || minesweeperOpen) return;
+
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
         e.preventDefault();
         setCmdOpen((o) => !o);
@@ -47,7 +55,7 @@ function AppContent() {
 
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
-  }, []);
+  }, [snakeOpen, minesweeperOpen]);
 
   const scrollTo = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
@@ -60,7 +68,21 @@ function AppContent() {
     { label: "Go to Projects", action: () => scrollTo("projects") },
     { label: "Go to Contact", action: () => scrollTo("contact") },
 
-    { label: "Play Snake", action: () => setSnakeOpen(true) },
+    {
+      label: "Play Snake",
+      action: () => {
+        setCmdOpen(false);
+        setSnakeOpen(true);
+      }
+    },
+
+    {
+      label: "Play Minesweeper",
+      action: () => {
+        setCmdOpen(false);
+        setMinesweeperOpen(true);
+      }
+    },
 
     {
       label: `Toggle Theme (${theme})`,
@@ -109,6 +131,11 @@ function AppContent() {
       <SnakeGame
         open={snakeOpen}
         onClose={() => setSnakeOpen(false)}
+      />
+
+      <MinesweeperGame
+        open={minesweeperOpen}
+        onClose={() => setMinesweeperOpen(false)}
       />
 
       <CommandPalette
