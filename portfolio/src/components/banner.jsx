@@ -65,6 +65,10 @@ export const Banner = () => {
         <Row className="align-items-center banner-row">
           <Col xs={12} md={6} xl={7} className="banner-text-col">
             <div className="banner-eyebrow"><span className="eyebrow-dot" />Kathmandu, Nepal</div>
+            <div className="availability-pill" role="status" aria-live="polite">
+              <span className="availability-dot" />
+              <span>Open to internships &amp; freelance</span>
+            </div>
             <h1 className="banner-headline">
               <span className="headline-hi">Hi, I'm</span>
               <span className="headline-name">

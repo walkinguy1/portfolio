@@ -1,44 +1,6 @@
 import TrackVisibility from 'react-on-screen';
+import { SKILL_TIERS } from '../data/portfolioData';
 import 'animate.css';
-
-// Each skill keeps its category (so we can show a small label on the chip),
-// and is grouped by proficiency tier instead of an arbitrary percentage.
-const SKILL_TIERS = [
-  {
-    tier: "Currently Using",
-    blurb: "My daily drivers — what I reach for on most projects right now.",
-    skills: [
-      { name: "React",         category: "Frontend" },
-      { name: "JavaScript",    category: "Frontend" },
-      { name: "HTML & CSS",    category: "Frontend" },
-      { name: "Bootstrap",     category: "Frontend" },
-      { name: "Python",        category: "Backend & APIs" },
-      { name: "Git & GitHub",  category: "Tools" },
-      { name: "Pygame",        category: "Tools" },
-    ],
-  },
-  {
-    tier: "Comfortable With",
-    blurb: "Solid working knowledge — used in real projects, still sharpening.",
-    skills: [
-      { name: "FastAPI",       category: "Backend & APIs" },
-      { name: "REST APIs",     category: "Backend & APIs" },
-      { name: "Pandas",        category: "ML & Data" },
-      { name: "NumPy",         category: "ML & Data" },
-      { name: "Linux / CLI",   category: "Tools" },
-    ],
-  },
-  {
-    tier: "Exploring & Learning",
-    blurb: "Actively learning — built things with these and going deeper.",
-    skills: [
-      { name: "SQL",               category: "Backend & APIs" },
-      { name: "Scikit-learn",      category: "ML & Data" },
-      { name: "Matplotlib",        category: "ML & Data" },
-      { name: "Figma / UI Design", category: "Design" },
-    ],
-  },
-];
 
 export const Skills = () => {
   return (

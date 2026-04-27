@@ -11,6 +11,11 @@ import { Contact } from './components/contact.jsx'
 import { Footer } from './components/footer.jsx'
 import { Marquee } from './components/Marquee.jsx'
 import { Cursor } from './components/Cursor.jsx'
+import { Walkinguy } from './components/Walkinguy.jsx'
+import { HiddenThingsSheet } from './components/HiddenThingsSheet.jsx'
+import { TerminalEgg } from './components/TerminalEgg.jsx'
+import { MetricsStrip } from './components/MetricsStrip.jsx'
+import { TerminalPortfolio } from './components/TerminalPortfolio.jsx'
 
 import { HelmetProvider } from 'react-helmet-async'
 
@@ -29,18 +34,42 @@ function AppContent() {
   const [snakeOpen, setSnakeOpen] = useState(false);
   const [minesweeperOpen, setMinesweeperOpen] = useState(false);
   const [cmdOpen, setCmdOpen] = useState(false);
+  const [terminalOpen, setTerminalOpen] = useState(false);
+  const [cliMode, setCliMode] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('cli') === '1';
+  });
+  const [gamesPlayed, setGamesPlayed] = useState(() => 
+    parseInt(localStorage.getItem('portfolio-games-played') || '0', 10)
+  );
+
+  useEffect(() => {
+    if (snakeOpen || minesweeperOpen) {
+      setGamesPlayed(p => {
+        const next = p + 1;
+        localStorage.setItem('portfolio-games-played', String(next));
+        return next;
+      });
+    }
+  }, [snakeOpen, minesweeperOpen]);
 
   useKonami(() => {
     setSnakeOpen(true);
-  }, { disabled: snakeOpen || minesweeperOpen || cmdOpen });
+  }, { disabled: snakeOpen || minesweeperOpen || cmdOpen || terminalOpen });
 
   useTypedSequence(["m", "i", "n", "e"], () => {
     setMinesweeperOpen(true);
-  }, { disabled: snakeOpen || minesweeperOpen || cmdOpen });
+  }, { disabled: snakeOpen || minesweeperOpen || cmdOpen || terminalOpen });
+
+  useTypedSequence(["c", "o", "f", "f", "e", "e"], () => {
+    if (gamesPlayed >= 3) {
+      setTerminalOpen(true);
+    }
+  }, { disabled: snakeOpen || minesweeperOpen || cmdOpen || terminalOpen });
 
   useEffect(() => {
     const handler = (e) => {
-      if (snakeOpen || minesweeperOpen) return;
+      if (snakeOpen || minesweeperOpen || terminalOpen) return;
 
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
         e.preventDefault();
@@ -55,7 +84,7 @@ function AppContent() {
 
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
-  }, [snakeOpen, minesweeperOpen]);
+  }, [snakeOpen, minesweeperOpen, terminalOpen]);
 
   const scrollTo = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
@@ -91,24 +120,59 @@ function AppContent() {
 
     {
       label: "Open GitHub",
-      action: () => window.open("https://github.com/yourusername", "_blank")
+      action: () => window.open("https://github.com/walkinguy1", "_blank")
     },
 
     {
       label: "Open LinkedIn",
-      action: () => window.open("https://linkedin.com/in/yourprofile", "_blank")
+      action: () => window.open("https://linkedin.com/in/tusharkhatiwada", "_blank")
+    },
+
+    {
+      label: "Open Instagram",
+      action: () => window.open("https://www.instagram.com/walkinguy/", "_blank")
     },
 
     {
       label: "Copy Email",
-      action: () => navigator.clipboard.writeText("your@email.com")
+      action: () => navigator.clipboard.writeText("walkinguy1937@gmail.com")
+    },
+
+    {
+      label: cliMode ? "Switch to Visual Mode" : "Switch to CLI Mode",
+      action: () => {
+        setCmdOpen(false);
+        setCliMode(m => !m);
+      }
     }
   ];
+
+  // CLI Mode — full-screen terminal replaces the visual portfolio
+  if (cliMode) {
+    return (
+      <div className="App">
+        <TerminalPortfolio
+          onExit={() => setCliMode(false)}
+          toggleTheme={toggle}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="App">
       <Cursor />
       <NavBar />
+
+      {/* CLI mode toggle FAB */}
+      <button
+        className="cli-toggle-fab"
+        onClick={() => setCliMode(true)}
+        title="Switch to CLI mode"
+        aria-label="Switch to terminal portfolio mode"
+      >
+        &lt;/&gt;
+      </button>
 
       <div className="main-bg-wrapper">
 
@@ -116,7 +180,7 @@ function AppContent() {
         <Marquee />
 
         <div id="about"><About /></div>
-        <Marquee />
+        <Marquee reverse light />
 
         <div id="skills"><Skills /></div>
         <Marquee />
@@ -126,6 +190,7 @@ function AppContent() {
 
       </div>
 
+      <MetricsStrip />
       <Footer />
 
       <SnakeGame
@@ -138,11 +203,19 @@ function AppContent() {
         onClose={() => setMinesweeperOpen(false)}
       />
 
+      <TerminalEgg 
+        open={terminalOpen}
+        onClose={() => setTerminalOpen(false)}
+      />
+
       <CommandPalette
         open={cmdOpen}
         onClose={() => setCmdOpen(false)}
         actions={actions}
       />
+
+      <HiddenThingsSheet gamesPlayed={gamesPlayed} />
+      <Walkinguy />
     </div>
   );
 }

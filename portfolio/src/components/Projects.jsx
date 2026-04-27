@@ -1,37 +1,15 @@
 import { Container, Row, Col } from "react-bootstrap";
 import { ProjectCard } from "./ProjectCard";
+import { PROJECTS } from "../data/portfolioData";
 import projImg1 from "../assets/img/project-img1.png";
 import projImg2 from "../assets/img/project-img2.png";
 import projImg3 from "../assets/img/project-img3.png";
 import TrackVisibility from "react-on-screen";
 import 'animate.css';
 
-const PROJECTS = [
-  {
-    title: "Car Price Prediction Model",
-    description: "ML model that predicts car prices based on features like brand, mileage, fuel type, and age using regression techniques in Python.",
-    tech: ["Python", "Scikit-learn", "Pandas", "Matplotlib"],
-    imgUrl: projImg1,
-    githubUrl: "https://github.com/walkinguy1",
-    liveUrl: null,
-  },
-  {
-    title: "PyGame Mini-Game Library",
-    description: "A collection of classic mini-games — Snake, Pong, Breakout — built from scratch using Python's Pygame library with custom game logic.",
-    tech: ["Python", "Pygame", "OOP"],
-    imgUrl: projImg2,
-    githubUrl: "https://github.com/walkinguy1",
-    liveUrl: null,
-  },
-  {
-    title: "Food Ordering Website",
-    description: "Full-stack food ordering platform with user authentication, cart management, and order tracking — powered by React on the frontend and FastAPI on the backend.",
-    tech: ["React", "FastAPI", "Python", "SQL"],
-    imgUrl: projImg3,
-    githubUrl: "https://github.com/walkinguy1",
-    liveUrl: null,
-  },
-];
+// Map image keys from the data model to actual imports
+const IMG_MAP = { projImg1, projImg2, projImg3 };
+
 
 export const Projects = () => {
   return (
@@ -54,7 +32,7 @@ export const Projects = () => {
 
                   <Row className="project-cards-row">
                     {PROJECTS.map((project, index) => (
-                      <ProjectCard key={index} {...project} />
+                      <ProjectCard key={index} {...project} imgUrl={IMG_MAP[project.imgKey]} />
                     ))}
                   </Row>
 

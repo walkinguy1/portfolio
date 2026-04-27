@@ -26,6 +26,7 @@ export const Footer = () => {
               </a>
             </div>
             <p>© {new Date().getFullYear()}. All Rights Reserved - Tushar Khatiwada</p>
+            <span style={{ fontSize: '10px', color: 'var(--text-faint)', opacity: 0.3 }}>{`// try typing 'mine'`}</span>
           </Col>
         </Row>
       </Container>

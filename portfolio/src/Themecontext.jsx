@@ -5,8 +5,10 @@ export const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState(() => {
-    return localStorage.getItem('portfolio-theme') || 'dark';
-  });
+  const stored = localStorage.getItem('portfolio-theme');
+  if (stored) return stored;
+  return window.matchMedia?.('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+});
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
