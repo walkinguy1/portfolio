@@ -311,6 +311,9 @@ span.navbar-text {
   align-items: center;
   justify-content: space-between;
   background: transparent !important;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
 }
 
 @media (max-width: 991px) {

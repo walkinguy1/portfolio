@@ -5,9 +5,9 @@ function SplashCursor({
   SIM_RESOLUTION = 128,
   DYE_RESOLUTION = 1440,
   CAPTURE_RESOLUTION = 512,
-  DENSITY_DISSIPATION = 3.5,
+  DENSITY_DISSIPATION = 1,
   VELOCITY_DISSIPATION = 2,
-  PRESSURE = 0.1,
+  PRESSURE = 0.2,
   PRESSURE_ITERATIONS = 20,
   CURL = 3,
   SPLAT_RADIUS = 0.2,
@@ -21,13 +21,50 @@ function SplashCursor({
 }) {
   const canvasRef = useRef(null);
   const animationFrameId = useRef(null);
+  const lastEmitRef = useRef({ x: -1, y: -1, time: 0 });
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    const section = canvas?.parentElement;
+    if (!canvas || !section) return;
 
     // Track if the effect is still active for cleanup
     let isActive = true;
+
+    const emitBannerSplash = (detail) => {
+      window.dispatchEvent(new CustomEvent('banner-splash', { detail }));
+    };
+
+    const getLocalPoint = (e) => {
+      const rect = section.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      if (x < 0 || y < 0 || x > rect.width || y > rect.height) return null;
+      return { x, y, rect };
+    };
+
+    const maybeEmitSplash = (x, y, kind, strength) => {
+      const now = performance.now();
+      const last = lastEmitRef.current;
+      const distance = Math.hypot(x - last.x, y - last.y);
+
+      if (kind === 'move' && distance < 10 && now - last.time < 16) {
+        return;
+      }
+
+      const dx = last.x >= 0 ? x - last.x : 0;
+      const dy = last.y >= 0 ? y - last.y : 0;
+      lastEmitRef.current = { x, y, time: now };
+
+      emitBannerSplash({
+        x,
+        y,
+        dx,
+        dy,
+        kind,
+        strength,
+      });
+    };
 
     function pointerPrototype() {
       this.id = -1;
@@ -1024,18 +1061,25 @@ function SplashCursor({
 
     // Named event handlers for proper cleanup
     function handleMouseDown(e) {
+      const point = getLocalPoint(e);
+      if (!point) return;
+
       let pointer = pointers[0];
-      let posX = scaleByPixelRatio(e.clientX);
-      let posY = scaleByPixelRatio(e.clientY);
+      let posX = scaleByPixelRatio(point.x);
+      let posY = scaleByPixelRatio(point.y);
       updatePointerDownData(pointer, -1, posX, posY);
       clickSplat(pointer);
+      maybeEmitSplash(point.x, point.y, 'down', 1.2);
     }
 
     let firstMouseMoveHandled = false;
     function handleMouseMove(e) {
+      const point = getLocalPoint(e);
+      if (!point) return;
+
       let pointer = pointers[0];
-      let posX = scaleByPixelRatio(e.clientX);
-      let posY = scaleByPixelRatio(e.clientY);
+      let posX = scaleByPixelRatio(point.x);
+      let posY = scaleByPixelRatio(point.y);
       if (!firstMouseMoveHandled) {
         let color = generateColor();
         updatePointerMoveData(pointer, posX, posY, color);
@@ -1043,15 +1087,19 @@ function SplashCursor({
       } else {
         updatePointerMoveData(pointer, posX, posY, pointer.color);
       }
+      maybeEmitSplash(point.x, point.y, 'move', 0.7);
     }
 
     function handleTouchStart(e) {
       const touches = e.targetTouches;
       let pointer = pointers[0];
       for (let i = 0; i < touches.length; i++) {
-        let posX = scaleByPixelRatio(touches[i].clientX);
-        let posY = scaleByPixelRatio(touches[i].clientY);
+        const point = getLocalPoint(touches[i]);
+        if (!point) continue;
+        let posX = scaleByPixelRatio(point.x);
+        let posY = scaleByPixelRatio(point.y);
         updatePointerDownData(pointer, touches[i].identifier, posX, posY);
+        maybeEmitSplash(point.x, point.y, 'down', 1.2);
       }
     }
 
@@ -1059,9 +1107,12 @@ function SplashCursor({
       const touches = e.targetTouches;
       let pointer = pointers[0];
       for (let i = 0; i < touches.length; i++) {
-        let posX = scaleByPixelRatio(touches[i].clientX);
-        let posY = scaleByPixelRatio(touches[i].clientY);
+        const point = getLocalPoint(touches[i]);
+        if (!point) continue;
+        let posX = scaleByPixelRatio(point.x);
+        let posY = scaleByPixelRatio(point.y);
         updatePointerMoveData(pointer, posX, posY, pointer.color);
+        maybeEmitSplash(point.x, point.y, 'move', 0.7);
       }
     }
 
@@ -1105,10 +1156,9 @@ function SplashCursor({
   return (
     <div
       style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        zIndex: 50,
+        position: 'absolute',
+        inset: 0,
+        zIndex: 0,
         pointerEvents: 'none',
         width: '100%',
         height: '100%'
@@ -1117,8 +1167,8 @@ function SplashCursor({
         ref={canvasRef}
         id="fluid"
         style={{
-          width: '100vw',
-          height: '100vh',
+          width: '100%',
+          height: '100%',
           display: 'block'
         }} />
     </div>

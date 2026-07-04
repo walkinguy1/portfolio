@@ -3,6 +3,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import headerImg from '../assets/img/header-img.png';
 import { Helmet } from 'react-helmet-async';
 import { ParticleCanvas } from './ParticleCanvas';
+import SplashCursor from './SplashCursor';
 
 const ROLES = ['Full Stack Dev', 'ML Enthusiast', 'Problem Solver', 'CS Student'];
 
@@ -45,7 +46,7 @@ export const Banner = () => {
     document.getElementById('connect')?.scrollIntoView({ behavior: 'smooth' });
 
   return (
-    <section className="banner" id="home">
+    <section className="banner" id="home" data-splash-scope="banner">
       <Helmet>
         <title>Tushar Khatiwada | Full Stack Developer</title>
         <meta name="description" content="Portfolio of Tushar Khatiwada — CS student, web developer and ML enthusiast from Kathmandu, Nepal." />
@@ -54,6 +55,7 @@ export const Banner = () => {
         <meta name="twitter:card" content="summary_large_image" />
       </Helmet>
 
+      <SplashCursor />
       {/* Particle field — absolute inside banner, scoped to this section */}
       <ParticleCanvas />
 

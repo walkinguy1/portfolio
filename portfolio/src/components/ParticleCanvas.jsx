@@ -2,8 +2,14 @@ import { useEffect, useRef } from "react";
 import { useTheme } from "../useTheme";
 
 /* ─── Color palettes ──────────────────────────────────────────────── */
-const DASH_COLORS_DARK  = ["#5b9cf6","#818cf8","#a78bfa","#c084fc","#7dd3fc"];
-const DASH_COLORS_LIGHT = ["#f59e0b","#d97706","#c084fc","#a78bfa","#e879f9"];
+const DASH_COLORS_DARK  = ["#2e82f7","#5666f8","#845cfd","#ab59fc","#4cc3fa"];
+const DASH_COLORS_LIGHT = ["#f59e0b","#ec8106","#9e3ffd","#7041fd","#e231fd"];
+
+/* ─── Interaction tuning ─────────────────────────────────────────── */
+const LIGHTNING_PARTICLE_FORCE = 80;
+const LIGHTNING_PARTICLE_RADIUS = 350;
+const SPLASH_PARTICLE_FORCE = 46;
+const SPLASH_PARTICLE_RADIUS = 180;
 
 /* ─── Particle ───────────────────────────────────────────────────── */
 class Particle {
@@ -26,10 +32,10 @@ class Particle {
     }
   }
 
-  repel(tx, ty, strength = 45) {
+  repel(tx, ty, strength = 45, radius = 250) {
     const dx = this.x - tx, dy = this.y - ty;
     const dist = Math.sqrt(dx * dx + dy * dy) + 0.1;
-    const R = 450;
+    const R = radius;
     if (dist < R) {
       const f = ((R - dist) / R) * strength;
       this.ax += (dx / dist) * f;
@@ -245,6 +251,56 @@ export const ParticleCanvas = () => {
       ...Array.from({ length: 140 }, () => new Particle(W, H, false)),
     ];
 
+    const pushParticles = (tx, ty, strength, radius) => {
+      particles.forEach(p => p.repel(tx, ty, strength, radius));
+    };
+
+    const spawnLightning = (tx, ty, mode = 'click', intensity = 1) => {
+      let ox;
+      let oy;
+      const edge = Math.random();
+
+      if (mode === 'splash') {
+        if (edge < 0.5) {
+          ox = tx + (Math.random() - 0.5) * 320;
+          oy = -10;
+        } else if (edge < 0.75) {
+          ox = -10;
+          oy = ty + (Math.random() - 0.5) * 240;
+        } else {
+          ox = W + 10;
+          oy = ty + (Math.random() - 0.5) * 240;
+        }
+      } else if (edge < 0.65) {
+        ox = tx + (Math.random() - 0.5) * 400;
+        oy = -10;
+      } else if (edge < 0.82) {
+        ox = -10;
+        oy = ty + (Math.random() - 0.5) * 300;
+      } else {
+        ox = W + 10;
+        oy = ty + (Math.random() - 0.5) * 300;
+      }
+
+      const mainBolt = buildBolt(ox, oy, tx, ty);
+      const ox2 = ox + (Math.random() - 0.5) * 60;
+      const oy2 = oy + (Math.random() - 0.5) * 30;
+      const afterglowBolt = buildBolt(ox2, oy2, tx + (Math.random() - 0.5) * 20, ty + (Math.random() - 0.5) * 20);
+
+      lightningRef.current = {
+        bolt: mainBolt,
+        afterglow: afterglowBolt,
+        opacity: mode === 'splash' ? 0.82 * intensity : 1.0,
+        afterOpacity: 0,
+        afterDelay: mode === 'splash' ? 1 : 3,
+        flashOpacity: mode === 'splash' ? 0.75 * intensity : 1.0,
+        tx,
+        ty,
+        flickerCount: 0,
+        flickerPhase: 0,
+      };
+    };
+
     /* Track mouse for ambient glow */
     const handleMouseMove = (e) => {
       const rect = canvas.getBoundingClientRect();
@@ -261,48 +317,24 @@ export const ParticleCanvas = () => {
       const ty = e.clientY - rect.top;
 
       // Strong scatter burst on impact
-      particles.forEach(p => p.repel(tx, ty, 80));
+      pushParticles(tx, ty, LIGHTNING_PARTICLE_FORCE, LIGHTNING_PARTICLE_RADIUS);
+      spawnLightning(tx, ty, 'click', 1);
+    };
 
-      // Randomize origin — top edge biased but can be side edges too
-      let ox, oy;
-      const edge = Math.random();
-      if (edge < 0.65) {
-        // Top edge
-        ox = tx + (Math.random() - 0.5) * 400;
-        oy = -10;
-      } else if (edge < 0.82) {
-        // Left edge
-        ox = -10;
-        oy = ty + (Math.random() - 0.5) * 300;
-      } else {
-        // Right edge
-        ox = W + 10;
-        oy = ty + (Math.random() - 0.5) * 300;
-      }
+    const handleBannerSplash = (e) => {
+      const detail = e.detail || {};
+      if (!Number.isFinite(detail.x) || !Number.isFinite(detail.y)) return;
 
-      // Main bolt
-      const mainBolt = buildBolt(ox, oy, tx, ty);
+      const tx = detail.x;
+      const ty = detail.y;
+      const intensity = Math.max(0.35, Math.min(1.4, detail.strength || 0.7));
 
-      // Afterglow bolt — slightly offset, dimmer
-      const ox2 = ox + (Math.random() - 0.5) * 60;
-      const oy2 = oy + (Math.random() - 0.5) * 30;
-      const afterglowBolt = buildBolt(ox2, oy2, tx + (Math.random() - 0.5) * 20, ty + (Math.random() - 0.5) * 20);
-
-      lightningRef.current = {
-        bolt:         mainBolt,
-        afterglow:    afterglowBolt,
-        opacity:      1.0,
-        afterOpacity: 0,    // starts after main bolt fades a bit
-        afterDelay:   3,    // frames before afterglow starts
-        flashOpacity: 1.0,
-        tx, ty,
-        flickerCount: 0,
-        flickerPhase: 0,
-      };
+      pushParticles(tx, ty, SPLASH_PARTICLE_FORCE * intensity, SPLASH_PARTICLE_RADIUS);
     };
 
     section.addEventListener("mousedown", handleStrike);
     section.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener('banner-splash', handleBannerSplash);
 
     let raf;
     const loop = () => {
@@ -373,6 +405,7 @@ export const ParticleCanvas = () => {
       ro.disconnect();
       section.removeEventListener("mousedown", handleStrike);
       section.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener('banner-splash', handleBannerSplash);
     };
   }, []);
 
