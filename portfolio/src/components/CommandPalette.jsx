@@ -66,16 +66,21 @@ export default function CommandPalette({ open, onClose, actions }) {
 
   return (
     <div className="cmd-overlay">
-      <div className="cmd-modal">
-        <input
-          autoFocus
-          placeholder="Type a command..."
-          className="cmd-input"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-        />
+      <div className="cmd-modal" role="dialog" aria-modal="true">
+          <input
+            autoFocus
+            placeholder="Type a command..."
+            className="cmd-input"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            role="combobox"
+            aria-autocomplete="list"
+            aria-haspopup="listbox"
+            aria-controls="command-list"
+            aria-expanded={open}
+          />
 
-        <div className="cmd-list">
+        <div className="cmd-list" role="listbox" id="command-list">
           {filtered.length === 0 && (
             <div className="cmd-empty">No results</div>
           )}
@@ -83,6 +88,9 @@ export default function CommandPalette({ open, onClose, actions }) {
           {filtered.map((item, i) => (
             <div
               key={item.label}
+              id={`command-option-${i}`}
+              role="option"
+              aria-selected={i === selected}
               className={`cmd-item ${i === selected ? "active" : ""}`}
               onClick={() => {
                 item.action();

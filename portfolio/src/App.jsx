@@ -163,7 +163,9 @@ function AppContent() {
   return (
     <div className="App">
       <Cursor />
-      <NavBar />
+      <header>
+        <NavBar />
+      </header>
 
       {/* CLI mode toggle FAB */}
       <button
@@ -175,7 +177,7 @@ function AppContent() {
         &lt;/&gt;
       </button>
 
-      <div className="main-bg-wrapper">
+      <main className="main-bg-wrapper">
 
         <div id="home"><Banner /></div>
         <Marquee />
@@ -189,10 +191,12 @@ function AppContent() {
         <div id="projects"><Projects /></div>
         <div id="contact"><Contact /></div>
 
-      </div>
+      </main>
 
       <MetricsStrip />
-      <Footer />
+      <footer>
+        <Footer />
+      </footer>
 
       <SnakeGame
         open={snakeOpen}

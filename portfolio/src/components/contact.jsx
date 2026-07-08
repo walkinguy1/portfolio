@@ -1,4 +1,5 @@
 import { useState, useCallback } from "react";
+import { IDENTITY } from "../data/portfolioData";
 import { Container } from "react-bootstrap";
 import TrackVisibility from 'react-on-screen';
 import 'animate.css';
@@ -81,15 +82,15 @@ export const Contact = () => {
                   <p>I'm currently open to internships, freelance work, and interesting side projects. Don't hesitate to reach out.</p>
 
                   <div className="contact-links">
-                    <a href="https://www.linkedin.com/in/tushar-khatiwada/" target="_blank" rel="noreferrer" className="contact-social-link">
+                    <a href={IDENTITY.linkedin} target="_blank" rel="noreferrer" className="contact-social-link">
                       <span className="contact-social-icon" aria-hidden="true">in</span>
                       <span>LinkedIn</span>
                     </a>
-                    <a href="https://github.com/walkinguy1" target="_blank" rel="noreferrer" className="contact-social-link">
+                    <a href={IDENTITY.github} target="_blank" rel="noreferrer" className="contact-social-link">
                       <span className="contact-social-icon" aria-hidden="true">gh</span>
                       <span>GitHub</span>
                     </a>
-                    <a href="https://www.instagram.com/walkinguy/" target="_blank" rel="noreferrer" className="contact-social-link">
+                    <a href={IDENTITY.instagram} target="_blank" rel="noreferrer" className="contact-social-link">
                       <span className="contact-social-icon" aria-hidden="true">ig</span>
                       <span>Instagram</span>
                     </a>
