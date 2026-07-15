@@ -1,0 +1,288 @@
+/************ Banner Css ************/
+.banner {
+  margin-top: 0;
+  padding: 70px 0 50px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: transparent !important;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+@media (max-width: 991px) {
+  .banner{
+    padding: 150px 0 50px 0;
+  }
+}
+
+.banner .tagline {
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  padding: 8px 10px;
+  background: linear-gradient(90.21deg, rgba(54, 137, 170, 0.5) -5.91%, rgba(74, 47, 189, 0.5) 111.58%);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  font-size: 20px;
+  margin-bottom: 16px;
+  display: inline-block;
+}
+
+.banner h1 {
+  font-size: 65px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  line-height: 1;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.banner p {
+  color: #ffffff;
+  font-size: 18px;
+  letter-spacing: 0.8px;
+  line-height: 1.5em;
+  width: 96%;
+}
+
+.banner button {
+  color: #fff;
+  font-weight: 700;
+  font-size: 20px;
+  margin-top: 60px;
+  letter-spacing: 0.8px;
+  display: flex;
+  align-items: center;
+}
+
+.banner button svg {
+  font-size: 25px;
+  margin-left: 10px;
+  transition: 0.3s ease-in-out;
+  line-height: 1;
+}
+
+.banner button:hover svg {
+  margin-left: 25px;
+}
+
+.banner img {
+  animation: imgFloat 3s linear infinite;
+}
+
+.txt-rotate > .wrap {
+  border-right: 0.08em solid #666;
+}
+
+/* ============================================================
+   BANNER
+   ============================================================ */
+.banner {
+  position: relative; min-height: 100vh;
+  background: var(--bg);
+  overflow: hidden; display: flex; align-items: center;
+  padding: 140px 0 80px;
+}
+
+.bannerAccentBar {
+  position: absolute; top: 0; left: 0; right: 0; height: 2px; z-index: 2;
+  background: linear-gradient(90deg, transparent, var(--accent), var(--accent-bright), var(--accent), transparent);
+}
+
+.bannerGlow {
+  position: absolute; border-radius: 50%;
+  filter: blur(140px); pointer-events: none; z-index: 0;
+  transition: none !important;
+}
+
+.bannerGlow1 {
+  width: 700px; height: 700px;
+  background: rgba(91,156,246,0.1);
+  top: -260px; right: -160px;
+  animation: glowPulse 9s ease-in-out infinite alternate;
+}
+
+.bannerGlow2 {
+  width: 500px; height: 500px;
+  background: rgba(147,197,253,0.06);
+  bottom: -100px; left: -100px;
+  animation: glowPulse 13s ease-in-out infinite alternate-reverse;
+}
+
+[data-theme="light"] .bannerGlow1 { background: rgba(217,119,6,0.09); }
+[data-theme="light"] .bannerGlow2 { background: rgba(79,70,229,0.06); }
+
+.bannerContainer { position: relative; z-index: 1; }
+.bannerRow { min-height: 80vh; }
+
+.bannerEyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--text-muted);
+  margin-bottom: 32px;
+  animation: fadeSlideUp 0.6s ease both;
+}
+
+.eyebrowDot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent);
+  animation: pulse 2.2s infinite;
+}
+
+.bannerHeadline { margin-bottom: 22px; animation: fadeSlideUp 0.5s 0.05s ease both; }
+.headlineHi {
+  display: block;
+  font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+  font-weight: 400; color: var(--text-muted); margin-bottom: 4px;
+}
+
+.headlineName {
+  display: block;
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 900; line-height: 0.93; letter-spacing: -0.05em;
+  /* Use color: transparent so the global color transition doesn't fight gradient text */
+  color: transparent;
+  background: linear-gradient(135deg, #93c5fd 0%, #5b9cf6 50%, #a78bfa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: white;
+  background-clip: text;
+}
+
+/* Light mode: warm indigo gradient for contrast on cream bg */
+[data-theme="light"] .headlineHi   { color: #7c7589; }
+[data-theme="light"] .headlineName {
+  color: transparent;
+  background: linear-gradient(135deg, #1a1c22 0%, #4f46e5 55%, #7c3aed 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: #1a1c22;
+  background-clip: text;
+}
+
+[data-theme="light"] .bannerDesc   { color: #5a556b; }
+[data-theme="light"] .bannerDesc strong { color: #1a1c22; }
+[data-theme="light"] .bannerEyebrow { color: #8a8495; }
+[data-theme="light"] .bannerRoleWrapper {
+  background: rgba(79,70,229,0.06);
+  border-color: rgba(79,70,229,0.18);
+}
+[data-theme="light"] .bannerRoleType { color: #2d2640; }
+[data-theme="light"] .scrollHint { color: #c5bfcf; }
+[data-theme="light"] .imgFrameCorner { border-color: rgba(79,70,229,0.35); }
+
+.animWord { display: inline-block; }
+.animChar {
+  display: inline-block;
+  animation: charReveal 0.65s cubic-bezier(0.22,1,0.36,1) both;
+  transition: none !important;
+}
+
+.bannerRoleWrapper {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: clamp(0.85rem, 1.6vw, 1rem);
+  font-weight: 600; color: var(--text-muted);
+  margin-bottom: 26px;
+  font-family: 'Courier New', monospace;
+  background: var(--accent-dim);
+  border: 1px solid rgba(91,156,246,0.2);
+  border-radius: 6px; padding: 10px 18px; width: fit-content;
+  animation: fadeSlideUp 0.6s 0.2s ease both;
+}
+
+.roleBracket { color: var(--accent); font-weight: 900; }
+.bannerRoleType { color: var(--text); }
+.cursorBlink { animation: blink 0.7s step-end infinite; color: var(--accent); }
+
+.bannerDesc {
+  font-size: 1rem; color: var(--text-muted); line-height: 1.8;
+  max-width: 460px; margin-bottom: 40px;
+  animation: fadeSlideUp 0.6s 0.3s ease both;
+}
+
+.bannerDesc strong { color: var(--text); font-weight: 600; }
+
+/* Fix: ensure banner content (eyebrow) isn't hidden behind fixed navbar on mobile */
+@media (max-width: 767px) {
+  /* Increase top padding on the hero so the fixed navbar doesn't overlap the eyebrow */
+  .banner {
+    padding-top: 180px !important;
+  }
+
+  /* Ensure in-page anchor scrolling accounts for taller navbar on small screens */
+  html {
+    scroll-padding-top: 170px;
+  }
+}
+
+.bannerCtaRow {
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  animation: fadeSlideUp 0.6s 0.4s ease both;
+}
+
+.bannerImgCol { animation: fadeSlideUp 0.7s 0.15s ease both; }
+.bannerImgWrapper { position: relative; max-width: 440px; margin: 0 auto; padding: 16px; }
+
+.imgFrameCorner {
+  position: absolute; width: 22px; height: 22px;
+  border-color: rgba(91,156,246,0.45); border-style: solid;
+}
+
+.imgFrameCornerTl { top:0;    left:0;  border-width: 2px 0 0 2px; }
+.imgFrameCornerTr { top:0;    right:0; border-width: 2px 2px 0 0; }
+.imgFrameCornerBl { bottom:0; left:0;  border-width: 0 0 2px 2px; }
+.imgFrameCornerBr { bottom:0; right:0; border-width: 0 2px 2px 0; }
+
+.bannerImgWrapper img {
+  width: 100%; border-radius: 6px;
+  filter: drop-shadow(0 0 50px rgba(91,156,246,0.14));
+  animation: imgFloat 5s ease-in-out infinite alternate;
+  transition: none !important;
+}
+
+[data-theme="light"] .bannerImgWrapper img {
+  filter: drop-shadow(0 0 60px rgba(37,99,235,0.18)) !important;
+}
+
+.scrollHint {
+  position: absolute; bottom: 28px; right: 40px;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  color: var(--text-faint); font-size: 10px;
+  letter-spacing: 0.18em; text-transform: uppercase; font-weight: 700;
+  animation: fadeIn 1.2s 1s ease both;
+}
+
+.scrollLine {
+  width: 1px; height: 48px;
+  background: linear-gradient(to bottom, var(--accent), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+  transition: none !important;
+}
+
+[data-theme="light"] .scrollLine {
+  background: linear-gradient(to bottom, #4f46e5, #d97706, transparent) !important;
+}
+
+/* Availability pill */
+.availabilityPill {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 6px 14px;
+  margin: 8px 0 18px;
+  background: rgba(34,197,94,0.10);
+  border: 1px solid rgba(34,197,94,0.28);
+  border-radius: 999px;
+  font-size: 0.78rem; font-weight: 600; letter-spacing: 0.02em;
+  color: #16a34a;
+  animation: fadeSlideUp 0.6s 0.25s ease both;
+}
+
+[data-theme="light"] .availabilityPill {
+  background: rgba(22,163,74,0.08);
+  color: #15803d;
+}
+
+.availabilityDot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 0 0 rgba(34,197,94,0.7);
+  animation: pulseGreen 1.8s ease-out infinite;
+}
