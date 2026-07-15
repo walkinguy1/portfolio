@@ -1,0 +1,228 @@
+/************ Navbar Base ************/
+.navbar {
+  padding: 18px 0;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 9999;
+  transition: transform 0.32s ease-in-out, padding 0.32s ease-in-out, background-color 0.32s ease-in-out;
+}
+
+/* Scroll Classes */
+.navHidden { transform: translateY(-100%); }
+.navVisible { transform: translateY(0); }
+
+.scrolled {
+  padding: 0 0 !important;
+  background-color: var(--nav-bg) !important;
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: saturate(160%) blur(14px);
+  -webkit-backdrop-filter: saturate(160%) blur(14px);
+}
+
+/* Pre-scroll: fully transparent so hero feels full-bleed */
+.navbar:not(.scrolled) {
+  background-color: transparent !important;
+  border-bottom: 1px solid transparent;
+}
+
+/* Logo Sizes */
+.navbarBrand {
+  width: 9%;
+}
+
+@media (max-width: 991px) {
+  .navbarBrand {
+    width: 120px !important; /* Larger logo for mobile visibility */
+  }
+}
+
+/************ Navbar Layout Logic ************/
+/* On Desktop: Push links and social apart */
+@media (min-width: 992px) {
+  .navbarCollapse {
+    display: flex !important;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .meAuto {
+    flex-grow: 1; 
+  }
+}
+
+/* On Mobile: Hide by default, show only when toggled */
+@media (max-width: 991px) {
+  .navbarCollapse {
+    display: none;
+    background: var(--nav-bg);
+    border: 1px solid var(--border);
+    margin-top: 10px;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    backdrop-filter: blur(16px);
+  }
+  
+  /* When the burger is clicked, Bootstrap adds .show */
+  .navbarCollapse.show {
+    display: block !important;
+  }
+
+  .navbarNav {
+    margin-bottom: 20px;
+  }
+}
+
+/************ Navigation Links ************/
+.navbarLink {
+  font-weight: 500;
+  letter-spacing: 0.8px;
+  padding: 0 25px;
+  font-size: 17px;
+  color: var(--text-muted) !important;
+  opacity: 1;
+  transition: color 0.2s ease;
+  position: relative;
+}
+
+.navbarLink:hover,
+.navbarLink.active {
+  color: var(--text) !important;
+}
+
+.navbarLink::after {
+  content: '';
+  position: absolute;
+  left: 25px; right: 25px; bottom: -4px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-bright));
+  border-radius: 2px;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.28s cubic-bezier(.6,.2,.2,1);
+}
+
+.navbarLink.active::after,
+.navbarLink:hover::after {
+  transform: scaleX(1);
+}
+
+/************ Burger Icon (3-Line) ************/
+.navbarToggler {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.navbarTogglerIcon {
+  background-image: none !important;
+  display: flex !important;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 30px !important;
+  height: 24px !important;
+}
+
+.navbarTogglerIcon span {
+  display: block;
+  width: 100%;
+  height: 3px;
+  background-color: var(--text);
+  border-radius: 3px;
+  transition: all 0.3s ease-in-out;
+}
+
+/* X Animation */
+.navbarToggler[aria-expanded="true"] .navbarTogglerIcon span:nth-child(2) {
+  opacity: 0;
+}
+.navbarToggler[aria-expanded="true"] .navbarTogglerIcon span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+.navbarToggler[aria-expanded="true"] .navbarTogglerIcon span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/************ Social Icons & Button ************/
+.navbarText {
+  display: flex;
+  align-items: center;
+}
+
+.socialIcon {
+  display: inline-block;
+  margin-left: 14px;
+}
+
+.socialIcon a {
+  width: 42px;
+  height: 42px;
+  background: rgba(217, 217, 217, 0.1);
+  display: inline-flex;
+  border-radius: 50%;
+  margin-right: 6px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  position: relative;
+  transition: 0.3s ease-in-out; /* Ensure smooth scaling */
+}
+
+/* Specificity fix for Social Icon Hover */
+.navbarText .socialIcon a:hover img {
+  transform: scale(1.1) !important; /* Forces the image to grow */
+  transition: 0.3s ease-in-out !important;
+}
+
+.navbarText .socialIcon a:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+}
+
+.socialIcon a img {
+  width: 40%;
+  z-index: 1;
+  transition: filter 0.3s ease, transform 0.3s ease !important;
+}
+
+/* Invert icons to black in light mode so they're visible */
+[data-theme="light"] .socialIcon a img {
+  filter: invert(1) brightness(0);
+}
+[data-theme="light"] .socialIcon a:hover img {
+  filter: invert(1) brightness(0) !important;
+}
+
+/* Invert logo to dark in light mode — navbar AND footer */
+[data-theme="light"] .navbarBrand img {
+  filter: invert(1) brightness(0);
+}
+
+/* Specificity fix for Let's Connect Button */
+.vvd {
+  font-weight: 700;
+  color: var(--text) !important;
+  border: 1.5px solid var(--border-bright) !important;
+  padding: 11px 24px;
+  font-size: 15px;
+  margin-left: 18px;
+  background-color: transparent !important;
+  border-radius: 6px;
+  transition: 0.3s ease-in-out !important;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+}
+
+.vvd:hover {
+  background-color: var(--accent) !important;
+  border-color: var(--accent) !important;
+  color: #fff !important;
+}
+
+/* ============================================================
+   NAVBAR OVERRIDES FOR THEMING
+   ============================================================ */
+.navbar {
+  background: transparent !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
