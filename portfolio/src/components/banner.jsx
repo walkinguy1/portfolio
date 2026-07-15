@@ -4,6 +4,7 @@ import headerImg from '../assets/img/header-img.png';
 import { Helmet } from 'react-helmet-async';
 import { ParticleCanvas } from './ParticleCanvas';
 import SplashCursor from './SplashCursor';
+import styles from './banner.module.css';
 
 const ROLES = ['Full Stack Dev', 'ML Enthusiast', 'Problem Solver', 'CS Student'];
 
@@ -46,7 +47,7 @@ export const Banner = () => {
     document.getElementById('connect')?.scrollIntoView({ behavior: 'smooth' });
 
   return (
-    <section className="banner" id="home" data-splash-scope="banner">
+    <section className={styles.banner} id="home" data-splash-scope="banner">
       <Helmet>
         <title>Tushar Khatiwada | Full Stack Developer</title>
         <meta name="description" content="Portfolio of Tushar Khatiwada — CS student, web developer and ML enthusiast from Kathmandu, Nepal." />
@@ -59,36 +60,36 @@ export const Banner = () => {
       {/* Particle field — absolute inside banner, scoped to this section */}
       <ParticleCanvas />
 
-      <div className="banner-glow banner-glow--1" aria-hidden="true" />
-      <div className="banner-glow banner-glow--2" aria-hidden="true" />
-      <div className="banner-accent-bar" aria-hidden="true" />
+      <div className={`${styles.bannerGlow} ${styles.bannerGlow1}`} aria-hidden="true" />
+      <div className={`${styles.bannerGlow} ${styles.bannerGlow2}`} aria-hidden="true" />
+      <div className={styles.bannerAccentBar} aria-hidden="true" />
 
-      <Container className="banner-container">
+      <Container className={styles.bannerContainer}>
         <Row className="align-items-center banner-row">
           <Col xs={12} md={6} xl={7} className="banner-text-col">
-            <div className="banner-eyebrow"><span className="eyebrow-dot" />Kathmandu, Nepal</div>
-            <div className="availability-pill" role="status" aria-live="polite">
-              <span className="availability-dot" />
+            <div className={styles.bannerEyebrow}><span className={styles.eyebrowDot} />Kathmandu, Nepal</div>
+            <div className={styles.availabilityPill} role="status" aria-live="polite">
+              <span className={styles.availabilityDot} />
               <span>Open to internships &amp; freelance</span>
             </div>
-            <h1 className="banner-headline">
-              <span className="headline-hi">Hi, I'm</span>
-              <span className="headline-name">
+            <h1 className={styles.bannerHeadline}>
+              <span className={styles.headlineHi}>Hi, I'm</span>
+              <span className={styles.headlineName}>
                 <AnimatedName text="Tushar" delay={0.1} />
                 <br />
                 <AnimatedName text="Khatiwada" delay={0.4} />
               </span>
             </h1>
-            <div className="banner-role-wrapper" aria-live="polite">
-              <span className="role-bracket" aria-hidden="true">[</span>
-              <span className="banner-role-type">{displayed}<span className="cursor-blink" aria-hidden="true">_</span></span>
-              <span className="role-bracket" aria-hidden="true">]</span>
+            <div className={styles.bannerRoleWrapper} aria-live="polite">
+              <span className={styles.roleBracket} aria-hidden="true">[</span>
+              <span className={styles.bannerRoleType}>{displayed}<span className={styles.cursorBlink} aria-hidden="true">_</span></span>
+              <span className={styles.roleBracket} aria-hidden="true">]</span>
             </div>
-            <p className="banner-desc">
+            <p className={styles.bannerDesc}>
               Also known as <strong>Walkinguy</strong> — weaving together web, ML,
               and whatever interesting problem lands on my desk next.
             </p>
-            <div className="banner-cta-row">
+            <div className={styles.bannerCtaRow}>
               <button className="btn-primary-cta" onClick={scrollToConnect}>
                 Let's Connect <span className="cta-arrow" aria-hidden="true">→</span>
               </button>
@@ -97,18 +98,18 @@ export const Banner = () => {
               </a>
             </div>
           </Col>
-          <Col xs={12} md={6} xl={5} className="banner-img-col">
-            <div className="banner-img-wrapper">
-              <div className="img-frame-corner img-frame-corner--tl" aria-hidden="true" />
-              <div className="img-frame-corner img-frame-corner--tr" aria-hidden="true" />
-              <div className="img-frame-corner img-frame-corner--bl" aria-hidden="true" />
-              <div className="img-frame-corner img-frame-corner--br" aria-hidden="true" />
+          <Col xs={12} md={6} xl={5} className={styles.bannerImgCol}>
+            <div className={styles.bannerImgWrapper}>
+              <div className={`${styles.imgFrameCorner} ${styles.imgFrameCornerTl}`} aria-hidden="true" />
+              <div className={`${styles.imgFrameCorner} ${styles.imgFrameCornerTr}`} aria-hidden="true" />
+              <div className={`${styles.imgFrameCorner} ${styles.imgFrameCornerBl}`} aria-hidden="true" />
+              <div className={`${styles.imgFrameCorner} ${styles.imgFrameCornerBr}`} aria-hidden="true" />
               <img src={headerImg} alt="Tushar Khatiwada" loading="eager" />
             </div>
           </Col>
         </Row>
-        <div className="scroll-hint" aria-hidden="true">
-          <div className="scroll-line" /><span>scroll</span>
+        <div className={styles.scrollHint} aria-hidden="true">
+          <div className={styles.scrollLine} /><span>scroll</span>
         </div>
       </Container>
     </section>

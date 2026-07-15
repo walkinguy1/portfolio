@@ -6,6 +6,7 @@ import projImg2 from "../assets/img/project-img2.png";
 import projImg3 from "../assets/img/project-img3.png";
 import TrackVisibility from "react-on-screen";
 import 'animate.css';
+import styles from './Projects.module.css';
 
 // Map image keys from the data model to actual imports
 const IMG_MAP = { projImg1, projImg2, projImg3 };
@@ -13,7 +14,7 @@ const IMG_MAP = { projImg1, projImg2, projImg3 };
 
 export const Projects = () => {
   return (
-    <section className="project" id="projects">
+    <section className={styles.project} id="projects">
       <Container>
         <Row>
           <Col xs={12}>
@@ -30,13 +31,13 @@ export const Projects = () => {
                     </p>
                   </div>
 
-                  <Row className="project-cards-row">
+                  <Row className={styles.projectCardsRow}>
                     {PROJECTS.map((project, index) => (
                       <ProjectCard key={index} {...project} imgUrl={IMG_MAP[project.imgKey]} />
                     ))}
                   </Row>
 
-                  <div className="projects-footer-note">
+                  <div className={styles.projectsFooterNote}>
                     <p>More experiments and works-in-progress live on my GitHub.</p>
                     <a
                       href="https://github.com/walkinguy1"

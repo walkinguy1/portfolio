@@ -7,6 +7,7 @@ import navIcon2 from '../assets/img/nav-icon2.svg';
 import navIcon3 from '../assets/img/nav-icon3.svg';
 import logo from '../assets/img/logo.png';
 import { ThemeSwitch } from './Themeswitch';
+import styles from './nav.module.css';
 
 export const NavBar = () => {
   const [activeLink, setActiveLink] = useState('home');
@@ -32,26 +33,26 @@ export const NavBar = () => {
   return (
     <Navbar
       expand="lg"
-      className={`${scrolled ? 'scrolled' : ''} ${visible ? 'nav-visible' : 'nav-hidden'}`}
+      className={`${styles.navbar} ${scrolled ? styles.scrolled : ''} ${visible ? styles.navVisible : styles.navHidden}`}
     >
       <Container>
-        <Navbar.Brand href="#home">
+        <Navbar.Brand href="#home" className={styles.navbarBrand}>
           <img src={logo} alt="Walkinguy logo" />
         </Navbar.Brand>
 
-        <Navbar.Toggle aria-controls="basic-navbar-nav">
-          <span className="navbar-toggler-icon">
+        <Navbar.Toggle aria-controls="basic-navbar-nav" className={styles.navbarToggler}>
+          <span className={styles.navbarTogglerIcon}>
             <span /><span /><span />
           </span>
         </Navbar.Toggle>
 
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
+        <Navbar.Collapse id="basic-navbar-nav" className={styles.navbarCollapse}>
+          <Nav className={styles.meAuto}>
             {['home','about','skills','projects'].map(link => (
               <Nav.Link
                 key={link}
                 href={`#${link}`}
-                className={activeLink === link ? 'active navbar-link' : 'navbar-link'}
+                className={`${styles.navbarLink} ${activeLink === link ? styles.active : ''}`}
                 onClick={() => setActiveLink(link)}
               >
                 {link.charAt(0).toUpperCase() + link.slice(1)}
@@ -59,8 +60,8 @@ export const NavBar = () => {
             ))}
           </Nav>
 
-          <span className="navbar-text">
-            <div className="social-icon">
+          <span className={styles.navbarText}>
+            <div className={styles.socialIcon}>
               <a href="https://www.linkedin.com/in/tushar-khatiwada/" target="_blank" rel="noreferrer" aria-label="LinkedIn"><img src={navIcon1} alt="LinkedIn" /></a>
               <a href="https://github.com/walkinguy1"                  target="_blank" rel="noreferrer" aria-label="GitHub"><img src={navIcon2} alt="GitHub" /></a>
               <a href="https://www.instagram.com/walkinguy/"           target="_blank" rel="noreferrer" aria-label="Instagram"><img src={navIcon3} alt="Instagram" /></a>
@@ -68,7 +69,7 @@ export const NavBar = () => {
 
             <ThemeSwitch />
 
-            <button className="vvd" onClick={scrollToConnect}>
+            <button className={styles.vvd} onClick={scrollToConnect}>
               <span>Let's Connect</span>
             </button>
           </span>

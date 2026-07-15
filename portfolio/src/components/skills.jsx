@@ -1,10 +1,11 @@
 import TrackVisibility from 'react-on-screen';
 import { SKILL_TIERS } from '../data/portfolioData';
 import 'animate.css';
+import styles from './skills.module.css';
 
 export const Skills = () => {
   return (
-    <section className="skill" id="skills">
+    <section className={styles.skill} id="skills">
       <div className="container">
         <TrackVisibility once>
           {({ isVisible }) => (
@@ -19,26 +20,26 @@ export const Skills = () => {
                 </p>
               </div>
 
-              <div className="skills-tiers">
+              <div className={styles.skillsTiers}>
                 {SKILL_TIERS.map((tier, ti) => (
                   <div
                     key={ti}
-                    className={`skill-tier skill-tier--${ti}`}
+                    className={`${styles.skillTier} ${styles[`skillTier${ti}`]}`}
                     style={{ animationDelay: `${ti * 0.15}s` }}
                   >
-                    <div className="skill-tier-head">
-                      <span className="skill-tier-index">0{ti + 1}</span>
+                    <div className={styles.skillTierHead}>
+                      <span className={styles.skillTierIndex}>0{ti + 1}</span>
                       <div>
-                        <h5 className="skill-tier-title">{tier.tier}</h5>
-                        <p className="skill-tier-blurb">{tier.blurb}</p>
+                        <h5 className={styles.skillTierTitle}>{tier.tier}</h5>
+                        <p className={styles.skillTierBlurb}>{tier.blurb}</p>
                       </div>
                     </div>
 
-                    <ul className="skill-chip-list" aria-label={`${tier.tier} skills`}>
+                    <ul className={styles.skillChipList} aria-label={`${tier.tier} skills`}>
                       {tier.skills.map((skill, si) => (
-                        <li key={si} className="skill-chip">
-                          <span className="skill-chip-name">{skill.name}</span>
-                          <span className="skill-chip-cat">{skill.category}</span>
+                        <li key={si} className={styles.skillChip}>
+                          <span className={styles.skillChipName}>{skill.name}</span>
+                          <span className={styles.skillChipCat}>{skill.category}</span>
                         </li>
                       ))}
                     </ul>
