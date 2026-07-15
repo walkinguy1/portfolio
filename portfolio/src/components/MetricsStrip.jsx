@@ -95,6 +95,7 @@ function getCached() {
 export const MetricsStrip = () => {
   const [metrics, setMetrics] = useState(getCached);
   const [loading, setLoading] = useState(!getCached());
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     const cached = getCached();
@@ -105,10 +106,13 @@ export const MetricsStrip = () => {
     }
 
     setLoading(true);
+    setError(false);
     fetchGitHubMetrics(IDENTITY.githubUsername).then(data => {
       if (data) {
         localStorage.setItem(CACHE_KEY, JSON.stringify(data));
         setMetrics(data);
+      } else {
+        setError(true);
       }
       setLoading(false);
     });
@@ -133,7 +137,7 @@ export const MetricsStrip = () => {
         </div>
 
         <div className="metrics-strip-items">
-          {loading && !metrics && (
+          {loading && !metrics && !error && (
             <>
               {[1, 2, 3, 4, 5].map(i => (
                 <div key={i} className="metrics-item metrics-item--skeleton">
@@ -141,6 +145,12 @@ export const MetricsStrip = () => {
                 </div>
               ))}
             </>
+          )}
+
+          {error && !metrics && (
+            <div className="metrics-item">
+              <span className="metrics-label">Metrics unavailable</span>
+            </div>
           )}
 
           {items.map((item, i) => (

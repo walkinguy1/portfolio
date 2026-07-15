@@ -8,14 +8,19 @@ const FORM_INITIAL = {
   firstName: '',
   lastName: '',
   email: '',
-  message: ''
+  message: '',
+  website: '' // Honeypot field
 };
+
+// Simple throttle to prevent rapid submissions
+const THROTTLE_MS = 30000; // 30 seconds
 
 export const Contact = () => {
   const [formDetails, setFormDetails] = useState(FORM_INITIAL);
   const [buttonText, setButtonText] = useState('Send Message');
   const [status, setStatus] = useState({});
   const [isSending, setIsSending] = useState(false);
+  const [lastSubmissionTime, setLastSubmissionTime] = useState(0);
 
   const onFormUpdate = useCallback((field, value) => {
     setFormDetails(prev => ({ ...prev, [field]: value }));
@@ -26,6 +31,22 @@ export const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (isSending) return;
+
+    // Check throttle
+    const now = Date.now();
+    if (now - lastSubmissionTime < THROTTLE_MS) {
+      const remaining = Math.ceil((THROTTLE_MS - (now - lastSubmissionTime)) / 1000);
+      setStatus({ success: false, message: `Please wait ${remaining} seconds before sending another message.` });
+      return;
+    }
+
+    // Check honeypot - if filled, it's a bot
+    if (formDetails.website) {
+      setStatus({ success: true, message: "Message sent! I'll get back to you soon." });
+      setFormDetails(FORM_INITIAL);
+      return;
+    }
+
     setIsSending(true);
     setButtonText("Sending...");
     setStatus({});
@@ -44,6 +65,7 @@ export const Contact = () => {
 
       if (response.ok) {
         setFormDetails(FORM_INITIAL);
+        setLastSubmissionTime(Date.now());
         setStatus({ success: true, message: "Message sent! I'll get back to you soon." });
       } else {
         const data = await response.json().catch(() => ({}));
@@ -149,6 +171,17 @@ export const Contact = () => {
                       required
                     />
                   </div>
+
+                  {/* Honeypot field - hidden from users, visible to bots */}
+                  <input
+                    type="text"
+                    name="website"
+                    value={formDetails.website}
+                    onChange={(e) => onFormUpdate('website', e.target.value)}
+                    style={{ position: 'absolute', left: '-5000px' }}
+                    tabIndex={-1}
+                    aria-hidden="true"
+                  />
 
                   <button
                     type="submit"

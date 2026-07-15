@@ -237,6 +237,15 @@ export const ParticleCanvas = () => {
     const ctx     = canvas.getContext("2d");
     const section = canvas.parentElement;
 
+    // Performance fallback: disable or reduce particles on low-end devices
+    const isSmallViewport = window.innerWidth < 768;
+    const isLowEndDevice = navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4;
+    const shouldDisableCanvas = isSmallViewport && isLowEndDevice;
+    
+    if (shouldDisableCanvas) {
+      return; // Don't initialize canvas on low-end small devices
+    }
+
     let W = 0, H = 0;
     const setSize = () => {
       W = canvas.offsetWidth; H = canvas.offsetHeight;
@@ -246,9 +255,13 @@ export const ParticleCanvas = () => {
     const ro = new ResizeObserver(setSize);
     ro.observe(section);
 
+    // Reduce particle count on small viewports or low-end devices
+    const dashCount = (isSmallViewport || isLowEndDevice) ? 210 : 420;
+    const dotCount = (isSmallViewport || isLowEndDevice) ? 70 : 140;
+    
     const particles = [
-      ...Array.from({ length: 420 }, () => new Particle(W, H, true)),
-      ...Array.from({ length: 140 }, () => new Particle(W, H, false)),
+      ...Array.from({ length: dashCount }, () => new Particle(W, H, true)),
+      ...Array.from({ length: dotCount }, () => new Particle(W, H, false)),
     ];
 
     const pushParticles = (tx, ty, strength, radius) => {

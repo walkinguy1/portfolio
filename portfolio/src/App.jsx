@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/set-state-in-effect */
 import { useState, useEffect, useContext } from "react";
 
 import { ThemeProvider, ThemeContext } from './Themecontext'
@@ -26,6 +25,17 @@ import useKonami from "./hooks/useKonami";
 import useTypedSequence from "./hooks/useTypedSequence";
 import CommandPalette from "./components/CommandPalette";
 
+function isTypingTarget(target) {
+  if (!(target instanceof HTMLElement)) return false;
+  const tag = target.tagName;
+  return (
+    tag === "INPUT" ||
+    tag === "TEXTAREA" ||
+    tag === "SELECT" ||
+    target.isContentEditable
+  );
+}
+
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
 
@@ -44,21 +54,21 @@ function AppContent() {
     parseInt(localStorage.getItem('portfolio-games-played') || '0', 10)
   );
 
-  useEffect(() => {
-    if (snakeOpen || minesweeperOpen) {
-      setGamesPlayed(p => {
-        const next = p + 1;
-        localStorage.setItem('portfolio-games-played', String(next));
-        return next;
-      });
-    }
-  }, [snakeOpen, minesweeperOpen]);
+  const incrementGamesPlayed = () => {
+    setGamesPlayed(p => {
+      const next = p + 1;
+      localStorage.setItem('portfolio-games-played', String(next));
+      return next;
+    });
+  };
 
   useKonami(() => {
+    incrementGamesPlayed();
     setSnakeOpen(true);
   }, { disabled: snakeOpen || minesweeperOpen || cmdOpen || terminalOpen });
 
   useTypedSequence(["m", "i", "n", "e"], () => {
+    incrementGamesPlayed();
     setMinesweeperOpen(true);
   }, { disabled: snakeOpen || minesweeperOpen || cmdOpen || terminalOpen });
 
@@ -71,6 +81,7 @@ function AppContent() {
   useEffect(() => {
     const handler = (e) => {
       if (snakeOpen || minesweeperOpen || terminalOpen) return;
+      if (isTypingTarget(e.target)) return;
 
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
         e.preventDefault();
@@ -101,6 +112,7 @@ function AppContent() {
     {
       label: "Play Snake",
       action: () => {
+        incrementGamesPlayed();
         setCmdOpen(false);
         setSnakeOpen(true);
       }
@@ -109,6 +121,7 @@ function AppContent() {
     {
       label: "Play Minesweeper",
       action: () => {
+        incrementGamesPlayed();
         setCmdOpen(false);
         setMinesweeperOpen(true);
       }
