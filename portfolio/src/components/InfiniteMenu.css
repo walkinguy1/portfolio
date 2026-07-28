@@ -1,0 +1,128 @@
+/* Adapted from the React Bits example CSS. Two deliberate changes:
+   1. Everything is scoped under .infinite-menu — the original uses bare
+      .action-button / .face-title / .face-description, which are generic
+      enough to collide with app styles.
+   2. Colours come from the theme tokens instead of the hardcoded purple,
+      and the label breakpoint is 768px rather than 1500px (the original
+      would have hidden the labels at every size this container ever is). */
+
+.infinite-menu {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+#infinite-grid-menu-canvas {
+  cursor: grab;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  outline: none;
+  display: block;
+}
+
+#infinite-grid-menu-canvas:active {
+  cursor: grabbing;
+}
+
+.infinite-menu .face-title,
+.infinite-menu .face-description {
+  user-select: none;
+  position: absolute;
+  top: 50%;
+  margin: 0;
+}
+
+.infinite-menu .face-title {
+  left: 0;
+  max-width: 8ch;
+  font-size: clamp(1.6rem, 3vw, 2.6rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  color: var(--text);
+  transform: translateY(-50%);
+}
+
+.infinite-menu .face-title.active {
+  opacity: 1;
+  pointer-events: auto;
+  transition: 0.5s ease;
+}
+
+.infinite-menu .face-title.inactive {
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.1s ease;
+}
+
+.infinite-menu .face-description {
+  right: 0;
+  max-width: 26ch;
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: var(--text-muted);
+  text-align: right;
+  transform: translateY(-50%);
+}
+
+.infinite-menu .face-description.active {
+  opacity: 1;
+  pointer-events: auto;
+  transition: 0.5s ease;
+}
+
+.infinite-menu .face-description.inactive {
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(8%, -50%);
+  transition: 0.1s ease;
+}
+
+.infinite-menu .action-button {
+  position: absolute;
+  left: 50%;
+  z-index: 10;
+  width: 56px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  background: var(--accent);
+  border: 2px solid var(--bg);
+  border-radius: 50%;
+  box-shadow: var(--accent-glow);
+  cursor: pointer;
+}
+
+.infinite-menu .action-button.active {
+  bottom: 2.2em;
+  transform: translateX(-50%) scale(1);
+  opacity: 1;
+  pointer-events: auto;
+  transition: 0.5s ease;
+}
+
+.infinite-menu .action-button.inactive {
+  bottom: -80px;
+  transform: translateX(-50%) scale(0);
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.1s ease;
+}
+
+.infinite-menu .action-button-icon {
+  user-select: none;
+  position: relative;
+  color: #fff;
+  font-size: 24px;
+  line-height: 1;
+}
+
+@media (max-width: 768px) {
+  .infinite-menu .face-title,
+  .infinite-menu .face-description {
+    display: none;
+  }
+}
