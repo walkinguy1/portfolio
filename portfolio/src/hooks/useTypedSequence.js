@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-function isTypingTarget(target) {
+export function isTypingTarget(target) {
   if (!(target instanceof HTMLElement)) return false;
 
   const tag = target.tagName;
@@ -14,11 +14,14 @@ function isTypingTarget(target) {
 
 export default function useTypedSequence(sequence, onTrigger, options = {}) {
   const { disabled = false } = options;
+  // Joined to a string so a fresh array literal from the caller
+  // doesn't rebind the listener on every render.
+  const keys = sequence.join(" ").toLowerCase();
 
   useEffect(() => {
-    if (disabled || !Array.isArray(sequence) || sequence.length === 0) return;
+    if (disabled || !keys) return;
 
-    const normalized = sequence.map((key) => key.toLowerCase());
+    const normalized = keys.split(" ");
     let index = 0;
 
     const handler = (event) => {
@@ -42,5 +45,5 @@ export default function useTypedSequence(sequence, onTrigger, options = {}) {
 
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
-  }, [disabled, onTrigger, sequence]);
+  }, [disabled, keys, onTrigger]);
 }

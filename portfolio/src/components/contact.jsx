@@ -1,8 +1,7 @@
 import { useState, useCallback } from "react";
 import { IDENTITY } from "../data/portfolioData";
 import { Container } from "react-bootstrap";
-import TrackVisibility from 'react-on-screen';
-import 'animate.css';
+import { Reveal } from './Reveal';
 import styles from './contact.module.css';
 
 const FORM_INITIAL = {
@@ -86,129 +85,125 @@ export const Contact = () => {
   return (
     <section className={styles.contact} id="connect">
       <Container>
-        <TrackVisibility>
-          {({ isVisible }) => (
-            <div className={isVisible ? "animate__animated animate__fadeIn" : ""}>
+        <Reveal>
 
-              {/* Section header */}
-              <div className="section-header">
-                <span className="section-tag">— Let's Talk</span>
-                <h2>Get In Touch</h2>
-                <p>Have a project in mind, want to collaborate, or just want to say hi? My inbox is open.</p>
+          {/* Section header */}
+          <div className="section-header">
+            <span className="section-tag">— Let's Talk</span>
+            <h2>Get In Touch</h2>
+            <p>Have a project in mind, want to collaborate, or just want to say hi? My inbox is open.</p>
+          </div>
+
+          {/* Contact card */}
+          <div className={styles.contactCard}>
+            {/* Left info panel */}
+            <div className={styles.contactInfo}>
+              <h3>Let's build<br />something together</h3>
+              <p>I'm currently open to internships, freelance work, and interesting side projects. Don't hesitate to reach out.</p>
+
+              <div className={styles.contactLinks}>
+                <a href={IDENTITY.linkedin} target="_blank" rel="noreferrer" className={styles.contactSocialLink}>
+                  <span className={styles.contactSocialIcon} aria-hidden="true">in</span>
+                  <span>LinkedIn</span>
+                </a>
+                <a href={IDENTITY.github} target="_blank" rel="noreferrer" className={styles.contactSocialLink}>
+                  <span className={styles.contactSocialIcon} aria-hidden="true">gh</span>
+                  <span>GitHub</span>
+                </a>
+                <a href={IDENTITY.instagram} target="_blank" rel="noreferrer" className={styles.contactSocialLink}>
+                  <span className={styles.contactSocialIcon} aria-hidden="true">ig</span>
+                  <span>Instagram</span>
+                </a>
               </div>
-
-              {/* Contact card */}
-              <div className={styles.contactCard}>
-                {/* Left info panel */}
-                <div className={styles.contactInfo}>
-                  <h3>Let's build<br />something together</h3>
-                  <p>I'm currently open to internships, freelance work, and interesting side projects. Don't hesitate to reach out.</p>
-
-                  <div className={styles.contactLinks}>
-                    <a href={IDENTITY.linkedin} target="_blank" rel="noreferrer" className={styles.contactSocialLink}>
-                      <span className={styles.contactSocialIcon} aria-hidden="true">in</span>
-                      <span>LinkedIn</span>
-                    </a>
-                    <a href={IDENTITY.github} target="_blank" rel="noreferrer" className={styles.contactSocialLink}>
-                      <span className={styles.contactSocialIcon} aria-hidden="true">gh</span>
-                      <span>GitHub</span>
-                    </a>
-                    <a href={IDENTITY.instagram} target="_blank" rel="noreferrer" className={styles.contactSocialLink}>
-                      <span className={styles.contactSocialIcon} aria-hidden="true">ig</span>
-                      <span>Instagram</span>
-                    </a>
-                  </div>
-                </div>
-
-                {/* Right form panel */}
-                <form className={styles.contactForm} onSubmit={handleSubmit} noValidate>
-                  <div className={styles.formRow2}>
-                    <div className={styles.formGroup}>
-                      <label htmlFor="firstName">First Name</label>
-                      <input
-                        id="firstName"
-                        type="text"
-                        value={formDetails.firstName}
-                        placeholder="Tushar"
-                        onChange={(e) => onFormUpdate('firstName', e.target.value)}
-                        required
-                        autoComplete="given-name"
-                      />
-                    </div>
-                    <div className={styles.formGroup}>
-                      <label htmlFor="lastName">Last Name</label>
-                      <input
-                        id="lastName"
-                        type="text"
-                        value={formDetails.lastName}
-                        placeholder="Khatiwada"
-                        onChange={(e) => onFormUpdate('lastName', e.target.value)}
-                        autoComplete="family-name"
-                      />
-                    </div>
-                  </div>
-
-                  <div className={styles.formGroup}>
-                    <label htmlFor="email">Email Address</label>
-                    <input
-                      id="email"
-                      type="email"
-                      value={formDetails.email}
-                      placeholder="you@example.com"
-                      onChange={(e) => onFormUpdate('email', e.target.value)}
-                      required
-                      autoComplete="email"
-                    />
-                  </div>
-
-                  <div className={styles.formGroup}>
-                    <label htmlFor="message">Message</label>
-                    <textarea
-                      id="message"
-                      rows="5"
-                      value={formDetails.message}
-                      placeholder="Tell me what you're working on..."
-                      onChange={(e) => onFormUpdate('message', e.target.value)}
-                      required
-                    />
-                  </div>
-
-                  {/* Honeypot field - hidden from users, visible to bots */}
-                  <input
-                    type="text"
-                    name="website"
-                    value={formDetails.website}
-                    onChange={(e) => onFormUpdate('website', e.target.value)}
-                    style={{ position: 'absolute', left: '-5000px' }}
-                    tabIndex={-1}
-                    aria-hidden="true"
-                  />
-
-                  <button
-                    type="submit"
-                    className={`btn-primary-cta ${styles.contactSubmit}`}
-                    disabled={isSending}
-                    aria-busy={isSending}
-                  >
-                    <span>{buttonText}</span>
-                    {!isSending && <span className={styles.submitArrow} aria-hidden="true">→</span>}
-                  </button>
-
-                  {status.message && (
-                    <p
-                      role="status"
-                      aria-live="polite"
-                      className={`${styles.formStatus} ${status.success ? styles.formStatusSuccess : styles.formStatusError}`}
-                    >
-                      {status.message}
-                    </p>
-                  )}
-                </form>
-              </div>
-
             </div>
-          )}
-        </TrackVisibility>
+
+            {/* Right form panel */}
+            <form className={styles.contactForm} onSubmit={handleSubmit} noValidate>
+              <div className={styles.formRow2}>
+                <div className={styles.formGroup}>
+                  <label htmlFor="firstName">First Name</label>
+                  <input
+                    id="firstName"
+                    type="text"
+                    value={formDetails.firstName}
+                    placeholder="Tushar"
+                    onChange={(e) => onFormUpdate('firstName', e.target.value)}
+                    required
+                    autoComplete="given-name"
+                  />
+                </div>
+                <div className={styles.formGroup}>
+                  <label htmlFor="lastName">Last Name</label>
+                  <input
+                    id="lastName"
+                    type="text"
+                    value={formDetails.lastName}
+                    placeholder="Khatiwada"
+                    onChange={(e) => onFormUpdate('lastName', e.target.value)}
+                    autoComplete="family-name"
+                  />
+                </div>
+              </div>
+
+              <div className={styles.formGroup}>
+                <label htmlFor="email">Email Address</label>
+                <input
+                  id="email"
+                  type="email"
+                  value={formDetails.email}
+                  placeholder="you@example.com"
+                  onChange={(e) => onFormUpdate('email', e.target.value)}
+                  required
+                  autoComplete="email"
+                />
+              </div>
+
+              <div className={styles.formGroup}>
+                <label htmlFor="message">Message</label>
+                <textarea
+                  id="message"
+                  rows="5"
+                  value={formDetails.message}
+                  placeholder="Tell me what you're working on..."
+                  onChange={(e) => onFormUpdate('message', e.target.value)}
+                  required
+                />
+              </div>
+
+              {/* Honeypot field - hidden from users, visible to bots */}
+              <input
+                type="text"
+                name="website"
+                value={formDetails.website}
+                onChange={(e) => onFormUpdate('website', e.target.value)}
+                style={{ position: 'absolute', left: '-5000px' }}
+                tabIndex={-1}
+                aria-hidden="true"
+              />
+
+              <button
+                type="submit"
+                className={`btn-primary-cta ${styles.contactSubmit}`}
+                disabled={isSending}
+                aria-busy={isSending}
+              >
+                <span>{buttonText}</span>
+                {!isSending && <span className={styles.submitArrow} aria-hidden="true">→</span>}
+              </button>
+
+              {status.message && (
+                <p
+                  role="status"
+                  aria-live="polite"
+                  className={`${styles.formStatus} ${status.success ? styles.formStatusSuccess : styles.formStatusError}`}
+                >
+                  {status.message}
+                </p>
+              )}
+            </form>
+          </div>
+
+        </Reveal>
       </Container>
     </section>
   );

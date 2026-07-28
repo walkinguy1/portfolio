@@ -10,7 +10,7 @@ import { Projects } from './components/Projects.jsx'
 import { Contact } from './components/contact.jsx'
 import { Footer } from './components/footer.jsx'
 import { Marquee } from './components/Marquee.jsx'
-import { Cursor } from './components/Cursor.jsx'
+import TargetCursor from './components/TargetCursor.jsx'
 import { HiddenThingsSheet } from './components/HiddenThingsSheet.jsx'
 import { TerminalEgg } from './components/TerminalEgg.jsx'
 import { MetricsStrip } from './components/MetricsStrip.jsx'
@@ -20,20 +20,8 @@ import { HelmetProvider } from 'react-helmet-async'
 
 import SnakeGame from "./games/SnakeGame";
 import MinesweeperGame from "./games/MinesweeperGame";
-import useKonami from "./hooks/useKonami";
-import useTypedSequence from "./hooks/useTypedSequence";
+import useTypedSequence, { isTypingTarget } from "./hooks/useTypedSequence";
 import CommandPalette from "./components/CommandPalette";
-
-function isTypingTarget(target) {
-  if (!(target instanceof HTMLElement)) return false;
-  const tag = target.tagName;
-  return (
-    tag === "INPUT" ||
-    tag === "TEXTAREA" ||
-    tag === "SELECT" ||
-    target.isContentEditable
-  );
-}
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
@@ -61,10 +49,19 @@ function AppContent() {
     });
   };
 
-  useKonami(() => {
+  // Snake opens from either the handle or the Konami code
+  const openSnake = () => {
     incrementGamesPlayed();
     setSnakeOpen(true);
-  }, { disabled: snakeOpen || minesweeperOpen || cmdOpen || terminalOpen });
+  };
+  const eggsDisabled = { disabled: snakeOpen || minesweeperOpen || cmdOpen || terminalOpen };
+
+  useTypedSequence([..."walkinguy"], openSnake, eggsDisabled);
+  useTypedSequence(
+    ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowRight", "ArrowLeft", "ArrowRight", "b", "a"],
+    openSnake,
+    eggsDisabled,
+  );
 
   useTypedSequence(["m", "i", "n", "e"], () => {
     incrementGamesPlayed();
@@ -174,7 +171,13 @@ function AppContent() {
 
   return (
     <div className="App">
-      <Cursor />
+      {/* The app's shared button classes are targets too, so individual
+          call sites don't each need a `cursor-target` class. */}
+      <TargetCursor
+        targetSelector=".cursor-target, .btn-primary-cta, .btn-outline-cta, .btn-ghost-cta, .cli-toggle-fab, .social-icon a"
+        spinDuration={3}
+        hoverDuration={0.25}
+      />
       <header>
         <NavBar />
       </header>

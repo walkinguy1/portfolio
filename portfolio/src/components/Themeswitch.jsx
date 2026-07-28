@@ -7,7 +7,7 @@ export const ThemeSwitch = () => {
 
   return (
     <button
-      className={`${styles.themeSwitch} ${isDark ? styles.themeSwitchDark : styles.themeSwitchLight}`}
+      className={`cursor-target ${styles.themeSwitch} ${isDark ? styles.themeSwitchDark : styles.themeSwitchLight}`}
       onClick={toggle}
       aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
       title={isDark ? 'Light mode' : 'Dark mode'}

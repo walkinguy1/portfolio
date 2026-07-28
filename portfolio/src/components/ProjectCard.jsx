@@ -10,12 +10,12 @@ export const ProjectCard = ({ title, description, imgUrl, tech = [], githubUrl, 
           <div className={styles.projOverlay}>
             <div className={styles.projOverlayLinks}>
               {githubUrl && (
-                <a href={githubUrl} target="_blank" rel="noreferrer" className={styles.projLink}>
+                <a href={githubUrl} target="_blank" rel="noreferrer" className={`cursor-target ${styles.projLink}`}>
                   GitHub ↗
                 </a>
               )}
               {liveUrl && (
-                <a href={liveUrl} target="_blank" rel="noreferrer" className={`${styles.projLink} ${styles.projLinkLive}`}>
+                <a href={liveUrl} target="_blank" rel="noreferrer" className={`cursor-target ${styles.projLink} ${styles.projLinkLive}`}>
                   Live Demo ↗
                 </a>
               )}
