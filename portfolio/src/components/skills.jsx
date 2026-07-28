@@ -30,7 +30,7 @@ export const Skills = () => {
                     <div className={styles.skillTierHead}>
                       <span className={styles.skillTierIndex}>0{ti + 1}</span>
                       <div>
-                        <h5 className={styles.skillTierTitle}>{tier.tier}</h5>
+                        <h3 className={styles.skillTierTitle}>{tier.tier}</h3>
                         <p className={styles.skillTierBlurb}>{tier.blurb}</p>
                       </div>
                     </div>

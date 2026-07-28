@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import styles from './HiddenThingsSheet.module.css';
 
 export const HiddenThingsSheet = ({ gamesPlayed }) => {
   const [open, setOpen] = useState(false);
@@ -14,22 +15,22 @@ export const HiddenThingsSheet = ({ gamesPlayed }) => {
 
   return (
     <>
-      <div className="easter-egg-fab" onClick={() => setOpen(true)} title="Hidden things">
+      <div className={styles.easterEggFab} onClick={() => setOpen(true)} title="Hidden things">
         ?
       </div>
       
       {highScore > 0 && !open && (
-        <div className="snake-high-score-corner">BEST: {highScore}</div>
+        <div className={styles.snakeHighScoreCorner}>BEST: {highScore}</div>
       )}
 
       {open && (
-        <div className="hidden-things-overlay" onClick={() => setOpen(false)}>
-          <div className="hidden-things-sheet" onClick={(e) => e.stopPropagation()}>
-            <div className="sheet-header">
+        <div className={styles.hiddenThingsOverlay} onClick={() => setOpen(false)}>
+          <div className={styles.hiddenThingsSheet} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.sheetHeader}>
               <h3>Hidden Things</h3>
               <button onClick={() => setOpen(false)}>×</button>
             </div>
-            <ul className="sheet-list">
+            <ul className={styles.sheetList}>
               <li>
                 <strong>Command Palette:</strong> <code>CTRL + K</code> or <code>/</code>
               </li>
@@ -44,7 +45,7 @@ export const HiddenThingsSheet = ({ gamesPlayed }) => {
                   <strong>Developer Terminal:</strong> <code>Type 'c' 'o' 'f' 'f' 'e' 'e'</code>
                 </li>
               ) : (
-                <li className="locked-egg">
+                <li className={styles.lockedEgg}>
                   <span>??? (Play {3 - gamesPlayed} more {3 - gamesPlayed === 1 ? 'game' : 'games'} to unlock)</span>
                 </li>
               )}

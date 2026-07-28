@@ -96,7 +96,7 @@ p.danger {
   --border:      rgba(255,255,255,0.07);
   --border-bright: rgba(255,255,255,0.13);
   --text:        #e8eaf0;
-  --text-muted:  #6b7280;
+  --text-muted:  #949cab;   /* WCAG AA on every dark surface, tinted chips included */
   --text-faint:  #3d4350;
   --accent:      #5b9cf6;
   --accent-bright: #93c5fd;

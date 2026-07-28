@@ -3,6 +3,7 @@ import { IDENTITY } from "../data/portfolioData";
 import { Container } from "react-bootstrap";
 import TrackVisibility from 'react-on-screen';
 import 'animate.css';
+import styles from './contact.module.css';
 
 const FORM_INITIAL = {
   firstName: '',
@@ -83,7 +84,7 @@ export const Contact = () => {
   };
 
   return (
-    <section className="contact" id="connect">
+    <section className={styles.contact} id="connect">
       <Container>
         <TrackVisibility>
           {({ isVisible }) => (
@@ -97,32 +98,32 @@ export const Contact = () => {
               </div>
 
               {/* Contact card */}
-              <div className="contact-card">
+              <div className={styles.contactCard}>
                 {/* Left info panel */}
-                <div className="contact-info">
+                <div className={styles.contactInfo}>
                   <h3>Let's build<br />something together</h3>
                   <p>I'm currently open to internships, freelance work, and interesting side projects. Don't hesitate to reach out.</p>
 
-                  <div className="contact-links">
-                    <a href={IDENTITY.linkedin} target="_blank" rel="noreferrer" className="contact-social-link">
-                      <span className="contact-social-icon" aria-hidden="true">in</span>
+                  <div className={styles.contactLinks}>
+                    <a href={IDENTITY.linkedin} target="_blank" rel="noreferrer" className={styles.contactSocialLink}>
+                      <span className={styles.contactSocialIcon} aria-hidden="true">in</span>
                       <span>LinkedIn</span>
                     </a>
-                    <a href={IDENTITY.github} target="_blank" rel="noreferrer" className="contact-social-link">
-                      <span className="contact-social-icon" aria-hidden="true">gh</span>
+                    <a href={IDENTITY.github} target="_blank" rel="noreferrer" className={styles.contactSocialLink}>
+                      <span className={styles.contactSocialIcon} aria-hidden="true">gh</span>
                       <span>GitHub</span>
                     </a>
-                    <a href={IDENTITY.instagram} target="_blank" rel="noreferrer" className="contact-social-link">
-                      <span className="contact-social-icon" aria-hidden="true">ig</span>
+                    <a href={IDENTITY.instagram} target="_blank" rel="noreferrer" className={styles.contactSocialLink}>
+                      <span className={styles.contactSocialIcon} aria-hidden="true">ig</span>
                       <span>Instagram</span>
                     </a>
                   </div>
                 </div>
 
                 {/* Right form panel */}
-                <form className="contact-form" onSubmit={handleSubmit} noValidate>
-                  <div className="form-row-2">
-                    <div className="form-group">
+                <form className={styles.contactForm} onSubmit={handleSubmit} noValidate>
+                  <div className={styles.formRow2}>
+                    <div className={styles.formGroup}>
                       <label htmlFor="firstName">First Name</label>
                       <input
                         id="firstName"
@@ -134,7 +135,7 @@ export const Contact = () => {
                         autoComplete="given-name"
                       />
                     </div>
-                    <div className="form-group">
+                    <div className={styles.formGroup}>
                       <label htmlFor="lastName">Last Name</label>
                       <input
                         id="lastName"
@@ -147,7 +148,7 @@ export const Contact = () => {
                     </div>
                   </div>
 
-                  <div className="form-group">
+                  <div className={styles.formGroup}>
                     <label htmlFor="email">Email Address</label>
                     <input
                       id="email"
@@ -160,7 +161,7 @@ export const Contact = () => {
                     />
                   </div>
 
-                  <div className="form-group">
+                  <div className={styles.formGroup}>
                     <label htmlFor="message">Message</label>
                     <textarea
                       id="message"
@@ -185,19 +186,19 @@ export const Contact = () => {
 
                   <button
                     type="submit"
-                    className="btn-primary-cta contact-submit"
+                    className={`btn-primary-cta ${styles.contactSubmit}`}
                     disabled={isSending}
                     aria-busy={isSending}
                   >
                     <span>{buttonText}</span>
-                    {!isSending && <span className="submit-arrow" aria-hidden="true">→</span>}
+                    {!isSending && <span className={styles.submitArrow} aria-hidden="true">→</span>}
                   </button>
 
                   {status.message && (
                     <p
                       role="status"
                       aria-live="polite"
-                      className={`form-status ${status.success ? 'form-status--success' : 'form-status--error'}`}
+                      className={`${styles.formStatus} ${status.success ? styles.formStatusSuccess : styles.formStatusError}`}
                     >
                       {status.message}
                     </p>

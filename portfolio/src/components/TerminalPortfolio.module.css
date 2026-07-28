@@ -1,0 +1,130 @@
+/* ============================================================
+   TERMINAL PORTFOLIO
+   ============================================================ */
+.terminalPortfolio {
+  position: fixed;
+  inset: 0;
+  background: var(--term-bg);
+  color: var(--term-text);
+  font-family: 'Courier New', monospace;
+  z-index: 999999;
+  display: flex;
+  flex-direction: column;
+  animation: crtOn 0.4s ease-out;
+}
+
+.terminalHeader {
+  background: var(--term-header-bg);
+  border-bottom: 1px solid var(--term-border);
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.terminalDots {
+  display: flex;
+  gap: 6px;
+}
+
+.terminalDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.terminalDotRed { background: #ff5f56; cursor: pointer; }
+.terminalDotYellow { background: #ffbd2e; }
+.terminalDotGreen { background: #27c93f; }
+
+.terminalTitle {
+  flex: 1;
+  font-size: 12px;
+  color: var(--term-title);
+  font-weight: 600;
+}
+
+.terminalExitBtn {
+  background: transparent;
+  border: 1px solid var(--term-border);
+  color: var(--term-title);
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.terminalExitBtn:hover {
+  background: var(--term-border);
+}
+
+.terminalBody {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  position: relative;
+}
+
+.terminalScanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.1),
+    rgba(0, 0, 0, 0.1) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  pointer-events: none;
+}
+
+.terminalLine {
+  margin-bottom: 4px;
+  line-height: 1.4;
+}
+
+.terminalLineInput {
+  color: var(--term-input-text);
+}
+
+.terminalLineOutput {
+  color: var(--term-text);
+}
+
+.terminalInputLine {
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.terminalPrompt {
+  color: var(--term-prompt);
+  margin-right: 8px;
+  white-space: nowrap;
+}
+
+.terminalInput {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--term-input-text);
+  font-family: inherit;
+  font-size: 14px;
+  caret-color: var(--term-prompt);
+}
+
+.terminalInput:focus {
+  outline: none;
+}
+
+.terminalBody::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  background: var(--term-gradient);
+  pointer-events: none;
+}

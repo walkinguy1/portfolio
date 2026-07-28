@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 import { useState, useEffect } from 'react';
 import { IDENTITY } from '../data/portfolioData';
+import styles from './MetricsStrip.module.css';
 
 const CACHE_KEY = 'portfolio-github-metrics-v2';
 const CACHE_TTL = 60 * 60 * 1000; // 1 hour
@@ -129,35 +130,35 @@ export const MetricsStrip = () => {
     : [];
 
   return (
-    <section className="metrics-strip" aria-label="Live coding metrics">
-      <div className="metrics-strip-inner">
-        <div className="metrics-strip-badge">
-          <span className="metrics-live-dot" />
+    <section className={styles.metricsStrip} aria-label="Live coding metrics">
+      <div className={styles.metricsStripInner}>
+        <div className={styles.metricsStripBadge}>
+          <span className={styles.metricsLiveDot} />
           <span>LIVE</span>
         </div>
 
-        <div className="metrics-strip-items">
+        <div className={styles.metricsStripItems}>
           {loading && !metrics && !error && (
             <>
               {[1, 2, 3, 4, 5].map(i => (
-                <div key={i} className="metrics-item metrics-item--skeleton">
-                  <span className="metrics-skeleton-bar" />
+                <div key={i} className={`${styles.metricsItem} ${styles.metricsItemSkeleton}`}>
+                  <span className={styles.metricsSkeletonBar} />
                 </div>
               ))}
             </>
           )}
 
           {error && !metrics && (
-            <div className="metrics-item">
-              <span className="metrics-label">Metrics unavailable</span>
+            <div className={styles.metricsItem}>
+              <span className={styles.metricsLabel}>Metrics unavailable</span>
             </div>
           )}
 
           {items.map((item, i) => (
-            <div key={i} className="metrics-item">
-              <span className="metrics-icon" aria-hidden="true">{item.icon}</span>
-              <span className="metrics-value">{item.value}</span>
-              <span className="metrics-label">{item.label}</span>
+            <div key={i} className={styles.metricsItem}>
+              <span className={styles.metricsIcon} aria-hidden="true">{item.icon}</span>
+              <span className={styles.metricsValue}>{item.value}</span>
+              <span className={styles.metricsLabel}>{item.label}</span>
             </div>
           ))}
         </div>
@@ -166,7 +167,7 @@ export const MetricsStrip = () => {
           href={IDENTITY.github}
           target="_blank"
           rel="noreferrer"
-          className="metrics-gh-link"
+          className={styles.metricsGhLink}
           aria-label="View GitHub profile"
         >
           GitHub ↗

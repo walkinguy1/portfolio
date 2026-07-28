@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import styles from './TerminalEgg.module.css';
 
 export const TerminalEgg = ({ open, onClose }) => {
   const [lines, setLines] = useState([]);
@@ -36,13 +37,13 @@ export const TerminalEgg = ({ open, onClose }) => {
   if (!open) return null;
 
   return (
-    <div className="cmd-overlay" onClick={onClose} style={{ zIndex: 100000 }}>
-      <div className="cmd-modal" onClick={e => e.stopPropagation()} style={{ padding: '20px', minHeight: '300px' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
-          <span style={{ color: '#aaa', fontSize: '12px' }}>terminal.exe</span>
-          <button onClick={onClose} style={{ color: '#fff', fontSize: '18px', cursor: 'pointer' }}>×</button>
+    <div className={styles.cmdOverlay} onClick={onClose} style={{ zIndex: 100000 }}>
+      <div className={styles.cmdModal} onClick={e => e.stopPropagation()}>
+        <div className={styles.terminalHeader}>
+          <span className={styles.terminalTitle}>terminal.exe</span>
+          <button className={styles.terminalCloseBtn} onClick={onClose}>×</button>
         </div>
-        <div style={{ color: '#22c55e', fontFamily: 'monospace', fontSize: '14px', lineHeight: '1.5' }}>
+        <div className={styles.terminalContent}>
           {lines.map((l, index) => (
             <div key={index}>{l}</div>
           ))}

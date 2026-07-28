@@ -85,6 +85,35 @@
 }
 
 /* ============================================================
+   SOCIAL ICONS
+   Shared by the navbar and the footer — keep this the single
+   source of truth so both stay in sync.
+   ============================================================ */
+.social-icon { display: inline-block; }
+
+.social-icon a {
+  width: 42px; height: 42px;
+  display: inline-flex;
+  align-items: center; justify-content: center;
+  margin-right: 6px;
+  border-radius: 50%;
+  background: rgba(217, 217, 217, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  position: relative;
+}
+.social-icon a:hover { background: rgba(255, 255, 255, 0.2); }
+
+.social-icon a img {
+  width: 40%;
+  z-index: 1;
+  transition: filter 0.3s ease, transform 0.3s ease;
+}
+.social-icon a:hover img { transform: scale(1.1); }
+
+/* Light mode: invert the white icons so they read on a pale circle */
+[data-theme="light"] .social-icon a img { filter: invert(1) brightness(0); }
+
+/* ============================================================
    THEME TOGGLE BUTTON
    ============================================================ */
 .theme-toggle {

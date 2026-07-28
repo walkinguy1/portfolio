@@ -1,0 +1,76 @@
+/* ============================================================
+   THEME SWITCH — Sliding toggle
+   ============================================================ */
+.themeSwitch {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0 14px;
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.themeSwitchTrack {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 52px;
+  height: 28px;
+  border-radius: 99px;
+  transition: background 0.35s ease, box-shadow 0.35s ease;
+}
+
+/* Dark mode track — deep inset look */
+.themeSwitchDark .themeSwitchTrack {
+  background: #1e2230;
+  box-shadow:
+    inset 2px 2px 5px rgba(0,0,0,0.6),
+    inset -1px -1px 3px rgba(255,255,255,0.04);
+}
+
+/* Light mode track */
+.themeSwitchLight .themeSwitchTrack {
+  background: #dde0e8;
+  box-shadow:
+    inset 2px 2px 5px rgba(0,0,0,0.12),
+    inset -1px -1px 3px rgba(255,255,255,0.8);
+}
+
+.themeSwitchThumb {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+              background 0.35s ease,
+              box-shadow 0.35s ease;
+  top: 3px;
+}
+
+/* Thumb in dark mode — slides to right */
+.themeSwitchDark .themeSwitchThumb {
+  transform: translateX(27px);
+  background: #3a4060;
+  color: #93c5fd;
+  box-shadow:
+    2px 2px 6px rgba(0,0,0,0.5),
+    -1px -1px 3px rgba(255,255,255,0.06);
+}
+
+/* Thumb in light mode — slides to left */
+.themeSwitchLight .themeSwitchThumb {
+  transform: translateX(3px);
+  background: #ffffff;
+  color: #f59e0b;
+  box-shadow:
+    2px 2px 6px rgba(0,0,0,0.15),
+    -1px -1px 4px rgba(255,255,255,0.9);
+}
+
+.themeSwitch:hover .themeSwitchThumb {
+  filter: brightness(1.1);
+}

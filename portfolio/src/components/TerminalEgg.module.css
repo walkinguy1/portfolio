@@ -1,0 +1,57 @@
+/* ============================================================
+   TERMINAL EGG
+   ============================================================ */
+.cmdOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 10vh;
+  z-index: 100000;
+}
+
+.cmdModal {
+  width: 500px;
+  background: #111;
+  border: 1px solid #333;
+  border-radius: 8px;
+  overflow: hidden;
+  font-family: monospace;
+  color: #fff;
+  padding: 20px;
+  min-height: 300px;
+}
+
+.terminalHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.terminalTitle {
+  color: #aaa;
+  font-size: 12px;
+}
+
+.terminalCloseBtn {
+  color: #fff;
+  font-size: 18px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.terminalContent {
+  color: #22c55e;
+  font-family: monospace;
+  font-size: 14px;
+  line-height: 1.5;
+}

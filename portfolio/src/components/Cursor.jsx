@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import styles from './Cursor.module.css';
 
 export const Cursor = () => {
   const dotRef = useRef(null);
@@ -30,8 +31,8 @@ export const Cursor = () => {
       // Show cursor elements on first move — use DOM directly to avoid stale closure
       if (!visibleRef.current) {
         visibleRef.current = true;
-        dot.classList.add('cursor-dot--visible');
-        ring.classList.add('cursor-ring--visible');
+        dot.classList.add(styles.cursorDotVisible);
+        ring.classList.add(styles.cursorRingVisible);
       }
     };
 
@@ -44,8 +45,8 @@ export const Cursor = () => {
       rafId = requestAnimationFrame(animate);
     };
 
-    const onEnter = () => { isHovering = true; ring.classList.add('cursor-ring--hover'); };
-    const onLeave = () => { isHovering = false; ring.classList.remove('cursor-ring--hover'); };
+    const onEnter = () => { isHovering = true; ring.classList.add(styles.cursorRingHover); };
+    const onLeave = () => { isHovering = false; ring.classList.remove(styles.cursorRingHover); };
 
     const attachListeners = () => {
       document.querySelectorAll('a, button').forEach(el => {
@@ -72,8 +73,8 @@ export const Cursor = () => {
 
   return (
     <>
-      <div className="cursor-dot" ref={dotRef} />
-      <div className="cursor-ring" ref={ringRef} />
+      <div className={styles.cursorDot} ref={dotRef} />
+      <div className={styles.cursorRing} ref={ringRef} />
     </>
   );
 };

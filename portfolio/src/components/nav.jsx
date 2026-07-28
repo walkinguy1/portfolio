@@ -61,7 +61,7 @@ export const NavBar = () => {
           </Nav>
 
           <span className={styles.navbarText}>
-            <div className={styles.socialIcon}>
+            <div className={`social-icon ${styles.navSocial}`}>
               <a href="https://www.linkedin.com/in/tushar-khatiwada/" target="_blank" rel="noreferrer" aria-label="LinkedIn"><img src={navIcon1} alt="LinkedIn" /></a>
               <a href="https://github.com/walkinguy1"                  target="_blank" rel="noreferrer" aria-label="GitHub"><img src={navIcon2} alt="GitHub" /></a>
               <a href="https://www.instagram.com/walkinguy/"           target="_blank" rel="noreferrer" aria-label="Instagram"><img src={navIcon3} alt="Instagram" /></a>

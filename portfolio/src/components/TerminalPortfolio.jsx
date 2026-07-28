@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { IDENTITY, PROJECTS, SKILL_TIERS } from '../data/portfolioData';
+import styles from './TerminalPortfolio.module.css';
 
 const PROMPT = `${IDENTITY.handle}@portfolio:~$ `;
 
@@ -121,6 +122,12 @@ Feel free to reach out — I'm open to internships, freelance, and collaborating
   if (cmd === 'coffee' || cmd === 'brew coffee') {
     return '☕ Brewing... done. Caffeine levels nominal.';
   }
+  if (cmd === 'gae') {
+    return 'no u';
+  }
+  if (cmd === 'hello') {
+    return 'yes yes hello this is a human speaking';
+  }
 
   return `command not found: ${cmd}\nType 'help' for available commands.`;
 }
@@ -211,37 +218,37 @@ export const TerminalPortfolio = ({ onExit, toggleTheme }) => {
   }, [input, cmdHistory]);
 
   return (
-    <div className="terminal-portfolio" onClick={() => inputRef.current?.focus()}>
-      <div className="terminal-header">
-        <div className="terminal-dots">
-          <span className="terminal-dot terminal-dot--red" onClick={onExit} />
-          <span className="terminal-dot terminal-dot--yellow" />
-          <span className="terminal-dot terminal-dot--green" />
+    <div className={styles.terminalPortfolio} onClick={() => inputRef.current?.focus()}>
+      <div className={styles.terminalHeader}>
+        <div className={styles.terminalDots}>
+          <span className={`${styles.terminalDot} ${styles.terminalDotRed}`} onClick={onExit} />
+          <span className={`${styles.terminalDot} ${styles.terminalDotYellow}`} />
+          <span className={`${styles.terminalDot} ${styles.terminalDotGreen}`} />
         </div>
-        <span className="terminal-title">walkinguy@portfolio — bash</span>
-        <button className="terminal-exit-btn" onClick={onExit}>
+        <span className={styles.terminalTitle}>walkinguy@portfolio — bash</span>
+        <button className={styles.terminalExitBtn} onClick={onExit}>
           ← Visual Mode
         </button>
       </div>
 
-      <div className="terminal-body" ref={scrollRef}>
-        <div className="terminal-scanlines" aria-hidden="true" />
+      <div className={styles.terminalBody} ref={scrollRef}>
+        <div className={styles.terminalScanlines} aria-hidden="true" />
 
         {history.map((entry, i) => (
           <div
             key={i}
-            className={`terminal-line ${entry.type === 'input' ? 'terminal-line--input' : 'terminal-line--output'}`}
+            className={`${styles.terminalLine} ${entry.type === 'input' ? styles.terminalLineInput : styles.terminalLineOutput}`}
           >
             <pre>{entry.text}</pre>
           </div>
         ))}
 
-        <form className="terminal-input-line" onSubmit={handleSubmit}>
-          <span className="terminal-prompt">{PROMPT}</span>
+        <form className={styles.terminalInputLine} onSubmit={handleSubmit}>
+          <span className={styles.terminalPrompt}>{PROMPT}</span>
           <input
             ref={inputRef}
             type="text"
-            className="terminal-input"
+            className={styles.terminalInput}
             value={input}
             onChange={e => setInput(e.target.value)}
             onKeyDown={handleKeyDown}

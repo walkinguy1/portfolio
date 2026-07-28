@@ -1,4 +1,5 @@
 import { useEffect, useState, useMemo, useRef } from "react";
+import styles from './CommandPalette.module.css';
 
 export default function CommandPalette({ open, onClose, actions }) {
   const [query, setQuery] = useState("");
@@ -65,12 +66,12 @@ export default function CommandPalette({ open, onClose, actions }) {
   if (!open) return null;
 
   return (
-    <div className="cmd-overlay">
-      <div className="cmd-modal" role="dialog" aria-modal="true">
+    <div className={styles.cmdOverlay}>
+      <div className={styles.cmdModal} role="dialog" aria-modal="true">
           <input
             autoFocus
             placeholder="Type a command..."
-            className="cmd-input"
+            className={styles.cmdInput}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             role="combobox"
@@ -80,9 +81,9 @@ export default function CommandPalette({ open, onClose, actions }) {
             aria-expanded={open}
           />
 
-        <div className="cmd-list" role="listbox" id="command-list">
+        <div className={styles.cmdList} role="listbox" id="command-list">
           {filtered.length === 0 && (
-            <div className="cmd-empty">No results</div>
+            <div className={styles.cmdEmpty}>No results</div>
           )}
 
           {filtered.map((item, i) => (
@@ -91,7 +92,7 @@ export default function CommandPalette({ open, onClose, actions }) {
               id={`command-option-${i}`}
               role="option"
               aria-selected={i === selected}
-              className={`cmd-item ${i === selected ? "active" : ""}`}
+              className={`${styles.cmdItem} ${i === selected ? styles.cmdItemActive : ''}`}
               onClick={() => {
                 item.action();
                 onClose();

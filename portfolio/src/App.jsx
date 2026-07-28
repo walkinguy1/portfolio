@@ -11,7 +11,6 @@ import { Contact } from './components/contact.jsx'
 import { Footer } from './components/footer.jsx'
 import { Marquee } from './components/Marquee.jsx'
 import { Cursor } from './components/Cursor.jsx'
-import { Walkinguy } from './components/Walkinguy.jsx'
 import { HiddenThingsSheet } from './components/HiddenThingsSheet.jsx'
 import { TerminalEgg } from './components/TerminalEgg.jsx'
 import { MetricsStrip } from './components/MetricsStrip.jsx'
@@ -107,7 +106,7 @@ function AppContent() {
     { label: "Go to About", action: () => scrollTo("about") },
     { label: "Go to Skills", action: () => scrollTo("skills") },
     { label: "Go to Projects", action: () => scrollTo("projects") },
-    { label: "Go to Contact", action: () => scrollTo("contact") },
+    { label: "Go to Contact", action: () => scrollTo("connect") },
 
     {
       label: "Play Snake",
@@ -192,17 +191,19 @@ function AppContent() {
 
       <main className="main-bg-wrapper">
 
-        <div id="home"><Banner /></div>
+        {/* Each section carries its own id — no wrapper ids, or the
+            anchors resolve to an empty div instead of the section. */}
+        <Banner />
         <Marquee />
 
-        <div id="about"><About /></div>
+        <About />
         <Marquee reverse light />
 
-        <div id="skills"><Skills /></div>
+        <Skills />
         <Marquee />
 
-        <div id="projects"><Projects /></div>
-        <div id="contact"><Contact /></div>
+        <Projects />
+        <Contact />
 
       </main>
 
@@ -233,7 +234,6 @@ function AppContent() {
       />
 
       <HiddenThingsSheet gamesPlayed={gamesPlayed} />
-      <Walkinguy />
     </div>
   );
 }

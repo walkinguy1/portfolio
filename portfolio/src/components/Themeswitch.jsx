@@ -1,4 +1,5 @@
 import { useTheme } from '../useTheme';
+import styles from './Themeswitch.module.css';
 
 export const ThemeSwitch = () => {
   const { theme, toggle } = useTheme();
@@ -6,13 +7,13 @@ export const ThemeSwitch = () => {
 
   return (
     <button
-      className={`theme-switch ${isDark ? 'theme-switch--dark' : 'theme-switch--light'}`}
+      className={`${styles.themeSwitch} ${isDark ? styles.themeSwitchDark : styles.themeSwitchLight}`}
       onClick={toggle}
       aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
       title={isDark ? 'Light mode' : 'Dark mode'}
     >
-      <span className="theme-switch__track">
-        <span className="theme-switch__thumb">
+      <span className={styles.themeSwitchTrack}>
+        <span className={styles.themeSwitchThumb}>
           {isDark ? (
             /* Moon */
             <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
