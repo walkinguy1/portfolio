@@ -880,6 +880,9 @@ const defaultItems = [
 export default function InfiniteMenu({ items = [], scale = 1.0, onError }) {
   const canvasRef = useRef(null);
   const [activeItem, setActiveItem] = useState(null);
+  // ADDED: the position is worth showing — 42 discs render only `items.length`
+  // distinct projects, so without a counter you can't tell how many there are.
+  const [activeIndex, setActiveIndex] = useState(0);
   const [isMoving, setIsMoving] = useState(false);
 
   useEffect(() => {
@@ -889,6 +892,7 @@ export default function InfiniteMenu({ items = [], scale = 1.0, onError }) {
     const handleActiveItem = index => {
       const itemIndex = index % items.length;
       setActiveItem(items[itemIndex]);
+      setActiveIndex(itemIndex);
     };
 
     if (canvas) {
@@ -939,11 +943,32 @@ export default function InfiniteMenu({ items = [], scale = 1.0, onError }) {
     <div className="infinite-menu">
       <canvas id="infinite-grid-menu-canvas" ref={canvasRef} />
 
+      {/* Fades the canvas edges into the page so overlay text never sits on a
+          busy screenshot. Purely decorative — never intercepts the drag. */}
+      <div className="face-scrim" aria-hidden="true" />
+
       {activeItem && (
         <>
-          <h3 className={`face-title ${isMoving ? 'inactive' : 'active'}`}>{activeItem.title}</h3>
+          <div className={`face-title-block ${isMoving ? 'inactive' : 'active'}`}>
+            {items.length > 1 && (
+              <span className="face-counter">
+                {String(activeIndex + 1).padStart(2, '0')} / {String(items.length).padStart(2, '0')}
+              </span>
+            )}
+            <h3 className="face-title">{activeItem.title}</h3>
+          </div>
 
-          <p className={`face-description ${isMoving ? 'inactive' : 'active'}`}>{activeItem.description}</p>
+          <div className={`face-meta ${isMoving ? 'inactive' : 'active'}`}>
+            <p className="face-description">{activeItem.description}</p>
+
+            {activeItem.tech?.length > 0 && (
+              <ul className="face-tech">
+                {activeItem.tech.map(tech => (
+                  <li key={tech}>{tech}</li>
+                ))}
+              </ul>
+            )}
+          </div>
 
           <button
             type="button"
@@ -951,7 +976,8 @@ export default function InfiniteMenu({ items = [], scale = 1.0, onError }) {
             aria-label={activeItem.title ? `Open ${activeItem.title}` : 'Open project'}
             className={`action-button ${isMoving ? 'inactive' : 'active'}`}
           >
-            <span className="action-button-icon">&#x2197;</span>
+            <span className="action-button-label">{activeItem.linkLabel || 'Open project'}</span>
+            <span className="action-button-icon" aria-hidden="true">&#x2197;</span>
           </button>
         </>
       )}

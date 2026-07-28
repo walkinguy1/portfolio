@@ -7,6 +7,7 @@ import projImg2 from "../assets/img/project-img2.png";
 import projImg3 from "../assets/img/project-img3.png";
 import { Reveal } from './Reveal';
 import InfiniteMenu from './InfiniteMenu';
+import useMediaQuery from '../hooks/useMediaQuery';
 import styles from './Projects.module.css';
 
 // Map image keys from the data model to actual imports
@@ -18,9 +19,15 @@ const MENU_ITEMS = PROJECTS.map(project => ({
   image: IMG_MAP[project.imgKey],
   link: project.liveUrl || project.githubUrl,
   title: project.title,
-  // The overlay has room for a line, not the full card copy
-  description: `${project.description.split('. ')[0]}.`,
+  description: project.description,
+  tech: project.tech,
+  linkLabel: project.liveUrl ? 'Visit site' : 'View source',
 }));
+
+// Mouse-driven screens only. A WebGL globe running a 60fps render loop is
+// exactly the work a phone shouldn't be doing, so this gates mounting rather
+// than visibility — `pointer: fine` keeps it off touch tablets too.
+const DESKTOP_QUERY = '(min-width: 1024px) and (pointer: fine)';
 
 // The component throws without a WebGL2 context; fall back to the cards alone.
 const HAS_WEBGL2 =
@@ -35,10 +42,12 @@ const HAS_WEBGL2 =
 
 
 export const Projects = () => {
-  // If WebGL setup fails on a visitor's machine, drop the globe and its
-  // reserved height — the cards below are the real content anyway.
+  // If WebGL setup fails on a visitor's machine, fall back to the card list.
   const [globeFailed, setGlobeFailed] = useState(false);
   const handleGlobeError = useCallback(() => setGlobeFailed(true), []);
+
+  const isDesktop = useMediaQuery(DESKTOP_QUERY);
+  const showGlobe = isDesktop && HAS_WEBGL2 && !globeFailed;
 
   return (
     <section className={styles.project} id="projects">
@@ -56,17 +65,34 @@ export const Projects = () => {
                 </p>
               </div>
 
-              {HAS_WEBGL2 && !globeFailed && (
-                <div className={styles.projectOrbit}>
-                  <InfiniteMenu items={MENU_ITEMS} onError={handleGlobeError} />
-                </div>
-              )}
+              {showGlobe ? (
+                <>
+                  <div className={styles.projectOrbit}>
+                    <InfiniteMenu items={MENU_ITEMS} onError={handleGlobeError} />
+                  </div>
 
-              <Row className={styles.projectCardsRow}>
-                {PROJECTS.map((project, index) => (
-                  <ProjectCard key={index} {...project} imgUrl={IMG_MAP[project.imgKey]} />
-                ))}
-              </Row>
+                  {/* The globe is a canvas — invisible to crawlers and screen
+                      readers. Same content, off-screen, so neither loses it. */}
+                  <ul className={styles.projectsSrList}>
+                    {PROJECTS.map(project => (
+                      <li key={project.slug}>
+                        <h3>{project.title}</h3>
+                        <p>{project.description}</p>
+                        <p>Built with: {project.tech.join(', ')}.</p>
+                        <a href={project.liveUrl || project.githubUrl}>
+                          {project.liveUrl ? `Visit ${project.title}` : `${project.title} source on GitHub`}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              ) : (
+                <Row className={styles.projectCardsRow}>
+                  {PROJECTS.map(project => (
+                    <ProjectCard key={project.slug} {...project} imgUrl={IMG_MAP[project.imgKey]} />
+                  ))}
+                </Row>
+              )}
 
               <div className={styles.projectsFooterNote}>
                 <p>More experiments and works-in-progress live on my GitHub.</p>

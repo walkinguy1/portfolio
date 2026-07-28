@@ -10,6 +10,34 @@
   position: relative;
   width: 100%;
   height: 100%;
+  /* Colour the edge fade and the text halo with the surface behind the canvas,
+     so both follow the active theme. */
+  --im-surface: var(--bg-raised);
+  --im-halo: rgba(19, 21, 26, 0.9);
+}
+
+[data-theme='light'] .infinite-menu {
+  --im-halo: rgba(250, 248, 243, 0.92);
+}
+
+/* Overlay text sits on top of project screenshots, which are busy and change
+   as the sphere turns. Fading the left and right thirds back into the page
+   surface gives every label a calm bed to sit on without boxing it in. */
+.infinite-menu .face-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      to right,
+      var(--im-surface) 0%,
+      color-mix(in srgb, var(--im-surface) 72%, transparent) 16%,
+      transparent 34%,
+      transparent 66%,
+      color-mix(in srgb, var(--im-surface) 72%, transparent) 84%,
+      var(--im-surface) 100%
+    );
 }
 
 #infinite-grid-menu-canvas {
@@ -26,74 +54,134 @@
   cursor: grabbing;
 }
 
-.infinite-menu .face-title,
-.infinite-menu .face-description {
+.infinite-menu .face-title-block,
+.infinite-menu .face-meta {
   user-select: none;
   position: absolute;
   top: 50%;
+  z-index: 2;
   margin: 0;
+  /* Soft halo carries the text over anything the scrim doesn't fully cover */
+  text-shadow: 0 0 3px var(--im-halo), 0 1px 14px var(--im-halo);
 }
 
-.infinite-menu .face-title {
+.infinite-menu .face-title-block {
   left: 0;
-  max-width: 8ch;
-  font-size: clamp(1.6rem, 3vw, 2.6rem);
-  font-weight: 900;
-  letter-spacing: -0.03em;
-  line-height: 1.05;
-  color: var(--text);
+  max-width: 11ch;
   transform: translateY(-50%);
 }
 
-.infinite-menu .face-title.active {
+.infinite-menu .face-title-block.active {
   opacity: 1;
   pointer-events: auto;
   transition: 0.5s ease;
 }
 
-.infinite-menu .face-title.inactive {
+.infinite-menu .face-title-block.inactive {
   opacity: 0;
   pointer-events: none;
   transition: 0.1s ease;
 }
 
-.infinite-menu .face-description {
+.infinite-menu .face-counter {
+  display: block;
+  margin-bottom: 8px;
+  font-family: var(--font-mono, monospace);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--accent);
+}
+
+.infinite-menu .face-title {
+  margin: 0;
+  font-size: clamp(1.6rem, 2.6vw, 2.4rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  color: var(--text);
+}
+
+/* Description + tech stack share one right-hand column so the chips always
+   sit under the copy, whatever length it runs to. */
+.infinite-menu .face-meta {
   right: 0;
-  max-width: 26ch;
-  font-size: 0.9rem;
-  line-height: 1.65;
-  color: var(--text-muted);
+  max-width: 30ch;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 14px;
   text-align: right;
   transform: translateY(-50%);
 }
 
-.infinite-menu .face-description.active {
+.infinite-menu .face-meta.active {
   opacity: 1;
   pointer-events: auto;
   transition: 0.5s ease;
 }
 
-.infinite-menu .face-description.inactive {
+.infinite-menu .face-meta.inactive {
   opacity: 0;
   pointer-events: none;
   transform: translate(8%, -50%);
   transition: 0.1s ease;
 }
 
+.infinite-menu .face-description {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: var(--text-muted);
+}
+
+.infinite-menu .face-tech {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.infinite-menu .face-tech li {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 3px;
+  background: var(--accent-dim);
+  color: var(--accent);
+  border: 1px solid var(--border-bright);
+}
+
+/* Chips carry their own background, so the halo would only muddy them */
+.infinite-menu .face-tech li { text-shadow: none; }
+
+/* Labelled rather than a bare arrow — "↗" alone doesn't say where it goes */
 .infinite-menu .action-button {
   position: absolute;
   left: 50%;
   z-index: 10;
-  width: 56px;
-  height: 56px;
-  display: grid;
-  place-items: center;
-  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 24px;
   background: var(--accent);
-  border: 2px solid var(--bg);
-  border-radius: 50%;
+  border: none;
+  border-radius: 999px;
   box-shadow: var(--accent-glow);
   cursor: pointer;
+  white-space: nowrap;
+}
+
+.infinite-menu .action-button-label {
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
 }
 
 .infinite-menu .action-button.active {
@@ -116,13 +204,15 @@
   user-select: none;
   position: relative;
   color: #fff;
-  font-size: 24px;
+  font-size: 18px;
   line-height: 1;
 }
 
-@media (max-width: 768px) {
-  .infinite-menu .face-title,
-  .infinite-menu .face-description {
+/* The globe only mounts on ≥1024px pointer-fine screens (see Projects.jsx),
+   but keep a floor so the labels never crowd the sphere if that changes. */
+@media (max-width: 900px) {
+  .infinite-menu .face-title-block,
+  .infinite-menu .face-meta {
     display: none;
   }
 }
