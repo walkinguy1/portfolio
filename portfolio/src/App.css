@@ -1,11 +1,8 @@
 /* ============================================================
-   APP.CSS - Global Visual Enhancements
-   Component-specific styles have been migrated to CSS Modules
-   ============================================================ */
-
-/* ============================================================
-   GLOBAL VISUAL ENHANCEMENTS
-   These are global overrides that enhance the migrated components
+   APP.CSS - Global styles for components that still use plain
+   class names. Everything migrated to CSS Modules owns its own
+   styles; global rules targeting those components were removed
+   because the hashed class names made them unmatchable.
    ============================================================ */
 
 /* Gradient accent on section headings */
@@ -24,66 +21,12 @@
   background-clip: text;
 }
 
-/* Stronger glow on banner glows */
-.banner-glow--1 {
-  background: rgba(91,156,246,0.18) !important;
+/* Section tag — subtle gradient background */
+.section-tag {
+  background: linear-gradient(135deg, var(--accent-dim), rgba(167,139,250,0.1)) !important;
 }
-.banner-glow--2 {
-  background: rgba(147,197,253,0.12) !important;
-}
-[data-theme="light"] .banner-glow--1 { background: rgba(217,119,6,0.12) !important; }
-[data-theme="light"] .banner-glow--2 { background: rgba(79,70,229,0.08) !important; }
-
-/* Glowing accent bar — more vibrant */
-.banner-accent-bar {
-  height: 3px;
-  background: linear-gradient(90deg, transparent, var(--accent), #a78bfa, var(--accent-bright), var(--accent), transparent) !important;
-  opacity: 0.9;
-}
-
-/* Skill cards — colored left border accent on hover */
-.skill-category-card {
-  border-left: 3px solid transparent;
-  transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease !important;
-}
-.skill-category-card:hover {
-  border-left-color: var(--accent) !important;
-}
-
-/* Project cards — glowing border on hover */
-.proj-card {
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease !important;
-}
-.proj-card:hover {
-  box-shadow: 0 20px 60px rgba(91,156,246,0.2), var(--shadow-hover) !important;
-}
-[data-theme="light"] .proj-card:hover {
-  box-shadow: 0 20px 60px rgba(79,70,229,0.15), var(--shadow-hover) !important;
-}
-
-/* Stat numbers — gradient color */
-.stat-number {
-  color: transparent;
-  background: linear-gradient(135deg, var(--accent), var(--accent-bright));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Social icon circles — gradient border on hover */
-.social-icon a:hover {
-  border-color: var(--accent) !important;
-  box-shadow: 0 0 16px rgba(91,156,246,0.4) !important;
-}
-[data-theme="light"] .social-icon a:hover {
-  box-shadow: 0 0 16px rgba(79,70,229,0.3) !important;
-}
-
-/* Let's Connect button — gradient on hover */
-.navbar-text button.vvd:hover {
-  background: linear-gradient(135deg, var(--accent), #a78bfa) !important;
-  border-color: transparent !important;
-  box-shadow: 0 4px 20px rgba(91,156,246,0.4) !important;
+[data-theme="light"] .section-tag {
+  background: linear-gradient(135deg, rgba(79,70,229,0.08), rgba(217,119,6,0.06)) !important;
 }
 
 /* CTA button — gradient + glow */
@@ -96,189 +39,11 @@
   transform: translateY(-3px) !important;
 }
 
-/* Eyebrow dot — stronger pulse glow */
-.eyebrow-dot {
-  box-shadow: 0 0 18px var(--accent), 0 0 6px var(--accent) !important;
-}
-
-/* Section tag — subtle gradient background */
-.section-tag {
-  background: linear-gradient(135deg, var(--accent-dim), rgba(167,139,250,0.1)) !important;
-}
-[data-theme="light"] .section-tag {
-  background: linear-gradient(135deg, rgba(79,70,229,0.08), rgba(217,119,6,0.06)) !important;
-}
-
-/* Light mode stat numbers — indigo to violet */
-[data-theme="light"] .stat-number {
-  background: linear-gradient(135deg, #4f46e5, #7c3aed) !important;
-  -webkit-background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
-  background-clip: text !important;
-}
-
-/* ============================================================
-   ADDITIONAL VISUAL ENHANCEMENTS — More dynamic & alive
-   ============================================================ */
-
-/* Animated gradient border on skill cards */
-@keyframes borderGlow {
-  0%, 100% { border-color: rgba(91,156,246,0.3); }
-  50%       { border-color: rgba(167,139,250,0.5); }
-}
-.skill-category-card:hover {
-  animation: borderGlow 2s ease-in-out infinite;
-}
-
-/* Floating animation on the profile image */
-.banner-img-wrapper img {
-  animation: imgFloat 5s ease-in-out infinite alternate !important;
-  filter: drop-shadow(0 0 60px rgba(91,156,246,0.22)) !important;
-}
-[data-theme="light"] .banner-img-wrapper img {
-  filter: drop-shadow(0 0 60px rgba(37,99,235,0.18)) !important;
-}
-
-/* Shimmer effect on the accent bar */
-@keyframes shimmer {
-  0%   { background-position: -200% center; }
-  100% { background-position: 200% center; }
-}
-.banner-accent-bar {
-  background-size: 200% auto !important;
-  animation: shimmer 4s linear infinite !important;
-}
-
-/* Glowing underline on nav links on hover */
-nav.navbar .navbar-nav a.nav-link.navbar-link {
-  position: relative;
-}
-nav.navbar .navbar-nav a.nav-link.navbar-link::after {
-  content: '';
-  position: absolute;
-  bottom: -4px; left: 50%; right: 50%;
-  height: 2px;
-  background: var(--accent);
-  border-radius: 99px;
-  transition: left 0.25s ease, right 0.25s ease;
-  box-shadow: 0 0 8px var(--accent);
-}
-nav.navbar .navbar-nav a.nav-link.navbar-link:hover::after,
-nav.navbar .navbar-nav a.nav-link.navbar-link.active::after {
-  left: 25%; right: 25%;
-}
-
-/* Subtle tilt on project card hover */
-.proj-card {
-  transform-origin: center bottom;
-}
-.proj-card:hover {
-  transform: translateY(-8px) rotate(-0.5deg) !important;
-}
-
-/* Pulsing glow on the CTA button */
-@keyframes ctaPulse {
-  0%, 100% { box-shadow: 0 4px 20px rgba(91,156,246,0.4), 0 0 0 0 rgba(91,156,246,0.3); }
-  50%       { box-shadow: 0 4px 20px rgba(91,156,246,0.4), 0 0 0 8px rgba(91,156,246,0); }
-}
 .btn-primary-cta {
   animation: ctaPulse 3s ease-in-out infinite !important;
 }
 .btn-primary-cta:hover:not(:disabled) {
   animation: none !important;
-}
-
-/* Glowing ring on social icon hover */
-.social-icon a {
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease !important;
-}
-.social-icon a:hover {
-  transform: translateY(-3px) scale(1.1) !important;
-}
-
-/* Scroll line — more vivid */
-.scroll-line {
-  background: linear-gradient(to bottom, var(--accent), #a78bfa, transparent) !important;
-}
-
-/* About section — subtle background pattern */
-.about::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background-image: radial-gradient(circle at 20% 50%, rgba(91,156,246,0.04) 0%, transparent 50%),
-                    radial-gradient(circle at 80% 20%, rgba(167,139,250,0.04) 0%, transparent 50%);
-  pointer-events: none;
-}
-[data-theme="light"] .about::before {
-  background-image: radial-gradient(circle at 20% 50%, rgba(79,70,229,0.04) 0%, transparent 50%),
-                    radial-gradient(circle at 80% 20%, rgba(217,119,6,0.03) 0%, transparent 50%);
-}
-
-/* Contact section — glowing card border */
-.contact-card {
-  border-color: rgba(91,156,246,0.15) !important;
-  box-shadow: 0 0 60px rgba(91,156,246,0.08), var(--shadow-hover) !important;
-}
-[data-theme="light"] .contact-card {
-  border-color: rgba(79,70,229,0.12) !important;
-  box-shadow: 0 0 60px rgba(79,70,229,0.06), var(--shadow-hover) !important;
-}
-
-/* Footer — gradient top border */
-.footer {
-  border-top: 2px solid transparent !important;
-  background-image: linear-gradient(var(--bg-raised), var(--bg-raised)),
-                    linear-gradient(90deg, transparent, var(--accent), #a78bfa, var(--accent), transparent) !important;
-  background-origin: border-box !important;
-  background-clip: padding-box, border-box !important;
-}
-
-/* Marquee items — colored on hover with transition */
-.marquee-item {
-  transition: color 0.2s ease !important;
-}
-
-/* Tech tags — subtle glow on hover */
-.tech-tag {
-  transition: background 0.2s ease, box-shadow 0.2s ease, color 0.2s ease !important;
-}
-.tech-tag:hover {
-  background: var(--accent-dim) !important;
-  box-shadow: 0 0 10px rgba(91,156,246,0.2) !important;
-}
-[data-theme="light"] .tech-tag:hover {
-  box-shadow: 0 0 10px rgba(79,70,229,0.15) !important;
-}
-
-/* Light mode accent bar shimmer — indigo to amber */
-[data-theme="light"] .banner-accent-bar {
-  background: linear-gradient(90deg, transparent, #4f46e5, #d97706, #7c3aed, #4f46e5, transparent) !important;
-}
-
-/* Light mode footer gradient border */
-[data-theme="light"] .footer {
-  background-image: linear-gradient(#f0eeea, #f0eeea),
-                    linear-gradient(90deg, transparent, #4f46e5, #d97706, #4f46e5, transparent) !important;
-  background-origin: border-box !important;
-  background-clip: padding-box, border-box !important;
-  border-top: 2px solid transparent !important;
-}
-
-/* Light mode social icons — dark icons with warm hover */
-[data-theme="light"] .social-icon a {
-  border-color: rgba(79,70,229,0.15);
-  background: rgba(79,70,229,0.04);
-}
-[data-theme="light"] .social-icon a:hover {
-  background: rgba(79,70,229,0.1) !important;
-  border-color: #4f46e5 !important;
-}
-
-/* Light mode nav link underline — indigo */
-[data-theme="light"] nav.navbar .navbar-nav a.nav-link.navbar-link::after {
-  background: #4f46e5;
-  box-shadow: 0 0 8px rgba(79,70,229,0.5);
 }
 
 /* Light mode CTA — softer indigo→amber tint, less aggressive glow */
@@ -296,43 +61,25 @@ nav.navbar .navbar-nav a.nav-link.navbar-link.active::after {
     0 4px 10px rgba(20,22,28,0.08) !important;
   transform: translateY(-1px);
 }
-[data-theme="light"] .navbar-text button.vvd:hover {
-  background: linear-gradient(135deg, #4f46e5, #7c3aed) !important;
-  border-color: transparent !important;
-  box-shadow: 0 6px 22px rgba(79,70,229,0.25) !important;
+
+/* Social icon circles — glowing ring on hover */
+.social-icon a {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease !important;
 }
-
-/* Light mode eyebrow dot */
-[data-theme="light"] .eyebrow-dot {
-  background: #d97706;
-  box-shadow: 0 0 18px #d97706, 0 0 6px #d97706 !important;
+.social-icon a:hover {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 16px rgba(91,156,246,0.4) !important;
+  transform: translateY(-3px) scale(1.1) !important;
 }
-
-/* Light mode role bracket */
-[data-theme="light"] .role-bracket { color: #4f46e5; }
-[data-theme="light"] .cursor-blink { color: #4f46e5; }
-
-/* Light mode scroll line */
-[data-theme="light"] .scroll-line {
-  background: linear-gradient(to bottom, #4f46e5, #d97706, transparent) !important;
+[data-theme="light"] .social-icon a {
+  border-color: rgba(79,70,229,0.15);
+  background: rgba(79,70,229,0.04);
 }
-
-/* ============================================================
-   PARTICLE CANVAS — antigravity ring effect
-   ============================================================ */
-.particle-canvas {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  pointer-events: none;
+[data-theme="light"] .social-icon a:hover {
+  background: rgba(79,70,229,0.1) !important;
+  border-color: #4f46e5 !important;
+  box-shadow: 0 0 16px rgba(79,70,229,0.3) !important;
 }
-
-/* Ensure banner content (text, buttons) sits above canvas */
-.banner-container  { position: relative; z-index: 2; }
-.banner-glow       { z-index: 0; }
-.banner-accent-bar { z-index: 3; }
 
 /* ============================================================
    GAME OVERLAYS (Snake, Minesweeper)
@@ -390,56 +137,6 @@ nav.navbar .navbar-nav a.nav-link.navbar-link.active::after {
   );
 }
 
-.cmd-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.5);
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding-top: 10vh;
-  z-index: 9999;
-}
-
-.cmd-modal {
-  width: 500px;
-  background: #111;
-  border: 1px solid #333;
-  border-radius: 8px;
-  overflow: hidden;
-  font-family: monospace;
-  color: #fff;
-}
-
-.cmd-input {
-  width: 100%;
-  padding: 12px;
-  border: none;
-  outline: none;
-  background: #1a1a1a;
-  color: #fff;
-}
-
-.cmd-list {
-  max-height: 300px;
-  overflow-y: auto;
-}
-
-.cmd-item {
-  padding: 10px 12px;
-  cursor: pointer;
-}
-
-.cmd-item:hover,
-.cmd-item.active {
-  background: #2a2a2a;
-}
-
-.cmd-empty {
-  padding: 10px;
-  color: #777;
-}
-
 .mine-modal {
   min-width: 420px;
 }
@@ -494,41 +191,6 @@ nav.navbar .navbar-nav a.nav-link.navbar-link.active::after {
   font-size: 11px;
   color: #7ef58a;
   font-family: monospace;
-}
-
-/* ============================================================
-   AVAILABILITY PILL
-   ============================================================ */
-.availability-pill {
-  display: inline-flex; align-items: center; gap: 10px;
-  padding: 6px 14px;
-  margin: 8px 0 18px;
-  background: rgba(34,197,94,0.10);
-  border: 1px solid rgba(34,197,94,0.28);
-  border-radius: 999px;
-  font-size: 0.78rem; font-weight: 600; letter-spacing: 0.02em;
-  color: #16a34a;
-  animation: fadeSlideUp 0.6s 0.25s ease both;
-}
-[data-theme="light"] .availability-pill {
-  background: rgba(22,163,74,0.08);
-  color: #15803d;
-}
-.availability-dot {
-  width: 8px; height: 8px; border-radius: 50%;
-  background: #22c55e;
-  box-shadow: 0 0 0 0 rgba(34,197,94,0.7);
-  animation: pulseGreen 1.8s ease-out infinite;
-}
-@keyframes pulseGreen {
-  0%   { box-shadow: 0 0 0 0 rgba(34,197,94,0.55); }
-  70%  { box-shadow: 0 0 0 10px rgba(34,197,94,0);    }
-  100% { box-shadow: 0 0 0 0 rgba(34,197,94,0);       }
-}
-
-@keyframes fadeSlideUp {
-  from { opacity:0; transform:translateY(28px); }
-  to   { opacity:1; transform:translateY(0); }
 }
 
 /* ============================================================

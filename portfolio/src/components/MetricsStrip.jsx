@@ -125,7 +125,6 @@ export const MetricsStrip = () => {
         { icon: '🔥', label: 'Commits this month', value: metrics.commitsThisMonth },
         { icon: '⚡', label: 'Streak', value: `${metrics.streak} days` },
         { icon: '🕐', label: 'Last push', value: metrics.lastPush },
-        { icon: '👥', label: 'Followers', value: metrics.followers },
       ]
     : [];
 
@@ -140,7 +139,7 @@ export const MetricsStrip = () => {
         <div className={styles.metricsStripItems}>
           {loading && !metrics && !error && (
             <>
-              {[1, 2, 3, 4, 5].map(i => (
+              {[1, 2, 3, 4].map(i => (
                 <div key={i} className={`${styles.metricsItem} ${styles.metricsItemSkeleton}`}>
                   <span className={styles.metricsSkeletonBar} />
                 </div>

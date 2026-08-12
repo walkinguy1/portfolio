@@ -8,8 +8,6 @@ const DASH_COLORS_LIGHT = ["#f59e0b","#ec8106","#9e3ffd","#7041fd","#e231fd"];
 /* ─── Interaction tuning ─────────────────────────────────────────── */
 const LIGHTNING_PARTICLE_FORCE = 80;
 const LIGHTNING_PARTICLE_RADIUS = 350;
-const SPLASH_PARTICLE_FORCE = 46;
-const SPLASH_PARTICLE_RADIUS = 180;
 
 /* ─── Particle ───────────────────────────────────────────────────── */
 class Particle {
@@ -334,20 +332,8 @@ export const ParticleCanvas = () => {
       spawnLightning(tx, ty, 'click', 1);
     };
 
-    const handleBannerSplash = (e) => {
-      const detail = e.detail || {};
-      if (!Number.isFinite(detail.x) || !Number.isFinite(detail.y)) return;
-
-      const tx = detail.x;
-      const ty = detail.y;
-      const intensity = Math.max(0.35, Math.min(1.4, detail.strength || 0.7));
-
-      pushParticles(tx, ty, SPLASH_PARTICLE_FORCE * intensity, SPLASH_PARTICLE_RADIUS);
-    };
-
     section.addEventListener("mousedown", handleStrike);
     section.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener('banner-splash', handleBannerSplash);
 
     let raf;
     const loop = () => {
@@ -418,7 +404,6 @@ export const ParticleCanvas = () => {
       ro.disconnect();
       section.removeEventListener("mousedown", handleStrike);
       section.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener('banner-splash', handleBannerSplash);
     };
   }, []);
 

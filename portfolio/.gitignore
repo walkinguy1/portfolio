@@ -8,12 +8,11 @@ pnpm-debug.log*
 lerna-debug.log*
 .claude
 .kilo
-PORTFOLIO_ACTION_PLAN.MD
+PORTFOLIO_ACTION_PLAN.md
 
 node_modules
 dist
 dist-ssr
-.github
 *.local
 
 # Editor directories and files

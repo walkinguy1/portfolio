@@ -52,7 +52,7 @@ export const NavBar = () => {
               <Nav.Link
                 key={link}
                 href={`#${link}`}
-                className={`cursor-target ${styles.navbarLink} ${activeLink === link ? styles.active : ''}`}
+                className={`${styles.navbarLink} ${activeLink === link ? styles.active : ''}`}
                 onClick={() => setActiveLink(link)}
               >
                 {link.charAt(0).toUpperCase() + link.slice(1)}
@@ -69,7 +69,7 @@ export const NavBar = () => {
 
             <ThemeSwitch />
 
-            <button className={`cursor-target ${styles.vvd}`} onClick={scrollToConnect}>
+            <button className={styles.vvd} onClick={scrollToConnect}>
               <span>Let's Connect</span>
             </button>
           </span>

@@ -10,7 +10,6 @@ import { Projects } from './components/Projects.jsx'
 import { Contact } from './components/contact.jsx'
 import { Footer } from './components/footer.jsx'
 import { Marquee } from './components/Marquee.jsx'
-import TargetCursor from './components/TargetCursor.jsx'
 import { HiddenThingsSheet } from './components/HiddenThingsSheet.jsx'
 import { TerminalEgg } from './components/TerminalEgg.jsx'
 import { MetricsStrip } from './components/MetricsStrip.jsx'
@@ -22,8 +21,8 @@ import SnakeGame from "./games/SnakeGame";
 import MinesweeperGame from "./games/MinesweeperGame";
 import useTypedSequence, { isTypingTarget } from "./hooks/useTypedSequence";
 import CommandPalette from "./components/CommandPalette";
+import { IDENTITY } from "./data/portfolioData";
 
-import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
 
 function AppContent() {
@@ -130,22 +129,22 @@ function AppContent() {
 
     {
       label: "Open GitHub",
-      action: () => window.open("https://github.com/walkinguy1", "_blank")
+      action: () => window.open(IDENTITY.github, "_blank")
     },
 
     {
       label: "Open LinkedIn",
-      action: () => window.open("https://linkedin.com/in/tusharkhatiwada", "_blank")
+      action: () => window.open(IDENTITY.linkedin, "_blank")
     },
 
     {
       label: "Open Instagram",
-      action: () => window.open("https://www.instagram.com/walkinguy/", "_blank")
+      action: () => window.open(IDENTITY.instagram, "_blank")
     },
 
     {
       label: "Copy Email",
-      action: () => navigator.clipboard.writeText("walkinguy1937@gmail.com")
+      action: () => navigator.clipboard.writeText(IDENTITY.email)
     },
 
     {
@@ -171,13 +170,6 @@ function AppContent() {
 
   return (
     <div className="App">
-      {/* The app's shared button classes are targets too, so individual
-          call sites don't each need a `cursor-target` class. */}
-      <TargetCursor
-        targetSelector=".cursor-target, .btn-primary-cta, .btn-outline-cta, .btn-ghost-cta, .cli-toggle-fab, .social-icon a"
-        spinDuration={3}
-        hoverDuration={0.25}
-      />
       <header>
         <NavBar />
       </header>
