@@ -2,28 +2,32 @@
    PROJECTS
    ============================================================ */
 .project { padding: 120px 0; background: var(--bg-raised); }
-.projectCardsRow { row-gap: 24px; }
+.cardsRow { row-gap: 24px; }
 
-/* Drag-to-spin project globe (InfiniteMenu). Needs an explicit height —
-   the canvas sizes itself to its container. */
-/* Off-screen mirror of the project list, rendered alongside the globe so the
-   content stays available to crawlers and screen readers. Not display:none —
-   that would hide it from assistive tech too. */
-.projectsSrList {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  padding: 0;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
-  border: 0;
-  list-style: none;
+/* Opt-in switch between the card list and the globe. Only rendered when the
+   globe is actually available, so it never promises something that can't run. */
+.globeToggle {
+  margin-top: 14px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  background: transparent;
+  border: 1px solid var(--border-bright);
+  border-radius: 99px;
+  padding: 6px 16px;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease;
 }
 
-/* Only rendered on ≥1024px pointer-fine screens, where it replaces the card
-   list entirely — so no small-screen sizing is needed here. */
+.globeToggle:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* Drag-to-spin project globe (InfiniteMenu). Needs an explicit height — the
+   canvas sizes itself to its container. Only mounted on ≥1024px pointer-fine
+   screens after an explicit opt-in, so no small-screen sizing is needed. */
 .projectOrbit {
   position: relative;
   width: 100%;
@@ -31,9 +35,9 @@
   margin: 0 0 24px;
 }
 
-.projectsFooterNote {
+.footerNote {
   margin-top: 64px; text-align: center;
   display: flex; flex-direction: column; align-items: center; gap: 20px;
 }
 
-.projectsFooterNote p { color: var(--text-muted); font-size: 0.9rem; }
+.footerNote p { color: var(--text-muted); font-size: 0.9rem; }

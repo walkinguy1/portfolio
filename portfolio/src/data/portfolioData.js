@@ -24,51 +24,77 @@ export const IDENTITY = {
   ],
 };
 
+/**
+ * Every entry here must be verifiable by a visitor in under a minute:
+ * `githubUrl` must resolve, `tech` must reflect what is actually in the repo,
+ * and `description` must state what the project does today — not what it will do.
+ *
+ * `status`   — 'shipped' | 'working-prototype' | 'in-progress' | 'paused'
+ * `builtFor` — 'coursework' | 'personal' | 'client' | 'hackathon'
+ */
 export const PROJECTS = [
   {
-    slug: 'vellum',
-    title: 'Vellum',
-    description: 'A modern document collaboration platform with real-time editing, version control, and team collaboration features. Built with a focus on performance and user experience.',
-    tech: ['React', 'Node.js', 'WebSocket', 'MongoDB'],
-    githubUrl: 'https://github.com/walkinguy1/vellum',
-    liveUrl: null,
-    imgKey: 'projImg1',
+    slug: 'zappstore',
+    title: 'ZappStore',
+    description:
+      'A full e-commerce store with product catalog, cart, orders, payments, wishlists, and reviews. React front end backed by a Django REST API.',
+    tech: ['React', 'Django', 'Zustand', 'SQLite'],
+    githubUrl: 'https://github.com/walkinguy1/Web-Application-Programming-Project',
+    liveUrl: 'https://zappstore-jade.vercel.app',
+    status: 'shipped',
+    builtFor: 'coursework',
+    year: '2026',
   },
   {
-    slug: 'amigosync',
-    title: 'AmigoSync',
-    description: 'Synchronization and backup utility that seamlessly keeps files across multiple devices in sync. Features conflict resolution, selective sync, and bandwidth optimization.',
-    tech: ['Electron', 'Node.js', 'React', 'SQLite'],
-    githubUrl: 'https://github.com/walkinguy1/amigosync',
+    // Team minor project — the repo lives on a teammate's account, and the
+    // README names all four submitters, so the collaborator claim is checkable.
+    slug: 'medalert-nepal',
+    title: 'MedAlert Nepal',
+    description:
+      'A mobile-first emergency health app for Nepal: find pharmacies with medicine in stock, locate blood banks by blood group, reach ambulance providers, and carry a digital medical ID. Prescription photos are read with Gemini vision. Built as a four-person minor project; core system is functional end to end.',
+    tech: ['Flutter', 'Django REST', 'Gemini API', 'JWT'],
+    githubUrl: 'https://github.com/AlishxAdhikari/Medicine-Availability-Emergency-Finder',
     liveUrl: null,
-    imgKey: 'projImg2',
+    status: 'working-prototype',
+    builtFor: 'coursework',
+    year: '2026',
+    role: 'Collaborator — 4-person team',
+  },
+  {
+    slug: 'gesture-platform',
+    title: 'Gesture Platform',
+    description:
+      'Real-time sign language recognition: a Python hand-tracking engine, a training pipeline, and a desktop app that talks to it over a local WebSocket bridge. ASL fingerspelling works today; dynamic signs and BSL are scaffolded but need training data.',
+    tech: ['Python', 'React', 'Tauri', 'WebSocket'],
+    githubUrl: 'https://github.com/walkinguy1/gesture-platform',
+    liveUrl: null,
+    status: 'working-prototype',
+    builtFor: 'personal',
+    year: '2026',
   },
   {
     slug: 'khoja',
     title: 'Khoja',
-    description: 'E-commerce platform tailored for local markets with multi-vendor support, inventory management, and payment gateway integration. Designed for scalability and ease of use.',
-    tech: ['Next.js', 'PostgreSQL', 'Stripe', 'Redis'],
-    githubUrl: 'https://github.com/walkinguy1/khoja',
+    description:
+      'A lost-and-found system for tourists in Nepal, built with a team for the Nepal Tourism Hackathon. The Supabase backend is complete.',
+    tech: ['JavaScript', 'TypeScript', 'Supabase'],
+    githubUrl: 'https://github.com/walkinguy1/Khoja-Lost-and-Found-System',
     liveUrl: null,
-    imgKey: 'projImg3',
+    status: 'working-prototype',
+    builtFor: 'hackathon',
+    year: '2026',
   },
   {
-    slug: 'medalert-nepal',
-    title: 'MedAlert Nepal',
-    description: 'Healthcare alert system for medical facilities in Nepal, providing real-time notifications for critical patient data, medicine stock levels, and emergency responses.',
-    tech: ['Flutter', 'FastAPI', 'PostgreSQL', 'Twilio'],
-    githubUrl: 'https://github.com/walkinguy1/medalert-nepal',
+    slug: 'vellum',
+    title: 'Vellum',
+    description:
+      'A study tool built around a Gemini-powered PDF analyzer, with a Pomodoro timer and to-do list alongside it. A background sound creator is built but not yet fully integrated.',
+    tech: ['JavaScript', 'Python', 'Gemini API'],
+    githubUrl: 'https://github.com/walkinguy1/Vellum-pdf-analyzer-tool-for-learning',
     liveUrl: null,
-    imgKey: 'projImg1',
-  },
-  {
-    slug: 'studyforge',
-    title: 'StudyForge',
-    description: 'Interactive learning platform with spaced repetition, progress tracking, and collaborative study tools. Helps students optimize their learning schedules and retain information effectively.',
-    tech: ['Vue.js', 'Python', 'Django', 'Celery'],
-    githubUrl: 'https://github.com/walkinguy1/studyforge',
-    liveUrl: null,
-    imgKey: 'projImg2',
+    status: 'in-progress',
+    builtFor: 'personal',
+    year: '2026',
   },
 ];
 
@@ -82,6 +108,9 @@ export const SKILL_TIERS = [
       { name: 'HTML & CSS',    category: 'Frontend' },
       { name: 'Bootstrap',     category: 'Frontend' },
       { name: 'Python',        category: 'Backend & APIs' },
+      { name: 'Flutter & Dart', category: 'Mobile' },
+      { name: 'Supabase',      category: 'Backend & APIs' },
+      { name: 'Gemini API',    category: 'ML & Data' },
       { name: 'Git & GitHub',  category: 'Tools' },
       { name: 'Pygame',        category: 'Tools' },
     ],
@@ -90,8 +119,10 @@ export const SKILL_TIERS = [
     tier: 'Comfortable With',
     blurb: 'Solid working knowledge — used in real projects, still sharpening.',
     skills: [
+      { name: 'Django & DRF',  category: 'Backend & APIs' },
       { name: 'FastAPI',       category: 'Backend & APIs' },
       { name: 'REST APIs',     category: 'Backend & APIs' },
+      { name: 'TypeScript',    category: 'Frontend' },
       { name: 'Pandas',        category: 'ML & Data' },
       { name: 'NumPy',         category: 'ML & Data' },
       { name: 'Linux / CLI',   category: 'Tools' },
@@ -103,6 +134,7 @@ export const SKILL_TIERS = [
     skills: [
       { name: 'SQL',               category: 'Backend & APIs' },
       { name: 'Scikit-learn',      category: 'ML & Data' },
+      { name: 'Tauri',             category: 'Tools' },
       { name: 'Matplotlib',        category: 'ML & Data' },
       { name: 'Figma / UI Design', category: 'Design' },
     ],

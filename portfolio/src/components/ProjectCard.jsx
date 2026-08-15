@@ -1,39 +1,61 @@
 import { Col } from "react-bootstrap";
 import styles from './ProjectCard.module.css';
 
-export const ProjectCard = ({ title, description, imgUrl, tech = [], githubUrl, liveUrl }) => {
+// Fixed vocabulary — keep in sync with portfolioData.js.
+const STATUS_LABEL = {
+  'shipped':           'Shipped',
+  'working-prototype': 'Working prototype',
+  'in-progress':       'In progress',
+  'paused':            'Paused',
+};
+
+export const ProjectCard = ({
+  title, description, tech = [], githubUrl, liveUrl,
+  status, builtFor, year, role, screenshot,
+}) => {
+  const meta = [builtFor, year].filter(Boolean).join(' · ');
+
   return (
-    <Col xs={12} sm={6} md={4} className={styles.projectCardCol}>
-      <div className={styles.projCard}>
-        <div className={styles.projImgWrap}>
-          <img src={imgUrl} alt={title} loading="lazy" />
-          <div className={styles.projOverlay}>
-            <div className={styles.projOverlayLinks}>
-              {githubUrl && (
-                <a href={githubUrl} target="_blank" rel="noreferrer" className={styles.projLink}>
-                  GitHub ↗
-                </a>
-              )}
-              {liveUrl && (
-                <a href={liveUrl} target="_blank" rel="noreferrer" className={`${styles.projLink} ${styles.projLinkLive}`}>
-                  Live Demo ↗
-                </a>
-              )}
-            </div>
-          </div>
-        </div>
-        <div className={styles.projBody}>
-          <h3>{title}</h3>
-          <p>{description}</p>
-          {tech.length > 0 && (
-            <div className={styles.projTechTags}>
-              {tech.map((t) => (
-                <span key={t} className={styles.techTag}>{t}</span>
-              ))}
-            </div>
+    <Col xs={12} sm={6} lg={4} className={styles.cardCol}>
+      <article className={styles.card}>
+        {screenshot && (
+          <img className={styles.shot} src={screenshot} alt={`${title} screenshot`} loading="lazy" />
+        )}
+
+        <header className={styles.head}>
+          <h3 className={styles.title}>{title}</h3>
+          {status && (
+            <span className={styles.badge}>{STATUS_LABEL[status] ?? status}</span>
           )}
-        </div>
-      </div>
+        </header>
+
+        {meta && <p className={styles.meta}>{meta}</p>}
+
+        <p className={styles.body}>{description}</p>
+
+        {/* Only set on team projects where the repo isn't mine — saying so is
+            the difference between crediting a team and implying solo work. */}
+        {role && <p className={styles.role}>{role}</p>}
+
+        {tech.length > 0 && (
+          <ul className={styles.tech} aria-label={`${title} tech stack`}>
+            {tech.map(t => <li key={t}>{t}</li>)}
+          </ul>
+        )}
+
+        <footer className={styles.links}>
+          {githubUrl && (
+            <a href={githubUrl} target="_blank" rel="noreferrer" className={styles.link}>
+              View source ↗
+            </a>
+          )}
+          {liveUrl && (
+            <a href={liveUrl} target="_blank" rel="noreferrer" className={`${styles.link} ${styles.linkLive}`}>
+              Live demo ↗
+            </a>
+          )}
+        </footer>
+      </article>
     </Col>
   );
 };
