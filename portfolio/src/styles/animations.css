@@ -17,11 +17,6 @@
   50%      { opacity: 0.45; transform: scale(0.75); }
 }
 
-@keyframes charReveal {
-  from { opacity: 0; transform: translateY(55%) skewY(5deg); }
-  to   { opacity: 1; transform: translateY(0) skewY(0); }
-}
-
 @keyframes tierIn {
   to { opacity: 1; transform: translateY(0); }
 }
@@ -60,19 +55,14 @@
 .reveal-fade { animation: fadeIn 0.8s ease-out both; }
 .reveal-zoom { animation: zoomIn 0.7s ease-out both; }
 
-@keyframes borderGlow {
-  0%, 100% { border-color: rgba(91,156,246,0.3); }
-  50%       { border-color: rgba(167,139,250,0.5); }
-}
-
 @keyframes shimmer {
   0%   { background-position: -200% center; }
   100% { background-position: 200% center; }
 }
 
 @keyframes ctaPulse {
-  0%, 100% { box-shadow: 0 4px 20px rgba(91,156,246,0.4), 0 0 0 0 rgba(91,156,246,0.3); }
-  50%       { box-shadow: 0 4px 20px rgba(91,156,246,0.4), 0 0 0 8px rgba(91,156,246,0); }
+  0%, 100% { box-shadow: 0 4px 20px var(--accent-a35), 0 0 0 0 var(--accent-a22); }
+  50%       { box-shadow: 0 4px 20px var(--accent-a35), 0 0 0 8px rgba(var(--accent-rgb),0); }
 }
 
 @keyframes livePulse {
@@ -92,4 +82,28 @@
   65%  { transform: scaleY(0.98); }
   80%  { transform: scaleY(1.02); }
   100% { transform: scaleY(1); filter: brightness(1); }
+}
+
+/* ============================================================
+   REDUCED MOTION
+   Collapse every animation and scroll-reveal to a single frame
+   for anyone who has asked the OS to cut down on movement.
+   Content must still end up visible, so reveals resolve to their
+   final state rather than being left mid-transition.
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reveal-up, .reveal-left, .reveal-right,
+  .reveal-fade, .reveal-zoom {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }

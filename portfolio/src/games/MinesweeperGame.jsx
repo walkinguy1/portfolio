@@ -136,7 +136,7 @@ const NUMBER_COLORS = [
   "#63b3ff",
   "#f6ad55",
   "#fc8181",
-  "#b794f4",
+  "#a3e635",
   "#4fd1c5",
   "#f687b3",
   "#fbd38d",

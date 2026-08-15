@@ -1,5 +1,8 @@
 /* ============================================================
    SHARED COMPONENTS
+   This file is the single owner of the global (non-module) class
+   names below. App.css used to re-declare them with !important to
+   win the cascade; those duplicates are gone — edit them here.
    ============================================================ */
 
 .section-tag {
@@ -7,15 +10,11 @@
   font-size: 11px; font-weight: 700;
   letter-spacing: 0.2em; text-transform: uppercase;
   color: var(--accent);
-  background: var(--accent-dim);
-  border: 1px solid rgba(91,156,246,0.22);
-  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+  background: linear-gradient(115deg, var(--accent-a14), var(--accent-a06));
+  border: 1px solid var(--accent-a22);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
   padding: 5px 14px; border-radius: 99px;
   margin-bottom: 16px;
-}
-[data-theme="light"] .section-tag {
-  border-color: rgba(79,70,229,0.2);
-  background: linear-gradient(135deg, rgba(79,70,229,0.08), rgba(217,119,6,0.06));
 }
 
 .section-header { text-align: center; margin-bottom: 64px; }
@@ -23,8 +22,14 @@
 .section-header h2 {
   font-size: clamp(2.4rem, 5vw, 3.6rem);
   font-weight: 900; line-height: 1.05;
-  letter-spacing: -0.04em; color: var(--text);
+  letter-spacing: -0.04em;
   margin-bottom: 16px;
+  /* Two-stop emerald wash rather than a three-stop rainbow */
+  color: transparent;
+  background: var(--grad-heading);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 .section-header p {
   font-size: 1rem; color: var(--text-muted);
@@ -36,18 +41,20 @@
 .btn-primary-cta {
   display: inline-flex; align-items: center; gap: 10px;
   padding: 14px 30px;
-  background: var(--accent); color: #fff;
+  background: var(--grad-cta); color: var(--on-accent);
   font-size: 0.92rem; font-weight: 700;
   border: none; border-radius: 6px;
   letter-spacing: 0.04em;
   text-decoration: none;
-  box-shadow: 0 4px 18px rgba(91,156,246,0.35);
+  box-shadow: 0 4px 18px var(--accent-a35);
   cursor: pointer;
+  animation: ctaPulse 3s ease-in-out infinite;
 }
 .btn-primary-cta:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 32px rgba(91,156,246,0.5);
-  color: #fff; opacity: 0.92;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px var(--accent-a60);
+  color: var(--on-accent); opacity: 0.92;
+  animation: none;
 }
 .btn-primary-cta:disabled {
   opacity: 0.6;
@@ -100,8 +107,18 @@
   background: rgba(217, 217, 217, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.5);
   position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
-.social-icon a:hover { background: rgba(255, 255, 255, 0.2); }
+.social-icon a:hover {
+  background: var(--accent-a14);
+  border-color: var(--accent);
+  box-shadow: 0 0 16px var(--accent-a35);
+  transform: translateY(-3px) scale(1.1);
+}
+[data-theme="light"] .social-icon a {
+  border-color: var(--accent-a22);
+  background: var(--accent-a06);
+}
 
 .social-icon a img {
   width: 40%;

@@ -3,85 +3,42 @@
    ============================================================ */
 .skill { padding: 120px 0; background: var(--bg); }
 
-.skillsGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-  gap: 20px;
-}
-
-.skillCategoryCard {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 10px; padding: 30px;
-  box-shadow: var(--shadow-card);
-}
-
-.skillCategoryCard:hover {
-  border-color: rgba(91,156,246,0.3);
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-hover);
-}
-
-[data-theme="light"] .skillCategoryCard:hover {
-  border-color: rgba(79,70,229,0.3);
-}
-
-.skillCatTitle {
-  font-size: 10px; font-weight: 700;
-  letter-spacing: 0.18em; text-transform: uppercase;
-  color: var(--accent); margin-bottom: 24px;
-}
-
 /* ===== Skills — tiered chips ===== */
 
-/* Default (dark mode) tokens */
+/* These names are local to this section, but every value now derives from
+   the global theme tokens in styles/global.css — this block used to be a
+   second, independent palette (with its own violets) that ignored --accent. */
 .skill {
   --tier-card-bg-from: rgba(255, 255, 255, 0.04);
   --tier-card-bg-to:   rgba(255, 255, 255, 0.015);
-  --tier-card-border:  rgba(255, 255, 255, 0.08);
+  --tier-card-border:  var(--border-bright);
 
-  --tier-title:        #ffffff;
-  --tier-blurb:        rgba(200, 205, 225, 0.65);
-  --tier-index:        rgba(170, 180, 220, 0.55);
+  --tier-title:        var(--text);
+  --tier-blurb:        var(--text-muted);
+  --tier-index:        var(--text-muted);
 
   --chip-bg:           rgba(255, 255, 255, 0.04);
   --chip-bg-hover:     rgba(255, 255, 255, 0.07);
-  --chip-border:       rgba(255, 255, 255, 0.10);
-  --chip-text:         rgba(235, 238, 250, 0.92);
-  --chip-cat:          rgba(170, 175, 200, 0.60);
+  --chip-border:       var(--border-bright);
+  --chip-text:         var(--text);
+  --chip-cat:          var(--text-muted);
 
-  --accent-1: rgba(140, 120, 255, 0.25);
-  --accent-1-hover: rgba(140, 120, 255, 0.60);
-  --accent-2: rgba(90, 180, 230, 0.18);
-  --accent-2-hover: rgba(90, 180, 230, 0.55);
-  --accent-3: rgba(255, 180, 100, 0.18);
-  --accent-3-hover: rgba(255, 180, 100, 0.55);
+  /* Three tiers across the emerald ramp: jade → teal → deep green */
+  --accent-1:       color-mix(in srgb, var(--accent) 28%, transparent);
+  --accent-1-hover: color-mix(in srgb, var(--accent) 65%, transparent);
+  --accent-2:       color-mix(in srgb, var(--accent-secondary) 22%, transparent);
+  --accent-2-hover: color-mix(in srgb, var(--accent-secondary) 60%, transparent);
+  --accent-3:       color-mix(in srgb, var(--accent-deep) 30%, transparent);
+  --accent-3-hover: color-mix(in srgb, var(--accent-deep) 70%, transparent);
 }
 
-/* Light mode overrides */
-[data-theme="light"] .skill,
-.light .skill,
-body.light .skill {
-  --tier-card-bg-from: rgba(15, 20, 40, 0.04);
-  --tier-card-bg-to:   rgba(15, 20, 40, 0.015);
-  --tier-card-border:  rgba(15, 20, 40, 0.10);
-
-  --tier-title:        #0f1428;
-  --tier-blurb:        rgba(40, 50, 80, 0.70);
-  --tier-index:        rgba(60, 70, 110, 0.55);
-
-  --chip-bg:           rgba(15, 20, 40, 0.04);
-  --chip-bg-hover:     rgba(15, 20, 40, 0.07);
-  --chip-border:       rgba(15, 20, 40, 0.14);
-  --chip-text:         rgba(20, 25, 50, 0.92);
-  --chip-cat:          rgba(60, 70, 100, 0.65);
-
-  --accent-1: rgba(110, 80, 230, 0.35);
-  --accent-1-hover: rgba(110, 80, 230, 0.70);
-  --accent-2: rgba(40, 130, 200, 0.30);
-  --accent-2-hover: rgba(40, 130, 200, 0.65);
-  --accent-3: rgba(220, 130, 40, 0.30);
-  --accent-3-hover: rgba(220, 130, 40, 0.65);
+/* Light mode only needs the neutral surfaces flipped; the accents above
+   are already theme-aware because --accent et al. are. */
+[data-theme="light"] .skill {
+  --tier-card-bg-from: rgba(11, 21, 18, 0.04);
+  --tier-card-bg-to:   rgba(11, 21, 18, 0.015);
+  --chip-bg:           rgba(11, 21, 18, 0.04);
+  --chip-bg-hover:     rgba(11, 21, 18, 0.07);
 }
 
 .skillsTiers {
@@ -187,24 +144,4 @@ body.light .skill {
 @media (min-width: 992px) {
   .skillTier { padding: 32px 36px 28px; }
   .skillTierTitle { font-size: 22px; }
-}
-
-/* Animated gradient border on skill cards */
-@keyframes borderGlow {
-  0%, 100% { border-color: rgba(91,156,246,0.3); }
-  50%       { border-color: rgba(167,139,250,0.5); }
-}
-
-.skillCategoryCard:hover {
-  animation: borderGlow 2s ease-in-out infinite;
-}
-
-/* Skill cards — colored left border accent on hover */
-.skillCategoryCard {
-  border-left: 3px solid transparent;
-  transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease !important;
-}
-
-.skillCategoryCard:hover {
-  border-left-color: var(--accent) !important;
 }

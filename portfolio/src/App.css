@@ -5,81 +5,9 @@
    because the hashed class names made them unmatchable.
    ============================================================ */
 
-/* Gradient accent on section headings */
-.section-header h2 {
-  color: transparent;
-  background: linear-gradient(135deg, #93c5fd 0%, #5b9cf6 50%, #a78bfa 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-[data-theme="light"] .section-header h2 {
-  color: transparent;
-  background: linear-gradient(135deg, #1a1c22 0%, #4f46e5 60%, #7c3aed 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Section tag — subtle gradient background */
-.section-tag {
-  background: linear-gradient(135deg, var(--accent-dim), rgba(167,139,250,0.1)) !important;
-}
-[data-theme="light"] .section-tag {
-  background: linear-gradient(135deg, rgba(79,70,229,0.08), rgba(217,119,6,0.06)) !important;
-}
-
-/* CTA button — gradient + glow */
-.btn-primary-cta {
-  background: linear-gradient(135deg, var(--accent), #7c3aed) !important;
-  box-shadow: 0 4px 20px rgba(91,156,246,0.4) !important;
-}
-.btn-primary-cta:hover:not(:disabled) {
-  box-shadow: 0 8px 36px rgba(91,156,246,0.6) !important;
-  transform: translateY(-3px) !important;
-}
-
-.btn-primary-cta {
-  animation: ctaPulse 3s ease-in-out infinite !important;
-}
-.btn-primary-cta:hover:not(:disabled) {
-  animation: none !important;
-}
-
-/* Light mode CTA — softer indigo→amber tint, less aggressive glow */
-[data-theme="light"] .btn-primary-cta {
-  background: linear-gradient(135deg, #4f46e5 0%, #6366f1 60%, #8b5cf6 100%) !important;
-  box-shadow:
-    0 1px 0 rgba(255,255,255,0.5) inset,
-    0 6px 20px rgba(79,70,229,0.22),
-    0 2px 6px rgba(20,22,28,0.06) !important;
-}
-[data-theme="light"] .btn-primary-cta:hover:not(:disabled) {
-  box-shadow:
-    0 1px 0 rgba(255,255,255,0.5) inset,
-    0 10px 30px rgba(79,70,229,0.32),
-    0 4px 10px rgba(20,22,28,0.08) !important;
-  transform: translateY(-1px);
-}
-
-/* Social icon circles — glowing ring on hover */
-.social-icon a {
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease !important;
-}
-.social-icon a:hover {
-  border-color: var(--accent) !important;
-  box-shadow: 0 0 16px rgba(91,156,246,0.4) !important;
-  transform: translateY(-3px) scale(1.1) !important;
-}
-[data-theme="light"] .social-icon a {
-  border-color: rgba(79,70,229,0.15);
-  background: rgba(79,70,229,0.04);
-}
-[data-theme="light"] .social-icon a:hover {
-  background: rgba(79,70,229,0.1) !important;
-  border-color: #4f46e5 !important;
-  box-shadow: 0 0 16px rgba(79,70,229,0.3) !important;
-}
+/* NOTE: .section-header, .section-tag, .btn-primary-cta and .social-icon
+   used to be re-declared here with !important to beat styles/shared.css.
+   They now live only in shared.css — edit them there, not here. */
 
 /* ============================================================
    GAME OVERLAYS (Snake, Minesweeper)

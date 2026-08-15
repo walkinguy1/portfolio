@@ -7,12 +7,13 @@
   padding: 48px 0 36px !important;
   border-top: 2px solid transparent !important;
   background-image: linear-gradient(var(--bg-raised), var(--bg-raised)),
-                    linear-gradient(90deg, transparent, var(--accent), #a78bfa, var(--accent), transparent) !important;
+                    var(--grad-rule) !important;
   background-origin: border-box !important;
   background-clip: padding-box, border-box !important;
 }
 
-.footer .row { row-gap: 20px; }
+/* .row comes from Bootstrap's grid at runtime — must be :global. */
+.footer :global(.row) { row-gap: 20px; }
 
 .footer p {
   color: var(--text-muted) !important;
@@ -24,11 +25,4 @@
 /* Social icons come from styles/shared.css (.social-icon) — the base
    class carries no margin, so the footer needs no override here. */
 
-[data-theme="light"] .footer {
-  background: #f0eeea !important;
-  background-image: linear-gradient(#f0eeea, #f0eeea),
-                    linear-gradient(90deg, transparent, #4f46e5, #d97706, #4f46e5, transparent) !important;
-  background-origin: border-box !important;
-  background-clip: padding-box, border-box !important;
-  border-top: 2px solid transparent !important;
-}
+/* No light-mode override needed — --bg-raised and --grad-rule are themed. */

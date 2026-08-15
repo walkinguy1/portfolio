@@ -27,8 +27,12 @@
 }
 
 /* Logo Sizes */
+/* Percentage of the container, so it needs a ceiling — otherwise the
+   logo keeps growing as the content column widens on zoomed-out views. */
 .navbarBrand {
   width: 9%;
+  min-width: 90px;
+  max-width: 130px;
 }
 
 @media (max-width: 991px) {
@@ -63,12 +67,13 @@
     backdrop-filter: blur(16px);
   }
   
-  /* When the burger is clicked, Bootstrap adds .show */
-  .navbarCollapse.show {
+  /* .show and .navbar-nav are added by Bootstrap at runtime, so they must be
+     :global — a bare .show here gets hashed and can never match. */
+  .navbarCollapse:global(.show) {
     display: block !important;
   }
 
-  .navbarNav {
+  .navbarCollapse :global(.navbar-nav) {
     margin-bottom: 20px;
   }
 }
@@ -176,14 +181,11 @@
 .vvd:hover {
   background-color: var(--accent) !important;
   border-color: var(--accent) !important;
-  color: #fff !important;
+  color: var(--on-accent) !important;
 }
 
-/* ============================================================
-   NAVBAR OVERRIDES FOR THEMING
-   ============================================================ */
-.navbar {
-  background: transparent !important;
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-}
+/* This block used to re-declare `.navbar { background: transparent
+   !important }` down here. Same specificity as .scrolled but later in
+   the file, so it always won — the scrolled navbar never actually got
+   its --nav-bg fill, and the bar stayed see-through over the content
+   it was supposed to sit on top of. The base rule above handles it. */

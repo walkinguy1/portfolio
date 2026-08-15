@@ -65,11 +65,26 @@ input:focus, textarea:focus, select:focus {
   outline: none;
 }
 
-@media (min-width:1700px) {
-	main .container {
-		max-width: 100%;
-		padding: 0 150px;
-	}
+/* ============================================================
+   CONTENT COLUMN WIDTH
+
+   This used to be `main .container { max-width: 100% }` above 1700px,
+   which had two bugs that only showed up when you zoomed the browser
+   out (zooming out grows the CSS viewport, so it crosses 1700px):
+
+   1. The column went edge-to-edge, so body copy stretched to absurd
+      line lengths and the two-column sections pulled apart.
+   2. It targeted `main .container` only — the navbar lives outside
+      <main>, so the nav stayed at Bootstrap's 1320px while the
+      sections went full width, and the two visibly misaligned.
+
+   Now every .container shares one capped, fluid width, so the layout
+   holds together at any zoom level.
+   ============================================================ */
+@media (min-width: 1400px) {
+  .container {
+    max-width: min(1560px, 100% - 192px) !important;
+  }
 }
 
 p.success {
@@ -82,76 +97,125 @@ p.danger {
 
 /* ============================================================
    THEME VARIABLES
-   Dark mode: deep navy-grey tones — easier on the eyes than pure black
-   Light mode: warm off-white — softer than pure white
+   Dark mode: near-black with a green cast — easier on the eyes than pure black
+   Light mode: cool off-white — softer than pure white
+   Single source of truth. Component CSS must reference these tokens
+   rather than re-declaring colours; that is how the old palette leaked.
    ============================================================ */
 
-/* DARK MODE (default) */
+/* DARK MODE (default) — deep emerald on near-black */
 :root,
 [data-theme="dark"] {
-  --bg:          #13151a;
-  --bg-raised:   #1a1d24;
-  --bg-card:     #1e2128;
-  --bg-card-hover: #252830;
+  --bg:          #08110d;
+  --bg-raised:   #0d1a14;
+  --bg-card:     #0f1f18;
+  --bg-card-hover: #14291f;
   --border:      rgba(255,255,255,0.07);
   --border-bright: rgba(255,255,255,0.13);
-  --text:        #e8eaf0;
-  --text-muted:  #949cab;   /* WCAG AA on every dark surface, tinted chips included */
-  --text-faint:  #3d4350;
-  --accent:      #5b9cf6;
-  --accent-bright: #93c5fd;
-  --accent-dim:  rgba(91,156,246,0.14);
-  --accent-glow: 0 0 28px rgba(91,156,246,0.4);
-  --shadow-card: 0 4px 24px rgba(0,0,0,0.4);
-  --shadow-hover: 0 20px 60px rgba(0,0,0,0.6);
-  --nav-bg:      rgba(19,21,26,0.92);
-  --marquee-bg:  #161820;
-  --marquee-text: #2e3340;
-  
+  --text:        #e8f5ef;
+  --text-muted:  #8fa89c;   /* WCAG AA on every dark surface, tinted chips included */
+  --text-faint:  #2c3d35;
+  --accent:      #10b981;
+  --accent-bright: #34d399;
+  --accent-deep: #047857;
+  --accent-secondary: #5eead4;   /* teal — the cool end of the emerald ramp */
+  --accent-rgb:  16,185,129;     /* drives every --accent-aNN below */
+  --accent-dim:  rgba(16,185,129,0.14);
+  --accent-glow: 0 0 28px rgba(16,185,129,0.4);
+  --shadow-card: 0 4px 24px rgba(0,0,0,0.5);
+  --shadow-hover: 0 20px 60px rgba(0,0,0,0.7);
+  --nav-bg:      rgba(8,17,13,0.92);
+  --marquee-bg:  #0b1611;
+  --marquee-text: #23342c;
+
   /* Terminal Dark Mode Variables */
-  --term-bg: #0a0e14;
-  --term-text: #33ff33;
-  --term-input-text: #e8eaf0;
-  --term-header-bg: #151a22;
-  --term-border: #1e2630;
-  --term-prompt: #5b9cf6;
-  --term-title: #5a6577;
-  --term-gradient: linear-gradient(to top, #0a0e14 0%, transparent 100%);
+  --term-bg: #050c09;
+  --term-text: #34d399;
+  --term-input-text: #e8f5ef;
+  --term-header-bg: #0b1611;
+  --term-border: #163024;
+  --term-prompt: #10b981;
+  --term-title: #4f6a5e;
+  --term-gradient: linear-gradient(to top, #050c09 0%, transparent 100%);
   color-scheme: dark;
 }
 
-/* LIGHT MODE — warm indigo-violet + amber personality */
+/* LIGHT MODE — cool off-white with the same emerald, darkened for contrast */
 [data-theme="light"] {
-  --bg:          #faf8f3;          /* slightly warmer */
-  --bg-raised:   #f3f0e9;
+  --bg:          #f7f9f6;
+  --bg-raised:   #eef2ec;
   --bg-card:     #ffffff;
-  --bg-card-hover: #fdfbf6;
-  --border:      rgba(79,70,229,0.10);
-  --border-bright: rgba(79,70,229,0.20);
-  --text:        #14161c;          /* deeper for AAA contrast */
-  --text-muted:  #4a4658;          /* was #64607a — passes WCAG AA on body */
-  --text-faint:  #b3aebd;
-  --accent:      #4f46e5;
-  --accent-bright: #7c3aed;
-  --accent-dim:  rgba(79,70,229,0.08);
-  --accent-glow: 0 0 28px rgba(79,70,229,0.22);
-  --accent-secondary: #d97706;
-  --shadow-card: 0 2px 20px rgba(79,70,229,0.07), 0 1px 4px rgba(20,22,28,0.05);
-  --shadow-hover: 0 18px 50px rgba(79,70,229,0.14), 0 6px 14px rgba(20,22,28,0.06);
-  --nav-bg:      rgba(250,248,243,0.85);   /* more translucent for blur effect */
-  --marquee-bg:  #ece7dd;
-  --marquee-text: #b8b1a3;
-  
+  --bg-card-hover: #f9fcf8;
+  --border:      rgba(13,125,92,0.12);
+  --border-bright: rgba(13,125,92,0.24);
+  --text:        #0b1512;          /* deeper for AAA contrast */
+  --text-muted:  #41564d;          /* passes WCAG AA on body and on cards */
+  --text-faint:  #a9bab2;
+  --accent:      #0d7d5c;          /* darkened from #10b981 for AA on white */
+  --accent-bright: #10b981;
+  --accent-deep: #065f46;
+  --accent-secondary: #0f766e;
+  --accent-rgb:  13,125,92;
+  --accent-dim:  rgba(13,125,92,0.08);
+  --accent-glow: 0 0 28px rgba(13,125,92,0.22);
+  --shadow-card: 0 2px 20px rgba(11,21,18,0.07), 0 1px 4px rgba(11,21,18,0.05);
+  --shadow-hover: 0 18px 50px rgba(11,21,18,0.13), 0 6px 14px rgba(11,21,18,0.06);
+  --nav-bg:      rgba(247,249,246,0.85);   /* more translucent for blur effect */
+  --marquee-bg:  #e4eae1;
+  --marquee-text: #b2c0b8;
+
   /* Terminal Light Mode Variables */
-  --term-bg: #faf8f3;
-  --term-text: #16a34a; /* Darker green for visibility on light bg */
-  --term-input-text: #14161c;
-  --term-header-bg: #f3f0e9;
-  --term-border: rgba(79,70,229,0.20);
-  --term-prompt: #4f46e5;
-  --term-title: #4a4658;
-  --term-gradient: linear-gradient(to top, #faf8f3 0%, transparent 100%);
+  --term-bg: #f7f9f6;
+  --term-text: #0d7d5c; /* Darker green for visibility on light bg */
+  --term-input-text: #0b1512;
+  --term-header-bg: #eef2ec;
+  --term-border: rgba(13,125,92,0.24);
+  --term-prompt: #0d7d5c;
+  --term-title: #41564d;
+  --term-gradient: linear-gradient(to top, #f7f9f6 0%, transparent 100%);
   color-scheme: light;
+}
+
+/* ------------------------------------------------------------------
+   Derived tokens — theme-agnostic, built off --accent-rgb above.
+   These exist so component CSS never needs a literal accent colour.
+   ------------------------------------------------------------------ */
+:root,
+[data-theme="dark"],
+[data-theme="light"] {
+  --accent-a06: rgba(var(--accent-rgb), 0.06);
+  --accent-a08: rgba(var(--accent-rgb), 0.08);
+  --accent-a14: rgba(var(--accent-rgb), 0.14);
+  --accent-a22: rgba(var(--accent-rgb), 0.22);
+  --accent-a35: rgba(var(--accent-rgb), 0.35);
+  --accent-a60: rgba(var(--accent-rgb), 0.60);
+
+  /* The gradients the site actually uses. Angles are deliberately
+     varied — a page where every gradient is 135deg looks machine-made. */
+  --grad-rule: linear-gradient(90deg, transparent, var(--accent), var(--accent-secondary), var(--accent), transparent);
+}
+
+/* Heading wash is theme-specific: on white, full-emerald display text
+   falls under 3:1, so light mode anchors the gradient in --text. */
+:root,
+[data-theme="dark"] {
+  --grad-heading: linear-gradient(100deg, var(--accent-bright) 0%, var(--accent) 70%);
+}
+[data-theme="light"] {
+  --grad-heading: linear-gradient(100deg, var(--text) 0%, var(--accent-deep) 85%);
+}
+
+/* Foreground for text sitting ON an accent fill. Bright emerald is a light
+   colour — white on it is only 2.5:1 — so dark mode uses near-black ink and
+   keeps the fill bright, while light mode keeps white on the deep green. */
+:root,
+[data-theme="dark"] {
+  --on-accent: #04231a;
+  --grad-cta:  linear-gradient(160deg, var(--accent-bright) 0%, var(--accent) 100%);
+}
+[data-theme="light"] {
+  --on-accent: #ffffff;
+  --grad-cta:  linear-gradient(160deg, var(--accent) 0%, var(--accent-deep) 100%);
 }
 
 /* Global smooth theme transition */
@@ -180,5 +244,5 @@ body {
   border-radius: 6px;
 }
 [data-theme="light"] :where(a, button, input, textarea, select, [tabindex]):focus-visible {
-  box-shadow: 0 0 0 4px rgba(79,70,229,0.18);
+  box-shadow: 0 0 0 4px var(--accent-a22);
 }

@@ -23,7 +23,7 @@
 
 /* Dark mode track — deep inset look */
 .themeSwitchDark .themeSwitchTrack {
-  background: #1e2230;
+  background: #122019;
   box-shadow:
     inset 2px 2px 5px rgba(0,0,0,0.6),
     inset -1px -1px 3px rgba(255,255,255,0.04);
@@ -31,7 +31,7 @@
 
 /* Light mode track */
 .themeSwitchLight .themeSwitchTrack {
-  background: #dde0e8;
+  background: #dee6e1;
   box-shadow:
     inset 2px 2px 5px rgba(0,0,0,0.12),
     inset -1px -1px 3px rgba(255,255,255,0.8);
@@ -54,8 +54,8 @@
 /* Thumb in dark mode — slides to right */
 .themeSwitchDark .themeSwitchThumb {
   transform: translateX(27px);
-  background: #3a4060;
-  color: #93c5fd;
+  background: #1d3a2e;
+  color: #34d399;
   box-shadow:
     2px 2px 6px rgba(0,0,0,0.5),
     -1px -1px 3px rgba(255,255,255,0.06);

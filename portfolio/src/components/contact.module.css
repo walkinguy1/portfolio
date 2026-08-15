@@ -7,13 +7,8 @@
   display: grid; grid-template-columns: 1fr 1.5fr;
   background: var(--bg-card); border: 1px solid var(--border);
   border-radius: 16px; overflow: hidden;
-  box-shadow: 0 0 60px rgba(91,156,246,0.08), var(--shadow-hover) !important;
-  border-color: rgba(91,156,246,0.15) !important;
-}
-
-[data-theme="light"] .contactCard {
-  border-color: rgba(79,70,229,0.12) !important;
-  box-shadow: 0 0 60px rgba(79,70,229,0.06), var(--shadow-hover) !important;
+  box-shadow: 0 0 60px var(--accent-a08), var(--shadow-hover);
+  border-color: var(--accent-a14);
 }
 
 .contactInfo {
@@ -41,7 +36,7 @@
 .contactSocialLink:hover { color: var(--text); }
 
 .contactSocialLink:hover .contactSocialIcon {
-  background: var(--accent); color: #fff; border-color: var(--accent);
+  background: var(--accent); color: var(--on-accent); border-color: var(--accent);
 }
 
 .contactSocialIcon {
@@ -74,13 +69,8 @@
 .formGroup input:focus, .formGroup textarea:focus {
   outline: none; border-color: var(--accent);
   background: var(--accent-dim);
-  box-shadow: 0 0 0 4px rgba(91,156,246,0.1);
+  box-shadow: 0 0 0 4px var(--accent-a14);
   transform: translateY(-1px);
-}
-
-[data-theme="light"] .formGroup input:focus,
-[data-theme="light"] .formGroup textarea:focus {
-  box-shadow: 0 0 0 4px rgba(79,70,229,0.1);
 }
 
 .formGroup input::placeholder, .formGroup textarea::placeholder { color: var(--text-faint); }

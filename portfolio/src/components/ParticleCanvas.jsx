@@ -2,8 +2,11 @@ import { useEffect, useRef } from "react";
 import { useTheme } from "../useTheme";
 
 /* ─── Color palettes ──────────────────────────────────────────────── */
-const DASH_COLORS_DARK  = ["#2e82f7","#5666f8","#845cfd","#ab59fc","#4cc3fa"];
-const DASH_COLORS_LIGHT = ["#f59e0b","#ec8106","#9e3ffd","#7041fd","#e231fd"];
+/* Emerald ramp — mirrors --accent / --accent-bright / --accent-secondary
+   in styles/global.css. Canvas can't read CSS vars cheaply per-frame, so
+   these are kept in sync by hand; update both if the palette changes. */
+const DASH_COLORS_DARK  = ["#10b981","#34d399","#5eead4","#047857","#6ee7b7"];
+const DASH_COLORS_LIGHT = ["#0d7d5c","#0f766e","#10b981","#065f46","#14b8a6"];
 
 /* ─── Interaction tuning ─────────────────────────────────────────── */
 const LIGHTNING_PARTICLE_FORCE = 80;
@@ -65,7 +68,7 @@ class Particle {
       ctx.fill();
     } else {
       ctx.globalAlpha = isDark ? 0.25 : 0.18;
-      ctx.fillStyle   = isDark ? "#b4c8ff" : "#6b5b3d";
+      ctx.fillStyle   = isDark ? "#a8d8c4" : "#3d5b4e";
       ctx.beginPath(); ctx.arc(0, 0, this.radius, 0, Math.PI * 2); ctx.fill();
     }
     ctx.restore();
@@ -168,7 +171,7 @@ function drawSegment(ctx, pts, thickness, opacity, colorRGB, isMain) {
   // Core bright line
   strokePath(ctx, pts);
   ctx.lineWidth   = thickness;
-  ctx.strokeStyle = `rgba(240,250,255,${(f * 0.96).toFixed(3)})`;
+  ctx.strokeStyle = `rgba(240,255,250,${(f * 0.96).toFixed(3)})`;
   ctx.shadowBlur  = 0;
   ctx.lineJoin    = isMain ? "miter" : "round";
   ctx.miterLimit  = 22;
@@ -191,13 +194,13 @@ function drawImpactFlash(ctx, x, y, opacity, isDark) {
   const radius = (1 - opacity) * 80 + 10;
   const grad = ctx.createRadialGradient(x, y, 0, x, y, radius);
   if (isDark) {
-    grad.addColorStop(0, `rgba(200,225,255,${(opacity * 0.7).toFixed(3)})`);
-    grad.addColorStop(0.3, `rgba(130,190,255,${(opacity * 0.35).toFixed(3)})`);
-    grad.addColorStop(1, `rgba(91,156,246,0)`);
+    grad.addColorStop(0, `rgba(214,250,236,${(opacity * 0.7).toFixed(3)})`);
+    grad.addColorStop(0.3, `rgba(94,234,212,${(opacity * 0.35).toFixed(3)})`);
+    grad.addColorStop(1, `rgba(16,185,129,0)`);
   } else {
-    grad.addColorStop(0, `rgba(255,220,130,${(opacity * 0.75).toFixed(3)})`);
-    grad.addColorStop(0.3, `rgba(255,180,40,${(opacity * 0.35).toFixed(3)})`);
-    grad.addColorStop(1, `rgba(217,119,6,0)`);
+    grad.addColorStop(0, `rgba(167,243,208,${(opacity * 0.75).toFixed(3)})`);
+    grad.addColorStop(0.3, `rgba(16,185,129,${(opacity * 0.35).toFixed(3)})`);
+    grad.addColorStop(1, `rgba(13,125,92,0)`);
   }
   ctx.fillStyle = grad;
   ctx.beginPath();
@@ -210,11 +213,11 @@ function drawMouseGlow(ctx, x, y, isDark) {
   if (x < 0 || y < 0) return;
   const grad = ctx.createRadialGradient(x, y, 0, x, y, 200);
   if (isDark) {
-    grad.addColorStop(0, "rgba(91,156,246,0.06)");
-    grad.addColorStop(1, "rgba(91,156,246,0)");
+    grad.addColorStop(0, "rgba(16,185,129,0.07)");
+    grad.addColorStop(1, "rgba(16,185,129,0)");
   } else {
-    grad.addColorStop(0, "rgba(79,70,229,0.05)");
-    grad.addColorStop(1, "rgba(79,70,229,0)");
+    grad.addColorStop(0, "rgba(13,125,92,0.05)");
+    grad.addColorStop(1, "rgba(13,125,92,0)");
   }
   ctx.fillStyle = grad;
   ctx.fillRect(x - 200, y - 200, 400, 400);
@@ -343,7 +346,7 @@ export const ParticleCanvas = () => {
 
       // Screen flash on initial strike
       if (l && l.opacity > 0.92) {
-        ctx.fillStyle = isDark ? "rgba(200,225,255,0.15)" : "rgba(255,220,130,0.08)";
+        ctx.fillStyle = isDark ? "rgba(214,250,236,0.15)" : "rgba(167,243,208,0.10)";
         ctx.fillRect(0, 0, W, H);
       }
 

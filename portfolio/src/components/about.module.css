@@ -7,11 +7,9 @@
 
 .aboutImgAccent {
   position: absolute; inset: -14px;
-  border: 1.5px solid rgba(91,156,246,0.2);
+  border: 1.5px solid var(--accent-a22);
   border-radius: var(--radius, 10px); z-index: 0;
 }
-
-[data-theme="light"] .aboutImgAccent { border-color: rgba(79,70,229,0.18); }
 
 .aboutImgWrap img {
   position: relative; z-index: 1; border-radius: 10px;
@@ -85,12 +83,7 @@
   content: '';
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
-  background-image: radial-gradient(circle at 20% 50%, rgba(91,156,246,0.04) 0%, transparent 50%),
-                    radial-gradient(circle at 80% 20%, rgba(167,139,250,0.04) 0%, transparent 50%);
+  background-image: radial-gradient(circle at 20% 50%, var(--accent-a06) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 20%, color-mix(in srgb, var(--accent-secondary) 5%, transparent) 0%, transparent 50%);
   pointer-events: none;
-}
-
-[data-theme="light"] .about::before {
-  background-image: radial-gradient(circle at 20% 50%, rgba(79,70,229,0.04) 0%, transparent 50%),
-                    radial-gradient(circle at 80% 20%, rgba(217,119,6,0.03) 0%, transparent 50%);
 }

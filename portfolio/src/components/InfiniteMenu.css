@@ -13,11 +13,7 @@
   /* Colour the edge fade and the text halo with the surface behind the canvas,
      so both follow the active theme. */
   --im-surface: var(--bg-raised);
-  --im-halo: rgba(19, 21, 26, 0.9);
-}
-
-[data-theme='light'] .infinite-menu {
-  --im-halo: rgba(250, 248, 243, 0.92);
+  --im-halo: color-mix(in srgb, var(--bg) 90%, transparent);
 }
 
 /* Overlay text sits on top of project screenshots, which are busy and change

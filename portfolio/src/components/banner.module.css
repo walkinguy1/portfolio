@@ -17,17 +17,6 @@
   }
 }
 
-.banner .tagline {
-  font-weight: 700;
-  letter-spacing: 0.8px;
-  padding: 8px 10px;
-  background: linear-gradient(90.21deg, rgba(54, 137, 170, 0.5) -5.91%, rgba(74, 47, 189, 0.5) 111.58%);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  font-size: 20px;
-  margin-bottom: 16px;
-  display: inline-block;
-}
-
 .banner h1 {
   font-size: 65px;
   font-weight: 700;
@@ -37,8 +26,10 @@
   display: block;
 }
 
+/* Element selector — outranks the .bannerDesc class below, so this must
+   stay themed or light mode renders white body copy on a pale background. */
 .banner p {
-  color: #ffffff;
+  color: var(--text-muted);
   font-size: 18px;
   letter-spacing: 0.8px;
   line-height: 1.5em;
@@ -46,7 +37,7 @@
 }
 
 .banner button {
-  color: #fff;
+  color: var(--on-accent);
   font-weight: 700;
   font-size: 20px;
   margin-top: 60px;
@@ -70,10 +61,6 @@
   animation: imgFloat 3s linear infinite;
 }
 
-.txt-rotate > .wrap {
-  border-right: 0.08em solid #666;
-}
-
 /* ============================================================
    BANNER
    ============================================================ */
@@ -86,7 +73,7 @@
 
 .bannerAccentBar {
   position: absolute; top: 0; left: 0; right: 0; height: 2px; z-index: 2;
-  background: linear-gradient(90deg, transparent, var(--accent), var(--accent-bright), var(--accent), transparent);
+  background: var(--grad-rule);
 }
 
 .bannerGlow {
@@ -97,23 +84,19 @@
 
 .bannerGlow1 {
   width: 700px; height: 700px;
-  background: rgba(91,156,246,0.1);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
   top: -260px; right: -160px;
   animation: glowPulse 9s ease-in-out infinite alternate;
 }
 
 .bannerGlow2 {
   width: 500px; height: 500px;
-  background: rgba(147,197,253,0.06);
+  background: color-mix(in srgb, var(--accent-secondary) 7%, transparent);
   bottom: -100px; left: -100px;
   animation: glowPulse 13s ease-in-out infinite alternate-reverse;
 }
 
-[data-theme="light"] .bannerGlow1 { background: rgba(217,119,6,0.09); }
-[data-theme="light"] .bannerGlow2 { background: rgba(79,70,229,0.06); }
-
 .bannerContainer { position: relative; z-index: 1; }
-.bannerRow { min-height: 80vh; }
 
 .bannerEyebrow {
   display: inline-flex; align-items: center; gap: 10px;
@@ -143,39 +126,15 @@
   font-weight: 900; line-height: 0.93; letter-spacing: -0.05em;
   /* Use color: transparent so the global color transition doesn't fight gradient text */
   color: transparent;
-  background: linear-gradient(135deg, #93c5fd 0%, #5b9cf6 50%, #a78bfa 100%);
+  background: var(--grad-heading);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: white;
+  -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Light mode: warm indigo gradient for contrast on cream bg */
-[data-theme="light"] .headlineHi   { color: #7c7589; }
-[data-theme="light"] .headlineName {
-  color: transparent;
-  background: linear-gradient(135deg, #1a1c22 0%, #4f46e5 55%, #7c3aed 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: #1a1c22;
-  background-clip: text;
-}
-
-[data-theme="light"] .bannerDesc   { color: #5a556b; }
-[data-theme="light"] .bannerDesc strong { color: #1a1c22; }
-[data-theme="light"] .bannerEyebrow { color: #8a8495; }
-[data-theme="light"] .bannerRoleWrapper {
-  background: rgba(79,70,229,0.06);
-  border-color: rgba(79,70,229,0.18);
-}
-[data-theme="light"] .bannerRoleType { color: #2d2640; }
-[data-theme="light"] .scrollHint { color: #c5bfcf; }
-[data-theme="light"] .imgFrameCorner { border-color: rgba(79,70,229,0.35); }
-
-.animWord { display: inline-block; }
-.animChar {
-  display: inline-block;
-  animation: charReveal 0.65s cubic-bezier(0.22,1,0.36,1) both;
-  transition: none !important;
-}
+/* The light-mode overrides that used to sit here only existed because the
+   values above were hardcoded. They now resolve through the theme tokens. */
+[data-theme="light"] .imgFrameCorner { border-color: var(--accent-a35); }
 
 .bannerRoleWrapper {
   display: inline-flex; align-items: center; gap: 8px;
@@ -184,7 +143,7 @@
   margin-bottom: 26px;
   font-family: 'Courier New', monospace;
   background: var(--accent-dim);
-  border: 1px solid rgba(91,156,246,0.2);
+  border: 1px solid var(--accent-a22);
   border-radius: 6px; padding: 10px 18px; width: fit-content;
   animation: fadeSlideUp 0.6s 0.2s ease both;
 }
@@ -224,7 +183,7 @@
 
 .imgFrameCorner {
   position: absolute; width: 22px; height: 22px;
-  border-color: rgba(91,156,246,0.45); border-style: solid;
+  border-color: var(--accent-a60); border-style: solid;
 }
 
 .imgFrameCornerTl { top:0;    left:0;  border-width: 2px 0 0 2px; }
@@ -234,13 +193,13 @@
 
 .bannerImgWrapper img {
   width: 100%; border-radius: 6px;
-  filter: drop-shadow(0 0 50px rgba(91,156,246,0.14));
+  filter: drop-shadow(0 0 50px var(--accent-a14));
   animation: imgFloat 5s ease-in-out infinite alternate;
   transition: none !important;
 }
 
 [data-theme="light"] .bannerImgWrapper img {
-  filter: drop-shadow(0 0 60px rgba(37,99,235,0.18)) !important;
+  filter: drop-shadow(0 0 60px var(--accent-a22));
 }
 
 .scrollHint {
@@ -256,10 +215,6 @@
   background: linear-gradient(to bottom, var(--accent), transparent);
   animation: scrollPulse 2s ease-in-out infinite;
   transition: none !important;
-}
-
-[data-theme="light"] .scrollLine {
-  background: linear-gradient(to bottom, #4f46e5, #d97706, transparent) !important;
 }
 
 /* Availability pill */
