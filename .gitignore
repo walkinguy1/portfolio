@@ -1,1 +1,33 @@
-node_modules/
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Dependencies and build output
+node_modules
+dist
+dist-ssr
+*.local
+
+# AI tooling — editor configs and agent skill files, not part of the project.
+# Only .github/skills is ignored, not all of .github, so that a CI workflow
+# at .github/workflows/ can still be committed.
+.claude
+.kilo
+.github/skills/
+PORTFOLIO_ACTION_PLAN.md
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
