@@ -96,6 +96,31 @@ export const PROJECTS = [
     builtFor: 'personal',
     year: '2026',
   },
+  {
+    // The repo is named Rubiks; the project inside it is OmniSolve.
+    slug: 'omnisolve',
+    title: 'OmniSolve',
+    description:
+      'A twisty puzzle solver covering cubes from 2x2 to 5x5 plus the Pyraminx and Skewb. Scramble or paint a puzzle, then step through the solution one move at a time in a 3D view. Cube solutions use human methods, layer-by-layer and reduction, so every move belongs to a named step instead of coming out of a lookup table; they run longer than an optimal solve, which is the deliberate trade. The Pyraminx and Skewb are small enough to solve outright, so both get a shortest solution found by meeting in the middle. The solvers and the state model are covered by tests.',
+    tech: ['React', 'Three.js', 'JavaScript', 'Jest'],
+    githubUrl: 'https://github.com/walkinguy1/Rubiks',
+    liveUrl: null,
+    status: 'working-prototype',
+    builtFor: 'personal',
+    year: '2026',
+  },
+  {
+    slug: 'walkerchat',
+    title: 'WalkerChat',
+    description:
+      'A realtime chat platform with a FastAPI backend: persistent WebSockets over Redis Pub/Sub, Celery for background work, encrypted media uploads to S3-compatible storage, and WebRTC signalling for peer-to-peer audio and video. Message bodies are stored as ciphertext, but the client-side key exchange is still an experimental AES-GCM demo rather than a full Signal-style implementation with a double ratchet and real key management.',
+    tech: ['TypeScript', 'FastAPI', 'Redis', 'WebRTC'],
+    githubUrl: 'https://github.com/walkinguy1/WalkerChat',
+    liveUrl: null,
+    status: 'in-progress',
+    builtFor: 'personal',
+    year: '2026',
+  },
 ];
 
 export const SKILL_TIERS = [
