@@ -19,8 +19,8 @@ export const IDENTITY = {
   instagram: 'https://instagram.com/walkinguy',
   bio: [
     "I'm a 3rd year Computer Engineering student at Himalaya College of Engineering, Lalitpur.",
-    "My main interests are web development and machine learning — but I'm genuinely curious about most things in tech and love diving into new areas whenever a good problem comes along.",
-    "Outside of code, you'll find me as Walkinguy across online spaces — a handle that kind of captures how I move through learning: one step at a time, persistently.",
+    "My main interests are web development and machine learning. I'm curious about most things in tech and pick up new areas whenever a good problem comes along.",
+    "Outside of code I go by Walkinguy online. The handle fits how I learn: one step at a time.",
   ],
 };
 
@@ -43,7 +43,7 @@ export const PROJECTS = [
     liveUrl: 'https://zappstore-jade.vercel.app',
     status: 'shipped',
     builtFor: 'coursework',
-    year: '2026',
+    year: '2025',
   },
   {
     // Team minor project — the repo lives on a teammate's account, and the
@@ -107,9 +107,11 @@ export const SKILL_TIERS = [
       { name: 'JavaScript',    category: 'Frontend' },
       { name: 'HTML & CSS',    category: 'Frontend' },
       { name: 'Bootstrap',     category: 'Frontend' },
-      { name: 'Python',        category: 'Backend & APIs' },
+      { name: 'FastAPI',        category: 'Backend & APIs' },
+      { name: 'Django',        category: 'Backend & APIs' },
       { name: 'Flutter & Dart', category: 'Mobile' },
       { name: 'Supabase',      category: 'Backend & APIs' },
+      { name: 'Jupyter Notebook',    category: 'ML & Data' },
       { name: 'Gemini API',    category: 'ML & Data' },
       { name: 'Git & GitHub',  category: 'Tools' },
       { name: 'Pygame',        category: 'Tools' },
@@ -123,6 +125,7 @@ export const SKILL_TIERS = [
       { name: 'FastAPI',       category: 'Backend & APIs' },
       { name: 'REST APIs',     category: 'Backend & APIs' },
       { name: 'TypeScript',    category: 'Frontend' },
+      { name: 'JavaScript',    category: 'Frontend' },
       { name: 'Pandas',        category: 'ML & Data' },
       { name: 'NumPy',         category: 'ML & Data' },
       { name: 'Linux / CLI',   category: 'Tools' },

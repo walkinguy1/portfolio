@@ -84,8 +84,8 @@ export const Banner = () => {
               <span className={styles.roleBracket} aria-hidden="true">]</span>
             </div>
             <p className={styles.bannerDesc}>
-              Also known as <strong>Walkinguy</strong> — weaving together web, ML,
-              and whatever interesting problem lands on my desk next.
+              Also known as <strong>Walkinguy</strong>. I build web apps and machine
+              learning tools, mostly with React, Django and Python.
             </p>
             <div className={styles.bannerCtaRow}>
               <button className="btn-primary-cta" onClick={scrollToConnect}>
