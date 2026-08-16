@@ -208,21 +208,6 @@ function drawImpactFlash(ctx, x, y, opacity, isDark) {
   ctx.fill();
 }
 
-/* ─── Mouse-follow glow ──────────────────────────────────────────── */
-function drawMouseGlow(ctx, x, y, isDark) {
-  if (x < 0 || y < 0) return;
-  const grad = ctx.createRadialGradient(x, y, 0, x, y, 200);
-  if (isDark) {
-    grad.addColorStop(0, "rgba(16,185,129,0.07)");
-    grad.addColorStop(1, "rgba(16,185,129,0)");
-  } else {
-    grad.addColorStop(0, "rgba(13,125,92,0.05)");
-    grad.addColorStop(1, "rgba(13,125,92,0)");
-  }
-  ctx.fillStyle = grad;
-  ctx.fillRect(x - 200, y - 200, 400, 400);
-}
-
 /* ─── Component ──────────────────────────────────────────────────── */
 export const ParticleCanvas = () => {
   const canvasRef    = useRef(null);
@@ -349,9 +334,6 @@ export const ParticleCanvas = () => {
         ctx.fillStyle = isDark ? "rgba(214,250,236,0.15)" : "rgba(167,243,208,0.10)";
         ctx.fillRect(0, 0, W, H);
       }
-
-      // Ambient mouse glow
-      drawMouseGlow(ctx, mouseRef.current.x, mouseRef.current.y, isDark);
 
       // Update & draw particles
       particles.forEach(p => { p.w = W; p.h = H; p.update(); p.draw(ctx, isDark); });

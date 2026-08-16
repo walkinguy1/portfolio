@@ -54,9 +54,26 @@
   background: linear-gradient(180deg, var(--tier-card-bg-from) 0%, var(--tier-card-bg-to) 100%);
   border: 1px solid var(--tier-card-border);
   backdrop-filter: blur(6px);
-  opacity: 0;
-  transform: translateY(14px);
-  animation: tierIn 0.7s ease forwards;
+}
+
+/* The tiers animate in, but the hidden start state lives inside this query
+   rather than on .skillTier itself. Putting `opacity: 0` in the base rule
+   made the whole section depend on the animation actually running: if it
+   did not, the tiers stayed invisible with no way to recover.
+
+   tierIn is declared just below rather than in styles/animations.css. A CSS
+   Module rewrites animation names, so the reference here was being scoped
+   while the keyframes out there stayed global, and the two never matched. */
+@keyframes tierIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .skillTier {
+    opacity: 0;
+    transform: translateY(14px);
+    animation: tierIn 0.7s ease forwards;
+  }
 }
 
 .skillTierHead {
@@ -136,7 +153,8 @@
 .skillTier2 .skillChip:hover { border-color: var(--accent-3-hover); }
 
 @media (prefers-reduced-motion: reduce) {
-  .skillTier { animation: none; opacity: 1; transform: none; }
+  /* .skillTier needs no override here — its hidden state is now scoped to
+     the no-preference query above, so it is simply never applied. */
   .skillChip { transition: none; }
   .skillChip:hover { transform: none; }
 }

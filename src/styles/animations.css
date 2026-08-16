@@ -17,9 +17,9 @@
   50%      { opacity: 0.45; transform: scale(0.75); }
 }
 
-@keyframes tierIn {
-  to { opacity: 1; transform: translateY(0); }
-}
+/* tierIn moved to components/skills.module.css. It is only used there, and a
+   CSS Module rewrites animation names, so a name declared out here could
+   never be matched from inside the module. */
 
 @keyframes blink {
   0%,100% { opacity:1; }
