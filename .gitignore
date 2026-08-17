@@ -12,10 +12,6 @@ node_modules
 dist
 dist-ssr
 *.local
-
-# AI tooling — editor configs and agent skill files, not part of the project.
-# Only .github/skills is ignored, not all of .github, so that a CI workflow
-# at .github/workflows/ can still be committed.
 .claude
 .kilo
 .github/skills/
