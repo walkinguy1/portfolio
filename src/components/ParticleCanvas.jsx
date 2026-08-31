@@ -408,19 +408,25 @@ export const ParticleCanvas = () => {
       const isDark  = themeRef.current === "dark";
       const pal     = isDark ? BOLT_DARK : BOLT_LIGHT;
 
-      const main  = bakeBolt(buildBolt(ox, oy, tx, ty), pal, dpr);
-      const after = bakeBolt(
-        buildBolt(
-          ox + (Math.random() - 0.5) * 60,
-          oy + (Math.random() - 0.5) * 30,
-          tx + (Math.random() - 0.5) * 20,
-          ty + (Math.random() - 0.5) * 20
-        ),
-        pal, dpr
+      /* Keep the geometry alongside the bitmap: the palette is baked in, so a
+         theme toggle mid-strike has to re-bake from the same path to avoid a
+         dark bolt lingering over the light page. */
+      const mainGeom  = buildBolt(ox, oy, tx, ty);
+      const afterGeom = buildBolt(
+        ox + (Math.random() - 0.5) * 60,
+        oy + (Math.random() - 0.5) * 30,
+        tx + (Math.random() - 0.5) * 20,
+        ty + (Math.random() - 0.5) * 20
       );
 
       if (strikes.length >= MAX_STRIKES) strikes.shift();
-      strikes.push({ main, after, tx, ty, age: 0, seed: Math.random() * 100 });
+      strikes.push({
+        mainGeom, afterGeom,
+        main:  bakeBolt(mainGeom,  pal, dpr),
+        after: bakeBolt(afterGeom, pal, dpr),
+        dark: isDark,
+        tx, ty, age: 0, seed: Math.random() * 100,
+      });
       kick();
     };
 
@@ -473,6 +479,14 @@ export const ParticleCanvas = () => {
         const s = strikes[i];
         s.age += dt;
         if (s.age >= STRIKE_LIFE) { strikes.splice(i, 1); continue; }
+
+        // Theme flipped while this strike is still alive — re-bake to match.
+        if (s.dark !== isDark) {
+          const pal = isDark ? BOLT_DARK : BOLT_LIGHT;
+          s.main  = bakeBolt(s.mainGeom,  pal, dpr);
+          s.after = bakeBolt(s.afterGeom, pal, dpr);
+          s.dark  = isDark;
+        }
 
         const flick = flickerAt(s.age, s.seed);
         blitBolt(ctx, s.main,  mainAlphaAt(s.age) * flick);
