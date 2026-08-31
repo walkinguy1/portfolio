@@ -27,3 +27,6 @@ PORTFOLIO_ACTION_PLAN.md
 *.njsproj
 *.sln
 *.sw?
+
+# graphify output
+graphify-out/
