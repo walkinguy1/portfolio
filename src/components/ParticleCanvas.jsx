@@ -460,6 +460,14 @@ export const ParticleCanvas = () => {
 
       ctx.clearRect(0, 0, W, H);
 
+      /* Age and retire strikes before anything reads s.age, so the whiteout
+         below and the bolts further down are drawn from the same frame's
+         ages. Aging inside the draw loop left the flash one frame behind. */
+      for (let i = strikes.length - 1; i >= 0; i--) {
+        strikes[i].age += dt;
+        if (strikes[i].age >= STRIKE_LIFE) strikes.splice(i, 1);
+      }
+
       // Screen flash while any strike is inside its whiteout window
       const flash = strikes.reduce(
         (m, s) => Math.max(m, s.age < SCREEN_FLASH ? 1 - s.age / SCREEN_FLASH : 0), 0
@@ -474,12 +482,8 @@ export const ParticleCanvas = () => {
       // Update & draw particles
       particles.forEach(p => { p.w = W; p.h = H; p.update(k); p.draw(ctx, isDark); });
 
-      // Strikes, newest last; expired ones drop off the front
-      for (let i = strikes.length - 1; i >= 0; i--) {
-        const s = strikes[i];
-        s.age += dt;
-        if (s.age >= STRIKE_LIFE) { strikes.splice(i, 1); continue; }
-
+      // Strikes, newest last; already aged and retired above
+      for (const s of strikes) {
         // Theme flipped while this strike is still alive — re-bake to match.
         if (s.dark !== isDark) {
           const pal = isDark ? BOLT_DARK : BOLT_LIGHT;
