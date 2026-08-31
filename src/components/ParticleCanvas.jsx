@@ -437,14 +437,12 @@ export const ParticleCanvas = () => {
       spawnLightning(tx, ty);
     };
 
-    const handleMouseDown = (e) => strikeAt(e.clientX, e.clientY, e.target);
-    const handleTouchStart = (e) => {
-      const t = e.touches[0];
-      if (t) strikeAt(t.clientX, t.clientY, e.target);
-    };
+    /* One pointerdown covers mouse, touch and pen. Listening for mousedown
+       and touchstart together double-fired on touch: the browser emits a
+       synthetic mousedown after every uncanceled tap. */
+    const handlePointerDown = (e) => strikeAt(e.clientX, e.clientY, e.target);
 
-    section.addEventListener("mousedown", handleMouseDown);
-    section.addEventListener("touchstart", handleTouchStart, { passive: true });
+    section.addEventListener("pointerdown", handlePointerDown, { passive: true });
 
     let raf = null;
     let last = 0;
@@ -533,8 +531,7 @@ export const ParticleCanvas = () => {
       ro.disconnect();
       io.disconnect();
       document.removeEventListener("visibilitychange", handleVisibility);
-      section.removeEventListener("mousedown", handleMouseDown);
-      section.removeEventListener("touchstart", handleTouchStart);
+      section.removeEventListener("pointerdown", handlePointerDown);
     };
   }, []);
 
